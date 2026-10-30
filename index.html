@@ -18,6 +18,9 @@
   img { max-width: 100%; height: auto; }
   [data-reveal], [data-parallax] { opacity: 1; visibility: visible; }
   :focus-visible { outline: 3px solid #f0c08d; outline-offset: 4px; }
+  .contact-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .contact-actions .btn { text-decoration: none; }
+  .contact-phone { color: #f4efe6; text-underline-offset: 4px; font-variant-numeric: tabular-nums; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
@@ -189,7 +192,11 @@
           <p class="contact-note">Пока в портфолио один подтверждённый кейс — его можно открыть и посмотреть целиком.</p>
         </div>
         <div class="contact-slot" id="contact-slot">
-          <p class="contact-empty"><b>Контакт пока не опубликован</b>Подтверждённый способ связи ещё не добавлен. <a href="https://yuriimasl.github.io/lyublyu-demo/">Посмотреть демо-макет «Люблю, целую»</a></p>
+          <div class="contact-actions">
+            <a class="btn btn--primary" href="https://wa.me/79292322074" target="_blank" rel="noopener">Написать в WhatsApp <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn btn--ghost" href="https://vk.ru/see_the_root" target="_blank" rel="noopener">ВКонтакте</a>
+            <a class="contact-phone" href="tel:+79292322074">+7 929 232-20-74</a>
+          </div>
         </div>
       </div>
     </div>
