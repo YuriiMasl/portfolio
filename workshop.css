@@ -69,6 +69,39 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2190-21BB;
 }
 
+@font-face {
+  font-family: "Oswald";
+  src: url("assets/fonts/oswald-cyrillic-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("assets/fonts/oswald-latin-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2190-21BB;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("assets/fonts/oswald-cyrillic-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Oswald";
+  src: url("assets/fonts/oswald-latin-500.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+2190-21BB;
+}
+
 :root {
   --ink: #0b0a09;
   --ink-soft: #100d0b;
@@ -87,7 +120,7 @@
   --r-lg: 26px;
   --r-xl: 34px;
   --pill: 999px;
-  --display: "Unbounded", "Trebuchet MS", system-ui, sans-serif;
+  --display: "Oswald", "Arial Narrow", system-ui, sans-serif;
   --text: "Golos Text", "Segoe UI", system-ui, sans-serif;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --glass-fill: radial-gradient(140% 140% at 12% 0%,
@@ -311,6 +344,9 @@ a { color: inherit; }
 .hero {
   position: relative;
   isolation: isolate;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
   margin-top: calc(-1 * clamp(60px, 8vw, 84px));
   padding-top: clamp(104px, 14vh, 168px);
   padding-bottom: clamp(48px, 6vh, 76px);
@@ -340,8 +376,8 @@ html.has-3d .hero-bg { opacity: 1; }
 html.has-3d .rig { display: none; }
 html.has-3d .hero-veil {
   background:
-    linear-gradient(96deg, rgba(11, 10, 9, 0.96) 0%, rgba(11, 10, 9, 0.82) 26%, rgba(11, 10, 9, 0.28) 46%, rgba(11, 10, 9, 0) 62%, rgba(11, 10, 9, 0.25) 100%),
-    linear-gradient(180deg, rgba(11, 10, 9, 0.85) 0%, rgba(11, 10, 9, 0) 24%, rgba(11, 10, 9, 0) 72%, rgba(11, 10, 9, 0.9) 100%);
+    linear-gradient(96deg, rgba(11, 10, 9, 0.9) 0%, rgba(11, 10, 9, 0.62) 24%, rgba(11, 10, 9, 0.12) 44%, rgba(11, 10, 9, 0) 60%, rgba(11, 10, 9, 0.18) 100%),
+    linear-gradient(180deg, rgba(11, 10, 9, 0.7) 0%, rgba(11, 10, 9, 0) 22%, rgba(11, 10, 9, 0) 74%, rgba(11, 10, 9, 0.82) 100%);
 }
 
 .hero-veil {
@@ -358,7 +394,7 @@ html.has-3d .hero-veil {
   z-index: 3;
   display: grid;
   grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
-  align-items: end;
+  align-items: center;
   gap: clamp(32px, 4.5vw, 72px);
 }
 
@@ -396,12 +432,13 @@ html.has-3d .hero-veil {
 .link-arrow:hover { color: var(--heat); border-color: var(--heat); gap: 16px; }
 
 .hero h1 {
-  margin: 0 0 clamp(22px, 2.6vw, 34px);
+  margin: 0 0 clamp(20px, 2.4vw, 30px);
   font-family: var(--display);
-  font-weight: 800;
-  font-size: clamp(2.35rem, 5.1vw, 4.85rem);
-  line-height: 0.94;
-  letter-spacing: -0.038em;
+  font-weight: 600;
+  font-size: clamp(2.2rem, 4.4vw, 4.15rem);
+  line-height: 0.9;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
 }
 
 .line { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
@@ -693,7 +730,7 @@ html.has-3d .hero-veil {
 h2 {
   margin: 0 0 clamp(16px, 2vw, 24px);
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: 600;
   font-size: clamp(1.85rem, 3.3vw, 3.1rem);
   line-height: 1.04;
   letter-spacing: -0.03em;
