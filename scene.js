@@ -1,9 +1,9 @@
 /* ============================================================
-   Гибрид: комната — сгенерированная фотография (CSS-фон),
-   поверх — 3D: трубная стойка, настоящая CC0-модель трубы
-   (Poly Haven), три стеклянные витрины с экранами кейса,
-   тёплое зарево и отражения от HDRI.
-   Без WebGL остаётся обычная вёрстка.
+   Витрина мастерской.
+   Каркас — монолит: настоящий PBR-металл (Poly Haven, CC0),
+   стоит на полу и не двигается.
+   Витрины — стекло со скруглёнными углами, янтарной тонировкой,
+   отражениями и живым покачиванием на подвесах.
    ============================================================ */
 import * as THREE from 'three';
 import { GLTFLoader } from './vendor/three-addons/loaders/GLTFLoader.js';
@@ -25,109 +25,117 @@ async function start() {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.08;
+  renderer.toneMappingExposure = 1.06;
   renderer.setClearAlpha(0);
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 60);
-  camera.position.set(0, 0, 7.4);
+  camera.position.set(0, 0, 7.6);
   camera.lookAt(0, 0, 0);
 
   scene.environment = await loadEnvironment(renderer);
 
-  /* ---------- свет: печь справа, холодный контровой слева ---------- */
+  /* ---------- свет ---------- */
 
-  scene.add(new THREE.AmbientLight(0x2b1e14, 1.0));
+  scene.add(new THREE.AmbientLight(0x2b1e14, 0.9));
 
-  const furnace = new THREE.PointLight(0xff8a3d, 55, 26, 2);
-  furnace.position.set(5.2, 0.9, 1.6);
+  const furnace = new THREE.PointLight(0xff8a3d, 46, 26, 2);
+  furnace.position.set(5.4, 0.8, 1.8);
   scene.add(furnace);
 
-  const topLight = new THREE.PointLight(0xffd0a0, 22, 16, 2);
-  topLight.position.set(2.2, 4.2, 2.2);
-  scene.add(topLight);
+  const key = new THREE.PointLight(0xffd0a0, 26, 18, 2);
+  key.position.set(2.4, 3.6, 2.6);
+  scene.add(key);
 
-  const rim = new THREE.DirectionalLight(0x9fb4c9, 0.65);
-  rim.position.set(-4, 3.4, 2.4);
+  const rim = new THREE.DirectionalLight(0x9fb4c9, 0.8);
+  rim.position.set(-4.5, 2.6, 2.2);
   scene.add(rim);
 
-  /* ---------- стойка из труб ---------- */
+  /* ---------- текстуры металла ---------- */
 
-  const ironMat = new THREE.MeshStandardMaterial({ color: 0x6b5236, metalness: 0.95, roughness: 0.42 });
-  const darkMat = new THREE.MeshStandardMaterial({ color: 0x33291f, metalness: 0.9, roughness: 0.55 });
+  const [diff, rough, nor] = await Promise.all([
+    loadTex('assets/tex/rusty_diff.jpg', true),
+    loadTex('assets/tex/rusty_rough.jpg', false),
+    loadTex('assets/tex/rusty_nor.jpg', false)
+  ]);
 
+  function pipeMat(repeatY) {
+    const d = diff.clone(); d.needsUpdate = true;
+    const r = rough.clone(); r.needsUpdate = true;
+    const n = nor.clone(); n.needsUpdate = true;
+    [d, r, n].forEach((t) => { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(1, repeatY); });
+    return new THREE.MeshStandardMaterial({
+      map: d,
+      roughnessMap: r,
+      normalMap: n,
+      normalScale: new THREE.Vector2(0.9, 0.9),
+      color: 0xb9a58c,
+      metalness: 0.82,
+      roughness: 0.72,
+      envMapIntensity: 1.15
+    });
+  }
+
+  /* ---------- монолитный каркас ---------- */
+
+  const metal = pipeMat(5);
+  const metalPlate = pipeMat(1);
   const rack = new THREE.Group();
   scene.add(rack);
 
-  function pipe(x1, y1, x2, y2, r, mat, z = -0.4) {
+  const L = -1.05;
+  const R = 4.45;
+  const FLOOR = -1.85;
+  const TOP = 2.82;
+
+  function tube(x1, y1, x2, y2, radius, mat, z = -0.45) {
     const len = Math.hypot(x2 - x1, y2 - y1);
-    const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, len, 20), mat);
+    const m = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, len, 28, 1, false), mat);
     m.position.set((x1 + x2) / 2, (y1 + y2) / 2, z);
     m.rotation.z = Math.atan2(y2 - y1, x2 - x1) - Math.PI / 2;
     return m;
   }
 
-  function joint(x, y, r, mat, z = -0.4) {
-    const m = new THREE.Mesh(new THREE.SphereGeometry(r, 18, 14), mat);
-    m.position.set(x, y, z);
-    return m;
-  }
+  /* стойки и верхняя труба */
+  rack.add(tube(L, FLOOR, L, TOP, 0.1, metal));
+  rack.add(tube(R, FLOOR, R, TOP, 0.1, metal));
+  rack.add(tube(L - 0.2, TOP - 0.02, R + 0.2, TOP - 0.02, 0.085, metal));
 
-  function flange(x, y, r, mat, z = -0.4) {
-    const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, 0.055, 22), mat);
-    m.position.set(x, y, z);
-    m.rotation.z = Math.PI / 2;
-    return m;
-  }
 
-  const L = -0.85;
-  const R = 4.55;
-  const FLOOR = -1.72;
-  const TOP = 2.78;
-
-  rack.add(pipe(L, FLOOR, L, TOP, 0.055, ironMat));
-  rack.add(pipe(R, FLOOR, R, TOP, 0.055, ironMat));
-  rack.add(pipe(L - 0.14, TOP - 0.06, R + 0.14, TOP - 0.06, 0.05, ironMat));
-  rack.add(pipe(L - 0.14, 2.34, R + 0.14, 2.34, 0.03, darkMat));
-  rack.add(pipe(L - 0.2, FLOOR + 0.04, R + 0.2, FLOOR + 0.04, 0.06, ironMat));
-
+  /* опорные плиты с болтами */
   [L, R].forEach((x) => {
-    [TOP - 0.06, 2.34].forEach((y) => {
-      rack.add(joint(x, y, 0.085, darkMat));
-      rack.add(flange(x, y - 0.12, 0.1, ironMat));
-    });
-    [FLOOR + 0.04].forEach((y) => {
-      rack.add(joint(x, y, 0.09, darkMat));
-      rack.add(flange(x, y + 0.1, 0.11, ironMat));
-    });
-    for (let i = 1; i < 4; i++) {
-      rack.add(flange(x, FLOOR + i * 1.1, 0.1, darkMat));
+    const plate = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.09, 0.78), metalPlate);
+    plate.position.set(x, FLOOR + 0.035, -0.45);
+    rack.add(plate);
+
+    for (let i = 0; i < 4; i++) {
+      const bolt = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.09, 8), metal);
+      bolt.position.set(x + (i < 2 ? -0.2 : 0.2), FLOOR + 0.09, -0.45 + (i % 2 ? -0.2 : 0.2));
+      rack.add(bolt);
     }
+
+    /* хомут под верхней трубой */
+    const collar = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.14, 0.24, 22), metal);
+    collar.position.set(x, TOP - 0.16, -0.45);
+    rack.add(collar);
   });
 
-  /* вентиль на правой стойке */
-  const valve = new THREE.Mesh(new THREE.TorusGeometry(0.16, 0.022, 8, 20), ironMat);
-  valve.position.set(R, 1.55, -0.34);
-  rack.add(valve);
-  rack.add(pipe(R - 0.16, 1.55, R + 0.16, 1.55, 0.012, ironMat, -0.34));
-
-  /* ---------- реальная CC0-модель труб как фон сцены ---------- */
-
+  /* CC0-модель труб фоном */
   try {
     const kit = await new GLTFLoader().loadAsync('assets/model-pipes/pipes.gltf');
     const model = kit.scene;
     const box = new THREE.Box3().setFromObject(model);
     const size = box.getSize(new THREE.Vector3());
-    const k = 3.2 / Math.max(size.x, size.y);
+    const k = 3.6 / Math.max(size.x, size.y);
     model.scale.setScalar(k);
     const box2 = new THREE.Box3().setFromObject(model);
     const c = box2.getCenter(new THREE.Vector3());
-    model.position.set(2.4 - c.x, -0.2 - c.y, -1.9);
-    model.rotation.y = -0.35;
+    model.position.set(2.6 - c.x, -0.1 - c.y, -2.1);
+    model.rotation.y = -0.4;
     model.traverse((o) => {
       if (o.isMesh && o.material) {
-        o.material.envMapIntensity = 1.1;
-        if (o.material.color) o.material.color.multiplyScalar(0.7);
+        o.material.envMapIntensity = 1.0;
+        if (o.material.color) o.material.color.multiplyScalar(0.72);
       }
     });
     scene.add(model);
@@ -137,137 +145,135 @@ async function start() {
 
   /* ---------- витрины ---------- */
 
-  const loader = new THREE.TextureLoader();
-  async function texture(url) {
-    const tex = await loader.loadAsync(url);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
-    return tex;
-  }
-
   const [texHero, texShelf, texPhone] = await Promise.all([
-    texture('assets/lyublyu-hero.webp'),
-    texture('assets/lyublyu-shelf.webp'),
-    texture('assets/lyublyu-mobile.webp')
+    loadTex('assets/lyublyu-hero.webp', true),
+    loadTex('assets/lyublyu-shelf.webp', true),
+    loadTex('assets/lyublyu-mobile.webp', true)
   ]);
 
-  const glowTex = radialTexture();
+  const streaks = streakTexture();
+  const bottomGlow = gradientTexture();
 
-  function glassCase(tex, w, h) {
-    const group = new THREE.Group();
-
-    /* ореол вокруг плиты — свет проходит сквозь стекло */
-    const halo = new THREE.Sprite(new THREE.SpriteMaterial({
-      map: glowTex,
-      color: 0xff8f4a,
-      transparent: true,
-      opacity: 0.26,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false
-    }));
-    halo.scale.set(w * 1.35, h * 1.5, 1);
-    halo.position.z = -0.05;
-    group.add(halo);
-
-    const screen = new THREE.Mesh(
-      new THREE.PlaneGeometry(w * 0.955, h * 0.955),
-      new THREE.MeshBasicMaterial({ map: tex, color: 0xffffff, toneMapped: false })
-    );
-    screen.position.z = 0.012;
-    group.add(screen);
-
-    /* толща стекла: передняя пластина и подсвеченная кромка */
-    const glass = new THREE.Mesh(
-      new THREE.BoxGeometry(w, h, 0.075),
-      new THREE.MeshPhysicalMaterial({
-        color: 0xfff1e0,
-        metalness: 0.1,
-        roughness: 0.03,
-        transparent: true,
-        opacity: 0.07,
-        clearcoat: 1,
-        clearcoatRoughness: 0.02,
-        envMapIntensity: 1.7,
-        depthWrite: false
-      })
-    );
-    glass.position.z = 0.075;
-    group.add(glass);
-
-    /* диагональный блик по стеклу */
-    const sheen = new THREE.Mesh(
-      new THREE.PlaneGeometry(w, h),
-      new THREE.MeshBasicMaterial({
-        map: sheenTexture(),
-        transparent: true,
-        opacity: 0.22,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false
-      })
-    );
-    sheen.position.z = 0.1;
-    group.add(sheen);
-
-    /* светящаяся кромка: четыре бруска по периметру */
-    const edgeMat = new THREE.MeshBasicMaterial({ color: 0xffa96a, toneMapped: false });
-    const t = 0.006;
-    const edges = [
-      [w, t, 0, h / 2],
-      [w, t, 0, -h / 2],
-      [t, h, -w / 2, 0],
-      [t, h, w / 2, 0]
-    ];
-    edges.forEach(([ew, eh, ex, ey]) => {
-      const e = new THREE.Mesh(new THREE.BoxGeometry(ew, eh, 0.085), edgeMat);
-      e.position.set(ex, ey, 0.04);
-      group.add(e);
-    });
-
-    return group;
+  function roundedShape(w, h, r) {
+    const s = new THREE.Shape();
+    const x = -w / 2;
+    const y = -h / 2;
+    s.moveTo(x + r, y);
+    s.lineTo(x + w - r, y);
+    s.quadraticCurveTo(x + w, y, x + w, y + r);
+    s.lineTo(x + w, y + h - r);
+    s.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    s.lineTo(x + r, y + h);
+    s.quadraticCurveTo(x, y + h, x, y + h - r);
+    s.lineTo(x, y + r);
+    s.quadraticCurveTo(x, y, x + r, y);
+    return s;
   }
 
-  const caseA = glassCase(texHero, 3.55, 2.22);
-  caseA.position.set(1.0, 0.85, 0.15);
-  caseA.rotation.set(0, -0.24, 0.03);
+  function glassCase(tex, w, h) {
+    const g = new THREE.Group();
+    const shape = roundedShape(w, h, 0.07);
 
-  const caseB = glassCase(texShelf, 2.6, 1.95);
-  caseB.position.set(1.28, -0.62, 0.55);
-  caseB.rotation.set(0, -0.28, -0.03);
+    /* стекло: объём с фаской */
+    const glassGeo = new THREE.ExtrudeGeometry(shape, {
+      depth: 0.07,
+      bevelEnabled: true,
+      bevelThickness: 0.016,
+      bevelSize: 0.016,
+      bevelSegments: 2,
+      curveSegments: 8
+    });
+    const glass = new THREE.Mesh(glassGeo, new THREE.MeshPhysicalMaterial({
+      color: 0xffe8cf,
+      metalness: 0.05,
+      roughness: 0.05,
+      transparent: true,
+      opacity: 0.03,
+      clearcoat: 1,
+      clearcoatRoughness: 0.03,
+      envMapIntensity: 0.7,
+      depthWrite: false
+    }));
+    glass.position.z = 0.02;
+    g.add(glass);
 
-  const caseC = glassCase(texPhone, 0.86, 1.86);
-  caseC.position.set(2.25, -0.78, 0.95);
-  caseC.rotation.set(0, -0.32, 0.05);
+    /* экран внутри стекла */
+    const screen = new THREE.Mesh(
+      new THREE.PlaneGeometry(w * 0.935, h * 0.935),
+      new THREE.MeshBasicMaterial({ map: tex, toneMapped: false })
+    );
+    screen.position.z = 0.008;
+    g.add(screen);
+
+    /* янтарная тонировка */
+    const tint = new THREE.Mesh(
+      new THREE.PlaneGeometry(w * 0.935, h * 0.935),
+      new THREE.MeshBasicMaterial({ color: 0xffe8c8, transparent: true, opacity: 0.18, blending: THREE.MultiplyBlending, depthWrite: false })
+    );
+    tint.position.z = 0.012;
+    g.add(tint);
+
+    /* вертикальные отражения комнаты */
+    const reflect = new THREE.Mesh(
+      new THREE.PlaneGeometry(w * 0.96, h * 0.96),
+      new THREE.MeshBasicMaterial({ map: streaks, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending, depthWrite: false })
+    );
+    reflect.position.z = 0.045;
+    g.add(reflect);
+
+    /* свечение у нижней кромки */
+    const glow = new THREE.Mesh(
+      new THREE.PlaneGeometry(w * 0.96, h * 0.34),
+      new THREE.MeshBasicMaterial({ map: bottomGlow, transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false })
+    );
+    glow.position.set(0, -h * 0.31, 0.05);
+    g.add(glow);
+
+    /* плотность стекла у кромок */
+    const vig = new THREE.Mesh(
+      new THREE.PlaneGeometry(w * 0.94, h * 0.94),
+      new THREE.MeshBasicMaterial({ map: vignetteTexture(), transparent: true, opacity: 0.4, blending: THREE.MultiplyBlending, depthWrite: false })
+    );
+    vig.position.z = 0.03;
+    g.add(vig);
+
+    /* светящийся контур */
+    const pts = shape.getPoints(48);
+    const lineGeo = new THREE.BufferGeometry().setFromPoints(pts.map((p) => new THREE.Vector3(p.x, p.y, 0.075)));
+    const line = new THREE.LineLoop(lineGeo, new THREE.LineBasicMaterial({ color: 0xffb877, transparent: true, opacity: 0.95 }));
+    g.add(line);
+
+    return g;
+  }
+
+  const caseA = glassCase(texHero, 3.5, 2.19);
+  caseA.position.set(0.95, 0.85, 0.2);
+  caseA.rotation.set(-0.02, -0.24, 0.02);
+
+  const caseB = glassCase(texShelf, 2.55, 1.91);
+  caseB.position.set(1.35, -0.62, 0.55);
+  caseB.rotation.set(0, -0.3, -0.015);
+
+  const caseC = glassCase(texPhone, 0.85, 1.84);
+  caseC.position.set(2.45, -0.8, 0.95);
+  caseC.rotation.set(0, -0.34, 0.03);
 
   const cases = [caseA, caseB, caseC];
   cases.forEach((c) => scene.add(c));
 
-  /* подвесы: зажим на верхней трубе и трос к плите */
-  function hang(x, yTop, yBottom, z) {
-    const g = new THREE.Group();
-    const clampMesh = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.13, 0.09), darkMat);
-    clampMesh.position.set(x, yTop - 0.05, -0.36);
-    g.add(clampMesh);
-    const wire = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, Math.max(0.05, yTop - yBottom), 6), darkMat);
-    wire.position.set(x, (yTop + yBottom) / 2, z);
-    g.add(wire);
-    return g;
+  /* струбцины на верхней трубе */
+  const clampMat = new THREE.MeshStandardMaterial({ map: diff, normalMap: nor, color: 0x8b7a66, metalness: 0.8, roughness: 0.7 });
+  function clamp(x, z) {
+    const body = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.16, 0.12), clampMat);
+    body.position.set(x, TOP - 0.1, z);
+    const bolt = new THREE.Mesh(new THREE.CylinderGeometry(0.02, 0.02, 0.16, 8), clampMat);
+    bolt.rotation.x = Math.PI / 2;
+    bolt.position.set(x, TOP - 0.1, z + 0.07);
+    const grp = new THREE.Group();
+    grp.add(body, bolt);
+    return grp;
   }
-  scene.add(hang(1.15 - 4.65 * 0.3, TOP - 0.06, 2.5, 0.15));
-  scene.add(hang(1.15 + 4.65 * 0.3, TOP - 0.06, 2.5, 0.15));
-  scene.add(hang(1.62 + 1.0, TOP - 0.06, 0.85, 0.55));
-  scene.add(hang(3.05 + 0.4, TOP - 0.06, 0.25, 0.9));
-
-  /* мягкая тень на полу под плитами */
-  const shadow = new THREE.Sprite(new THREE.SpriteMaterial({
-    map: glowTex,
-    color: 0x000000,
-    transparent: true,
-    opacity: 0.32,
-    depthWrite: false
-  }));
-  shadow.scale.set(6, 1.3, 1);
-  shadow.position.set(2.2, -2.75, 0.6);
-  scene.add(shadow);
+  scene.add(clamp(0.95 - 1.05, 0.1), clamp(0.95 + 1.05, 0.1), clamp(2.2 + 0.3, 0.9));
 
   /* ---------- кадр ---------- */
 
@@ -304,24 +310,26 @@ async function start() {
     const t = clock.getElapsedTime();
     intro = Math.min(1, intro + 0.008);
 
-    eased.x += (pointer.x - eased.x) * 0.045;
-    eased.y += (pointer.y - eased.y) * 0.045;
+    eased.x += (pointer.x - eased.x) * 0.05;
+    eased.y += (pointer.y - eased.y) * 0.05;
 
-    camera.position.x = -eased.x * 0.2;
-    camera.position.y = -eased.y * 0.12 + Math.sin(t * 0.3) * 0.01;
-    camera.lookAt(0, 0, 0);
-
+    /* витрины живут: мягкое покачивание на подвесах и наклон за курсором */
     const bases = [
-      { y: 1.02, ry: -0.16 },
-      { y: -0.55, ry: -0.2 },
-      { y: -1.05, ry: -0.26 }
+      { x: 0.95, y: 0.85, ry: -0.24, rz: 0.02, phase: 0 },
+      { x: 1.35, y: -0.62, ry: -0.3, rz: -0.015, phase: 1.7 },
+      { x: 2.45, y: -0.8, ry: -0.34, rz: 0.03, phase: 3.1 }
     ];
     cases.forEach((c, i) => {
-      c.position.y = bases[i].y - (1 - intro) * 0.55 + Math.sin(t * 0.4 + i * 1.4) * 0.018;
-      c.rotation.y = bases[i].ry + eased.x * 0.05;
+      const b = bases[i];
+      c.position.y = b.y - (1 - intro) * 0.35 + Math.sin(t * 0.55 + b.phase) * 0.012;
+      c.position.x = b.x + Math.cos(t * 0.4 + b.phase) * 0.006;
+      c.rotation.z = b.rz + Math.sin(t * 0.7 + b.phase) * 0.004;
+      c.rotation.x = eased.y * 0.02;
+      c.rotation.y = b.ry + eased.x * 0.05;
+      c.rotation.x = eased.y * 0.02;
     });
 
-    furnace.intensity = 52 + Math.sin(t * 1.5) * 3 + Math.sin(t * 4.2) * 1.2;
+    furnace.intensity = 44 + Math.sin(t * 1.5) * 2.6 + Math.sin(t * 4.3) * 1.1;
 
     renderer.render(scene, camera);
   }
@@ -330,37 +338,65 @@ async function start() {
   frame();
 }
 
-function sheenTexture() {
+function loadTex(url, srgb) {
+  return new THREE.TextureLoader().loadAsync(url).then((t) => {
+    if (srgb) t.colorSpace = THREE.SRGBColorSpace;
+    t.anisotropy = 8;
+    return t;
+  });
+}
+
+function vignetteTexture() {
   const c = document.createElement('canvas');
-  c.width = 256;
-  c.height = 256;
+  c.width = 512;
+  c.height = 512;
   const ctx = c.getContext('2d');
-  const g = ctx.createLinearGradient(0, 256, 256, 0);
-  g.addColorStop(0, 'rgba(255,255,255,0)');
-  g.addColorStop(0.34, 'rgba(255,240,220,0.04)');
-  g.addColorStop(0.46, 'rgba(255,248,235,0.30)');
-  g.addColorStop(0.54, 'rgba(255,248,235,0.10)');
-  g.addColorStop(0.72, 'rgba(255,255,255,0)');
-  g.addColorStop(1, 'rgba(255,255,255,0)');
+  const g = ctx.createRadialGradient(256, 256, 120, 256, 256, 330);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.62, 'rgba(236,222,204,1)');
+  g.addColorStop(0.86, 'rgba(150,120,96,1)');
+  g.addColorStop(1, 'rgba(90,70,56,1)');
   ctx.fillStyle = g;
-  ctx.fillRect(0, 0, 256, 256);
+  ctx.fillRect(0, 0, 512, 512);
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
   return tex;
 }
 
-function radialTexture() {
+function streakTexture() {
   const c = document.createElement('canvas');
-  c.width = 256;
+  c.width = 512;
+  c.height = 512;
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0, 0, 512, 512);
+  /* отражения живут у краёв, центр остаётся чистым */
+  for (let i = 0; i < 14; i++) {
+    const edge = i % 2 === 0;
+    const x = edge ? 8 + Math.random() * 90 : 414 + Math.random() * 90;
+    const w = 8 + Math.random() * 34;
+    const g = ctx.createLinearGradient(x, 0, x + w, 0);
+    g.addColorStop(0, 'rgba(255,244,230,0)');
+    g.addColorStop(0.5, 'rgba(255,244,230,' + (0.1 + Math.random() * 0.22).toFixed(3) + ')');
+    g.addColorStop(1, 'rgba(255,244,230,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(x, 0, w, 512);
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+function gradientTexture() {
+  const c = document.createElement('canvas');
+  c.width = 32;
   c.height = 256;
   const ctx = c.getContext('2d');
-  const g = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
-  g.addColorStop(0, 'rgba(255,255,255,1)');
-  g.addColorStop(0.45, 'rgba(255,255,255,0.55)');
-  g.addColorStop(0.75, 'rgba(255,255,255,0.12)');
-  g.addColorStop(1, 'rgba(255,255,255,0)');
+  const g = ctx.createLinearGradient(0, 0, 0, 256);
+  g.addColorStop(0, 'rgba(255,190,130,0)');
+  g.addColorStop(0.6, 'rgba(255,170,100,0.35)');
+  g.addColorStop(1, 'rgba(255,200,150,0.9)');
   ctx.fillStyle = g;
-  ctx.fillRect(0, 0, 256, 256);
+  ctx.fillRect(0, 0, 32, 256);
   const tex = new THREE.CanvasTexture(c);
   tex.colorSpace = THREE.SRGBColorSpace;
   return tex;

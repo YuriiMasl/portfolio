@@ -376,7 +376,7 @@ html.has-3d .hero-bg { opacity: 1; }
 html.has-3d .rig { display: none; }
 html.has-3d .hero-veil {
   background:
-    linear-gradient(96deg, rgba(11, 10, 9, 0.9) 0%, rgba(11, 10, 9, 0.62) 24%, rgba(11, 10, 9, 0.12) 44%, rgba(11, 10, 9, 0) 60%, rgba(11, 10, 9, 0.18) 100%),
+    linear-gradient(96deg, rgba(11, 10, 9, 0.88) 0%, rgba(11, 10, 9, 0.55) 24%, rgba(11, 10, 9, 0.06) 44%, rgba(11, 10, 9, 0) 60%, rgba(11, 10, 9, 0.06) 100%),
     linear-gradient(180deg, rgba(11, 10, 9, 0.7) 0%, rgba(11, 10, 9, 0) 22%, rgba(11, 10, 9, 0) 74%, rgba(11, 10, 9, 0.82) 100%);
 }
 
