@@ -10,44 +10,57 @@
 <meta property="og:title" content="Юрий — сайты, которые держат форму">
 <meta property="og:description" content="Сайты для малого бизнеса: разбор задачи, форма, проверка на прочность. Один кейс открыт целиком.">
 <meta property="og:locale" content="ru_RU">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230B0A09'/%3E%3Crect x='6' y='6' width='52' height='52' fill='none' stroke='%23F4571F' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='32' fill='%23F2ECE3' text-anchor='middle'%3E%D0%AE%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B0A09'/%3E%3Crect x='5' y='5' width='54' height='54' rx='12' fill='none' stroke='%23F4571F' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='32' fill='%23F2ECE3' text-anchor='middle'%3E%D0%AE%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/unbounded-cyrillic-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/golos-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/workshop-hero.webp" as="image">
 <link rel="stylesheet" href="workshop.css">
 </head>
 <body>
+
 <a class="skip-link" href="#main">Перейти к содержимому</a>
 
+<div class="scroll-progress" aria-hidden="true"><span></span></div>
+
 <header class="head">
-  <div class="wrap head-inner">
-    <a class="brand" href="#top">
-      <span class="brand-mark" aria-hidden="true">Ю</span>
-      <span class="brand-text">
-        <span class="brand-name">Юрий</span>
-        <span class="brand-note">сайты для бизнеса</span>
-      </span>
-    </a>
-    <nav class="nav" aria-label="Основная навигация">
-      <a href="#work">Работа</a>
-      <a href="#process">Процесс</a>
-      <a href="#about">Обо мне</a>
-    </nav>
-    <a class="head-cta" href="https://wa.me/79292322074" target="_blank" rel="noopener">Написать<span aria-hidden="true"> ↗</span></a>
+  <div class="wrap head-wrap">
+    <div class="head-bar glass">
+      <a class="brand" href="#top">
+        <span class="brand-avatar"><img src="assets/avatar.webp" width="320" height="320" alt="Юрий"></span>
+        <span class="brand-text">
+          <span class="brand-name">Юрий</span>
+          <span class="brand-note">сайты для бизнеса</span>
+        </span>
+      </a>
+      <nav class="tabs" aria-label="Основная навигация">
+        <a class="tab" href="#work">Работа</a>
+        <a class="tab" href="#process">Процесс</a>
+        <a class="tab" href="#about">Обо мне</a>
+        <a class="tab tab--accent" href="https://t.me/+79292322074" target="_blank" rel="noopener">Telegram<span aria-hidden="true"> ↗</span></a>
+      </nav>
+    </div>
   </div>
 </header>
 
 <main id="main">
 
   <section class="hero" id="top" aria-labelledby="hero-title">
+    <img class="hero-bg" src="assets/workshop-hero.webp" width="1400" height="875" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
+    <div class="hero-veil" aria-hidden="true"></div>
+
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <h1 id="hero-title" data-rise>Сайты,<br>которые<br>держат форму</h1>
-        <p class="lead" data-rise>Собираю страницы для небольших бизнесов: сначала разбираю задачу, потом ищу форму, потом проверяю на прочность. Один кейс открыт целиком: его можно потрогать.</p>
-        <div class="actions" data-rise>
-          <a class="btn btn--solid" href="#work">Открыть кейс<span class="arr" aria-hidden="true">↓</span></a>
-          <a class="btn btn--quiet" href="https://wa.me/79292322074" target="_blank" rel="noopener">Написать в WhatsApp</a>
+        <h1 id="hero-title">
+          <span class="line"><span class="line-in">Сайты,</span></span>
+          <span class="line"><span class="line-in">которые</span></span>
+          <span class="line"><span class="line-in">держат форму</span></span>
+        </h1>
+        <p class="lead fade">Собираю страницы для небольших бизнесов: сначала разбираю задачу, потом ищу форму, потом проверяю на прочность. Один кейс открыт целиком: его можно потрогать.</p>
+        <div class="actions fade">
+          <a class="btn btn--glass btn--ember" href="#work">Открыть кейс<span class="arr" aria-hidden="true">↓</span></a>
+          <a class="btn btn--glass" href="https://t.me/+79292322074" target="_blank" rel="noopener">Написать в Telegram</a>
         </div>
-        <p class="facts" data-rise>Воронеж · работаю удалённо по России · один подтверждённый кейс</p>
+        <p class="facts fade">Воронеж · работаю удалённо по России · один подтверждённый кейс</p>
       </div>
 
       <div class="rig" aria-label="Три экрана демо-кейса на железной стойке">
@@ -55,26 +68,26 @@
         <span class="rig-arm" aria-hidden="true"></span>
         <span class="rig-cross" aria-hidden="true"></span>
 
-        <figure class="panel panel--main" data-heat>
+        <figure class="panel panel--main" data-float="1">
           <div class="panel-heat" aria-hidden="true"></div>
           <img src="assets/lyublyu-hero.webp" width="1440" height="900" alt="Главный экран демо-макета цветочного салона «Люблю, целую»: крупный заголовок, букет и цены" decoding="async" fetchpriority="high">
           <figcaption>Главная · первый экран</figcaption>
         </figure>
 
-        <figure class="panel panel--shelf" data-heat>
+        <figure class="panel panel--shelf" data-float="2">
           <div class="panel-heat" aria-hidden="true"></div>
           <img src="assets/lyublyu-shelf.webp" width="1440" height="1080" alt="Витрина демо-макета: полка букетов с ценами S, M и XL" loading="lazy" decoding="async">
           <figcaption>Витрина · выбор и цены</figcaption>
         </figure>
 
-        <figure class="panel panel--phone" data-heat>
+        <figure class="panel panel--phone" data-float="3">
           <div class="panel-heat" aria-hidden="true"></div>
-          <img src="assets/lyublyu-mobile.webp" width="390" height="844" alt="Мобильная версия демо-макета: карточка букета и заказ в WhatsApp" loading="lazy" decoding="async">
+          <img src="assets/lyublyu-mobile.webp" width="390" height="844" alt="Мобильная версия демо-макета: карточка букета и заказ" loading="lazy" decoding="async">
           <figcaption>Телефон · заказ</figcaption>
         </figure>
 
         <figure class="bloom">
-          <img src="assets/glass-alstroemeria.webp" width="760" height="832" alt="Стеклянная альстромерия — образ формы, собранный из стекла и света" loading="lazy" decoding="async">
+          <img src="assets/glass-alstroemeria-bright.webp" width="900" height="984" alt="Стеклянная альстромерия, светящаяся как только что выдутая" loading="lazy" decoding="async">
           <figcaption>Стеклянная альстромерия: образ формы</figcaption>
         </figure>
       </div>
@@ -84,11 +97,11 @@
   <section class="case" id="work" aria-labelledby="work-title">
     <div class="wrap">
       <div class="case-head">
-        <h2 id="work-title" data-rise>Кейс, который<br>можно потрогать</h2>
-        <p class="lead" data-rise>«Люблю, целую»: цветочный салон. Демонстрационный макет, а не запущенный сайт клиента: я собрал его как рабочий образец подхода. Слева сайт салона, каким он был. Справа макет: те же букеты и цены, но выбор и заказ в два шага.</p>
+        <h2 id="work-title" class="fade">Кейс, который<br>можно потрогать</h2>
+        <p class="lead fade">«Люблю, целую»: цветочный салон. Демонстрационный макет, а не запущенный сайт клиента: я собрал его как рабочий образец подхода. Слева сайт салона, каким он был. Справа макет: те же букеты и цены, но выбор и заказ в два шага.</p>
       </div>
 
-      <div class="compare" style="--split: 52%">
+      <div class="compare glass-frame" style="--split: 52%">
         <img class="cmp-before" src="assets/lyublyu-before.webp" width="1440" height="900" alt="Сайт цветочного салона до переработки: длинная страница с мелким текстом и без выбора по бюджету" loading="lazy" decoding="async">
         <div class="cmp-after">
           <img src="assets/lyublyu-hero.webp" width="1440" height="900" alt="Переработанный макет: крупный первый экран, букет, цены и кнопка заказа" loading="lazy" decoding="async">
@@ -101,17 +114,17 @@
       </div>
 
       <div class="case-body">
-        <div class="case-what">
+        <div class="case-what fade">
           <h3>Что именно сделано</h3>
           <ul class="ticks">
             <li>Пересобрал структуру под выбор букета: повод, размер, бюджет вместо простыни текста.</li>
-            <li>Сделал витрину с ценами S / M / XL и заказ в WhatsApp с уже заполненным текстом.</li>
+            <li>Сделал витрину с ценами S / M / XL и заказ в мессенджере с уже заполненным текстом.</li>
             <li>Проверил мобильную версию, клавиатуру и работу без JavaScript: страница остаётся читаемой.</li>
           </ul>
-          <a class="btn btn--solid" href="https://yuriimasl.github.io/lyublyu-demo/" target="_blank" rel="noopener">Открыть демо-макет<span class="arr" aria-hidden="true">↗</span></a>
+          <a class="btn btn--glass btn--ember" href="https://yuriimasl.github.io/lyublyu-demo/" target="_blank" rel="noopener">Открыть демо-макет<span class="arr" aria-hidden="true">↗</span></a>
           <p class="note">Макет демонстрационный: я не выдаю его за сайт клиента и не приписываю ему чужих результатов.</p>
         </div>
-        <div class="case-truth">
+        <div class="case-truth fade">
           <h3>Что здесь честно</h3>
           <p>В портфолио пока один кейс. Не запущенный клиентский сайт, а макет, который можно открыть и потрогать: посмотреть витрину, пройти путь до заказа, проверить вёрстку на телефоне.</p>
           <p>Поэтому на странице нет отзывов, логотипов клиентов и цифр конверсии. Когда появятся, они будут здесь, с именами и ссылками.</p>
@@ -123,26 +136,26 @@
   <section class="process" id="process" aria-labelledby="process-title">
     <div class="wrap">
       <div class="process-head">
-        <h2 id="process-title" data-rise>Печь, форма, отжиг</h2>
-        <p class="lead" data-rise>Один и тот же порядок на любом проекте: сначала понять, что должно получиться, потом собрать форму, потом проверить, что она не треснет на телефоне.</p>
+        <h2 id="process-title" class="fade">Печь, форма, отжиг</h2>
+        <p class="lead fade">Один и тот же порядок на любом проекте: сначала понять, что должно получиться, потом собрать форму, потом проверить, что она не треснет на телефоне.</p>
       </div>
       <ol class="steps">
-        <li class="step" data-rise>
+        <li class="step fade">
           <span class="step-num" aria-hidden="true">01</span>
           <h3>Разбор задачи</h3>
-          <p>Смотрю, кто ваш покупатель, что он должен понять за десять секунд и какое действие сделать. Отсюда — состав страниц.</p>
+          <p>Смотрю, кто ваш покупатель, что он должен понять за десять секунд и какое действие сделать. Отсюда состав страниц.</p>
         </li>
-        <li class="step" data-rise>
+        <li class="step fade">
           <span class="step-num" aria-hidden="true">02</span>
           <h3>Форма</h3>
           <p>Структура и макет: где доказательство, где цена, где кнопка. Согласуем направление до того, как появится код.</p>
         </li>
-        <li class="step" data-rise>
+        <li class="step fade">
           <span class="step-num" aria-hidden="true">03</span>
           <h3>Сборка</h3>
           <p>Вёрстка, типографика, движение, мобильная версия. Сайт статический: быстро грузится и не зависит от чужих сервисов.</p>
         </li>
-        <li class="step" data-rise>
+        <li class="step fade">
           <span class="step-num" aria-hidden="true">04</span>
           <h3>Отжиг</h3>
           <p>Проверка контраста, клавиатуры, скринридера и разных экранов. После запуска не исчезаю: правки и вопросы на мне.</p>
@@ -153,17 +166,17 @@
 
   <section class="services" aria-labelledby="services-title">
     <div class="wrap">
-      <h2 id="services-title" data-rise>Что можно заказать</h2>
+      <h2 id="services-title" class="fade">Что можно заказать</h2>
       <dl class="service-list">
-        <div class="service" data-rise>
+        <div class="service fade">
           <dt>Сайт-визитка</dt>
           <dd>Когда нужно объяснить, чем вы занимаетесь, и не потерять человека по дороге к контакту.</dd>
         </div>
-        <div class="service" data-rise>
+        <div class="service fade">
           <dt>Витрина с выбором</dt>
           <dd>Когда товар нужно показать лицом, а заказ вы принимаете в мессенджере: цветы, кофе, мебель, услуги.</dd>
         </div>
-        <div class="service" data-rise>
+        <div class="service fade">
           <dt>Редизайн и разбор</dt>
           <dd>Когда сайт есть, но с него не пишут. Покажу, где именно теряется человек, и что менять в первую очередь.</dd>
         </div>
@@ -173,30 +186,31 @@
 
   <section class="about" id="about" aria-labelledby="about-title">
     <div class="wrap about-grid">
-      <figure class="portrait">
+      <figure class="portrait glass-frame fade">
         <img src="assets/portrait.webp" width="1000" height="1000" alt="Юрий, разработчик сайтов из Воронежа" loading="lazy" decoding="async">
         <figcaption>Юрий · Воронеж</figcaption>
       </figure>
       <div class="about-copy">
-        <h2 id="about-title" data-rise>Меня зовут Юрий.<br>Делаю сайты, которые можно проверить.</h2>
-        <p data-rise>Работаю один, без агентства и менеджеров: вы общаетесь напрямую со мной, и я же собираю страницу. Мне интересны небольшие дела: цветочный салон, кофейня, мастерская, где сайт нужен не для галочки, а чтобы человек выбрал и написал.</p>
-        <p data-rise>Пока в портфолио один кейс, и это честная стадия: я не подписываю чужие работы своим именем. Следующим в портфолио станет ваш сайт.</p>
+        <h2 id="about-title" class="fade">Меня зовут Юрий.<br>Делаю сайты, которые можно проверить.</h2>
+        <p class="fade">Работаю один, без агентства и менеджеров: вы общаетесь напрямую со мной, и я же собираю страницу. Мне интересны небольшие дела: цветочный салон, кофейня, мастерская, где сайт нужен не для галочки, а чтобы человек выбрал и написал.</p>
+        <p class="fade">Пока в портфолио один кейс, и это честная стадия: я не подписываю чужие работы своим именем. Следующим в портфолио станет ваш сайт.</p>
       </div>
     </div>
   </section>
 
   <section class="contact" id="contact" aria-labelledby="contact-title">
+    <img class="contact-bg" src="assets/molten-texture.webp" width="1200" height="800" alt="" aria-hidden="true" loading="lazy" decoding="async">
     <div class="wrap">
-      <h2 id="contact-title" data-rise>Расскажите, чем занимаетесь</h2>
-      <p class="lead" data-rise>Хватит двух-трёх предложений: что за бизнес, что хотите показать и как сейчас принимают заказы. Отвечу в тот же день и скажу, что имеет смысл делать с сайтом.</p>
-      <div class="contact-actions" data-rise>
-        <a class="btn btn--solid btn--big" href="https://wa.me/79292322074?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%AE%D1%80%D0%B8%D0%B9!%20%D0%A3%20%D0%BC%D0%B5%D0%BD%D1%8F%20%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81%2C%20%D0%BD%D1%83%D0%B6%D0%B5%D0%BD%20%D1%81%D0%B0%D0%B9%D1%82." target="_blank" rel="noopener">Написать в WhatsApp<span class="arr" aria-hidden="true">↗</span></a>
-        <a class="btn btn--quiet" href="https://vk.ru/see_the_root" target="_blank" rel="noopener">ВКонтакте</a>
+      <h2 id="contact-title" class="fade">Расскажите, чем занимаетесь</h2>
+      <p class="lead fade">Хватит двух-трёх предложений: что за бизнес, что хотите показать и как сейчас принимают заказы. Отвечу в тот же день и скажу, что имеет смысл делать с сайтом.</p>
+      <div class="contact-actions fade">
+        <a class="btn btn--glass btn--ember btn--big" href="https://t.me/+79292322074" target="_blank" rel="noopener">Написать в Telegram<span class="arr" aria-hidden="true">↗</span></a>
+        <a class="btn btn--glass" href="https://vk.ru/see_the_root" target="_blank" rel="noopener">ВКонтакте</a>
         <a class="phone" href="tel:+79292322074">+7 929 232-20-74</a>
       </div>
-      <p class="note" data-rise>Если сайт уже есть, пришлите ссылку — посмотрю и скажу, что мешает людям писать вам.</p>
+      <p class="note fade">Если сайт уже есть, пришлите ссылку: посмотрю и скажу, что мешает людям писать вам.</p>
     </div>
-    <img class="bloom-echo" src="assets/glass-alstroemeria.webp" width="760" height="832" alt="" aria-hidden="true" loading="lazy" decoding="async">
+    <img class="bloom-echo" src="assets/glass-alstroemeria-bright.webp" width="900" height="984" alt="" aria-hidden="true" loading="lazy" decoding="async">
   </section>
 
 </main>
@@ -214,6 +228,7 @@
   </div>
 </footer>
 
+<script src="vendor/lenis.min.js" defer></script>
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
 <script src="workshop.js" defer></script>
