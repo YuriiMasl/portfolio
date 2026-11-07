@@ -231,8 +231,8 @@ a { color: inherit; }
 
 .hero {
   position: relative;
-  padding-top: clamp(48px, 7vh, 96px) clamp(64px, 10vh, 128px);
-  padding-bottom: clamp(48px, 7vh, 96px) clamp(64px, 10vh, 128px);
+  padding-top: clamp(48px, 7vh, 96px);
+  padding-bottom: clamp(64px, 10vh, 128px);
   overflow: clip;
 }
 
@@ -770,8 +770,8 @@ h2 {
 
 .foot {
   border-top: 1px solid var(--line);
-  padding-top: 34px 42px;
-  padding-bottom: 34px 42px;
+  padding-top: 34px;
+  padding-bottom: 42px;
   font-size: 0.85rem;
 }
 
@@ -808,8 +808,8 @@ h2 {
   .nav { display: none; }
   .head-inner { min-height: 68px; }
 
-  .hero { padding-top: 40px 72px;
-  padding-bottom: 40px 72px; }
+  .hero { padding-top: 40px;
+  padding-bottom: 72px; }
   .hero-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 44px;
