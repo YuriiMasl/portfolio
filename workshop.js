@@ -66,7 +66,7 @@
   /* ---------- Первый экран: стекло остывает ---------- */
 
   var lines = gsap.utils.toArray('.hero h1 .line-in');
-  var panels = gsap.utils.toArray('.panel');
+  var panels = gsap.utils.toArray('.panel, .phone-mock');
   var heat = gsap.utils.toArray('.panel-heat');
   var bloom = document.querySelector('.bloom');
 

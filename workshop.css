@@ -299,12 +299,12 @@ a { color: inherit; }
 }
 
 .tab--accent {
-  color: #1b0c05;
-  background: radial-gradient(130% 150% at 20% 0%, rgba(255, 238, 208, 0.97), rgba(250, 126, 62, 0.92) 52%, rgba(232, 96, 31, 0.97));
-  border-color: rgba(255, 236, 200, 0.65);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -2px 8px rgba(120, 30, 0, 0.5), 0 12px 26px -14px rgba(244, 87, 31, 0.8);
+  color: var(--bone);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: radial-gradient(130% 150% at 20% 0%, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08) 48%, rgba(255, 255, 255, 0.03) 82%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -2px 8px rgba(0, 0, 0, 0.35), 0 12px 26px -16px rgba(0, 0, 0, 0.9);
 }
-.tab--accent:hover { color: #1b0c05; }
+.tab--accent:hover { color: var(--bone); border-color: rgba(255, 255, 255, 0.5); }
 
 /* ---------- Первый экран ---------- */
 
@@ -418,13 +418,14 @@ a { color: inherit; }
 .btn--glass { color: var(--bone); }
 
 .btn--ember {
-  color: #180b05;
-  border-color: rgba(255, 236, 200, 0.65);
-  background: radial-gradient(125% 145% at 16% 0%, rgba(255, 240, 214, 0.97), rgba(250, 126, 62, 0.93) 46%, rgba(232, 96, 31, 0.97));
+  color: var(--bone);
+  border-color: rgba(255, 255, 255, 0.34);
+  background:
+    radial-gradient(125% 145% at 18% 0%, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.09) 44%, rgba(255, 255, 255, 0.03) 74%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.65),
-    inset 0 -3px 10px rgba(120, 34, 0, 0.5),
-    0 18px 38px -18px rgba(244, 87, 31, 0.8);
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -2px 9px rgba(0, 0, 0, 0.4),
+    0 18px 40px -20px rgba(0, 0, 0, 0.95);
 }
 
 .btn--big { padding: 19px 32px; font-size: 1.02rem; }
@@ -444,7 +445,7 @@ a { color: inherit; }
 
 .rig {
   position: relative;
-  aspect-ratio: 660 / 590;
+  aspect-ratio: 660 / 640;
   padding-left: clamp(16px, 2vw, 26px);
   perspective: 1200px;
 }
@@ -534,33 +535,91 @@ a { color: inherit; }
     0 0 0 1px rgba(255, 169, 77, 0.35);
 }
 
-.panel--main { left: 0; top: 3%; width: 58%; transform: rotate(-0.8deg); }
-.panel--shelf { right: 1%; top: 13%; width: 29%; transform: rotate(1deg); }
-.panel--phone { left: 1%; top: 46%; width: 15%; transform: rotate(-1.4deg); }
+.panel--main { left: 0; top: 0; width: 66%; transform: rotate(-1deg); }
+.panel--shelf { left: 29%; top: 44%; width: 46%; transform: rotate(1.2deg); }
+
+/* Айфон на стойке: экран кейса внутри настоящего корпуса */
+.phone-mock {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 24%;
+  margin: 0;
+  z-index: 4;
+  transform: rotate(-2.5deg);
+}
+.phone-body {
+  position: relative;
+  padding: 7px;
+  border-radius: 34px;
+  background: linear-gradient(155deg, #6a5a4a 0%, #241d18 26%, #3d332b 58%, #15110e 100%);
+  box-shadow:
+    0 42px 70px -34px rgba(0, 0, 0, 0.98),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
+    inset 0 0 0 3px rgba(0, 0, 0, 0.6);
+}
+.phone-body::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 22%;
+  width: 3px;
+  height: 16%;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, #4a3f34, #1b1512);
+  box-shadow: 0 34px 0 0 #2c251e, 0 62px 0 0 #2c251e;
+}
+.phone-screen {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.9);
+}
+.phone-screen img { display: block; width: 100%; height: auto; }
+.phone-island {
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32%;
+  height: 7px;
+  border-radius: 99px;
+  background: #060505;
+  z-index: 3;
+  box-shadow: inset 0 0 3px rgba(255, 255, 255, 0.18), 0 0 8px rgba(0, 0, 0, 0.9);
+}
+.phone-mock figcaption {
+  margin-top: 10px;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  color: var(--bone-dim);
+  text-align: center;
+}
 
 .bloom {
   position: absolute;
-  right: 3%;
-  bottom: -7%;
-  width: 30%;
+  left: -5%;
+  bottom: -6%;
+  width: 32%;
   margin: 0;
-  z-index: 3;
+  z-index: 5;
   pointer-events: none;
 }
 .bloom img {
   display: block;
   width: 100%;
-  transform: scaleX(-1) rotate(-4deg);
-  filter: drop-shadow(0 0 54px rgba(255, 138, 61, 0.65)) brightness(1.28) saturate(1.15) contrast(1.04);
+  transform: scaleX(-1) rotate(-3deg);
+  filter: drop-shadow(0 0 70px rgba(255, 130, 50, 0.7)) brightness(1.15) saturate(1.2);
 }
 .bloom figcaption {
-  margin-top: 4px;
+  margin-top: 6px;
   font-size: 0.75rem;
   line-height: 1.35;
   letter-spacing: 0.02em;
-  color: var(--bone-dim);
-  max-width: 26ch;
-  text-align: right;
+  color: var(--bone);
+  max-width: 24ch;
 }
 
 /* ---------- Кейс ---------- */
@@ -971,8 +1030,8 @@ h2 {
   .panel::before { display: none; }
   .rig-cross { display: none; }
   .rig-arm { display: none; }
-  .panel--phone { width: 46%; }
-  .bloom { right: 0; bottom: 0; width: 48%; }
+  .phone-mock { position: relative; right: auto; bottom: auto; width: 62%; margin-inline: auto; transform: none; }
+  .bloom { left: 0; right: auto; bottom: 0; width: 40%; }
   .bloom figcaption { font-size: 0.72rem; }
 
   .case-head,
