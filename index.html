@@ -47,20 +47,21 @@
   <section class="hero" id="top" aria-labelledby="hero-title">
     <img class="hero-bg" src="assets/workshop-hero.webp" width="1400" height="875" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
     <div class="hero-veil" aria-hidden="true"></div>
+    <div class="stage" aria-hidden="true"><canvas id="stage-canvas"></canvas></div>
 
     <div class="wrap hero-grid">
       <div class="hero-copy">
+        <p class="hero-intro fade">Делаю сайты для небольших бизнесов: цветочный салон, кофейня, мастерская. Воронеж, работаю удалённо по России.</p>
         <h1 id="hero-title">
           <span class="line"><span class="line-in">Сайты,</span></span>
           <span class="line"><span class="line-in">которые</span></span>
           <span class="line"><span class="line-in">держат форму</span></span>
         </h1>
-        <p class="lead fade">Собираю страницы для небольших бизнесов: сначала разбираю задачу, потом ищу форму, потом проверяю на прочность. Один кейс открыт целиком: его можно потрогать.</p>
-        <div class="actions fade">
-          <a class="btn btn--glass btn--ember" href="#work">Открыть кейс<span class="arr" aria-hidden="true">↓</span></a>
+        <div class="hero-links fade">
+          <a class="link-arrow" href="#work">Открыть кейс <span aria-hidden="true">→</span></a>
           <a class="btn btn--glass" href="https://t.me/IOpaWho" target="_blank" rel="noopener">Написать в Telegram</a>
         </div>
-        <p class="facts fade">Воронеж · работаю удалённо по России · один подтверждённый кейс</p>
+        <p class="facts fade">Один подтверждённый кейс · демо-макет, а не сайт клиента</p>
       </div>
 
       <div class="rig" aria-label="Три экрана демо-кейса на железной стойке">
@@ -236,5 +237,6 @@
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
 <script src="workshop.js" defer></script>
+<script type="module" src="scene.js"></script>
 </body>
 </html>
