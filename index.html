@@ -13,7 +13,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B0A09'/%3E%3Crect x='5' y='5' width='54' height='54' rx='12' fill='none' stroke='%23F4571F' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='32' fill='%23F2ECE3' text-anchor='middle'%3E%D0%AE%3C/text%3E%3C/svg%3E">
 <link rel="preload" href="assets/fonts/unbounded-cyrillic-800.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/golos-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/workshop-hero.webp" as="image">
+<link rel="preload" href="assets/workshop-room.webp" as="image">
 <link rel="stylesheet" href="workshop.css">
 </head>
 <body>
@@ -45,7 +45,7 @@
 <main id="main">
 
   <section class="hero" id="top" aria-labelledby="hero-title">
-    <img class="hero-bg" src="assets/workshop-hero.webp" width="1400" height="875" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
+    <img class="hero-bg" src="assets/workshop-room.webp" width="1600" height="900" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
     <div class="hero-veil" aria-hidden="true"></div>
     <div class="stage" aria-hidden="true"><canvas id="stage-canvas"></canvas></div>
 
@@ -237,6 +237,7 @@
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
 <script src="workshop.js" defer></script>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 <script type="module" src="scene.js"></script>
 </body>
 </html>
