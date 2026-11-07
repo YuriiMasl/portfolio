@@ -3,230 +3,219 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Юрий — сайты для бизнеса в Воронеже</title>
-<meta name="description" content="Юрий — разработчик сайтов для бизнеса в Воронеже. Понятные витрины, удобный выбор и короткий путь к обращению. Один подтверждённый кейс — демо-макет цветочного салона «Люблю, целую».">
-<meta name="theme-color" content="#080706">
+<title>Юрий — сайты для малого бизнеса</title>
+<meta name="description" content="Юрий, разработчик сайтов. Собираю страницы для малого бизнеса: разбор задачи, форма, проверка на прочность. Демо-кейс цветочного салона «Люблю, целую» открыт целиком.">
+<meta name="theme-color" content="#0B0A09">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Юрий — сайты для бизнеса в Воронеже">
-<meta property="og:description" content="Сайты для небольших бизнесов: понятная витрина, удобный выбор, короткий путь к обращению. Портфолио с честной стадией работ.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23080706'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='36' fill='%23f4efe6' text-anchor='middle'%3E%D0%AE%3C/text%3E%3C/svg%3E">
-<style>
-  /* Базовая подстраховка до загрузки cinematic.css: страница читается без
-     JavaScript и до применения оформления. Скрытие элементов здесь запрещено. */
-  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: #080706; }
-  body { margin: 0; background: #080706; color: #f4efe6; }
-  img { max-width: 100%; height: auto; }
-  [data-reveal], [data-parallax] { opacity: 1; visibility: visible; }
-  :focus-visible { outline: 3px solid #f0c08d; outline-offset: 4px; }
-  .contact-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-  .contact-actions .btn { text-decoration: none; }
-  .contact-phone { color: #f4efe6; text-underline-offset: 4px; font-variant-numeric: tabular-nums; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
-  }
-</style>
-<link rel="stylesheet" href="cinematic.css">
+<meta property="og:title" content="Юрий — сайты, которые держат форму">
+<meta property="og:description" content="Сайты для малого бизнеса: разбор задачи, форма, проверка на прочность. Один кейс открыт целиком.">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230B0A09'/%3E%3Crect x='6' y='6' width='52' height='52' fill='none' stroke='%23F4571F' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='32' fill='%23F2ECE3' text-anchor='middle'%3E%D0%AE%3C/text%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/unbounded-cyrillic-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/golos-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="workshop.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Перейти к содержимому</a>
 
-<header class="site-head">
-  <div class="head-inner">
-    <a class="brand" href="#hero" aria-label="Юрий — к началу страницы">
+<header class="head">
+  <div class="wrap head-inner">
+    <a class="brand" href="#top">
       <span class="brand-mark" aria-hidden="true">Ю</span>
-      <span class="brand-text"><span class="brand-name">Юрий</span><span class="brand-role">Сайты для бизнеса</span></span>
+      <span class="brand-text">
+        <span class="brand-name">Юрий</span>
+        <span class="brand-note">сайты для бизнеса</span>
+      </span>
     </a>
-    <nav class="head-nav" aria-label="Основная навигация">
-      <a href="#services">Услуги</a>
-      <a href="#cases">Работы</a>
-      <a href="#about">О себе</a>
-      <a class="head-cta" href="#contact">Обсудить сайт</a>
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="#work">Работа</a>
+      <a href="#process">Процесс</a>
+      <a href="#about">Обо мне</a>
     </nav>
+    <a class="head-cta" href="https://wa.me/79292322074" target="_blank" rel="noopener">Написать<span aria-hidden="true"> ↗</span></a>
   </div>
 </header>
 
 <main id="main">
 
-  <section class="cinematic-scene scene--hero" id="hero" aria-labelledby="hero-title">
-    <div class="scene-inner">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow" data-reveal>Разработчик сайтов · Воронеж</p>
-          <h1 id="hero-title" data-reveal><span class="hero-name">Юрий</span> <em>Сайты для бизнеса</em> <span class="hero-tail">в Воронеже — от задачи до готовой страницы</span></h1>
-          <p class="lead" data-reveal>Меня зовут Юрий. Собираю сайты для небольших бизнесов: <strong>понятная витрина, удобный выбор и короткий путь к обращению.</strong> С вниманием к тому, как страница работает на телефоне.</p>
-          <div class="hero-actions" data-reveal>
-            <a class="btn btn--primary" href="#cases">Смотреть работы <span class="arrow" aria-hidden="true">→</span></a>
-            <a class="btn btn--ghost" href="#contact">Обсудить сайт</a>
-          </div>
-          <ul class="hero-facts" data-reveal>
-            <li><span class="mark" aria-hidden="true">01</span><span><b>Сначала задача</b>Потом структура, дизайн и код</span></li>
-            <li><span class="mark" aria-hidden="true">02</span><span><b>С телефона удобно</b>Не только красиво на макете</span></li>
-            <li><span class="mark" aria-hidden="true">03</span><span><b>Честные кейсы</b>С понятной стадией работы</span></li>
-          </ul>
-          <p class="hero-scroll">Листайте — сцены ниже</p>
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1 id="hero-title" data-rise>Сайты,<br>которые<br>держат форму</h1>
+        <p class="lead" data-rise>Собираю страницы для небольших бизнесов: сначала разбираю задачу, потом ищу форму, потом проверяю на прочность. Один кейс открыт целиком: его можно потрогать.</p>
+        <div class="actions" data-rise>
+          <a class="btn btn--solid" href="#work">Открыть кейс<span class="arr" aria-hidden="true">↓</span></a>
+          <a class="btn btn--quiet" href="https://wa.me/79292322074" target="_blank" rel="noopener">Написать в WhatsApp</a>
         </div>
-        <figure class="portrait" data-reveal data-parallax="0.06">
-          <div class="portrait-frame">
-            <img class="profile-photo" src="w2K7lKvhrwA.jpg" width="1254" height="1254" alt="Юрий — разработчик сайтов для бизнеса в Воронеже" decoding="async" fetchpriority="high">
-          </div>
-          <figcaption><b>Юрий</b><span>Воронеж · разработка сайтов</span></figcaption>
+        <p class="facts" data-rise>Воронеж · работаю удалённо по России · один подтверждённый кейс</p>
+      </div>
+
+      <div class="rig" aria-label="Три экрана демо-кейса на железной стойке">
+        <span class="rig-post" aria-hidden="true"></span>
+        <span class="rig-arm" aria-hidden="true"></span>
+        <span class="rig-cross" aria-hidden="true"></span>
+
+        <figure class="panel panel--main" data-heat>
+          <div class="panel-heat" aria-hidden="true"></div>
+          <img src="assets/lyublyu-hero.webp" width="1440" height="900" alt="Главный экран демо-макета цветочного салона «Люблю, целую»: крупный заголовок, букет и цены" decoding="async" fetchpriority="high">
+          <figcaption>Главная · первый экран</figcaption>
+        </figure>
+
+        <figure class="panel panel--shelf" data-heat>
+          <div class="panel-heat" aria-hidden="true"></div>
+          <img src="assets/lyublyu-shelf.webp" width="1440" height="1080" alt="Витрина демо-макета: полка букетов с ценами S, M и XL" loading="lazy" decoding="async">
+          <figcaption>Витрина · выбор и цены</figcaption>
+        </figure>
+
+        <figure class="panel panel--phone" data-heat>
+          <div class="panel-heat" aria-hidden="true"></div>
+          <img src="assets/lyublyu-mobile.webp" width="390" height="844" alt="Мобильная версия демо-макета: карточка букета и заказ в WhatsApp" loading="lazy" decoding="async">
+          <figcaption>Телефон · заказ</figcaption>
+        </figure>
+
+        <figure class="bloom">
+          <img src="assets/glass-alstroemeria.webp" width="760" height="832" alt="Стеклянная альстромерия — образ формы, собранный из стекла и света" loading="lazy" decoding="async">
+          <figcaption>Стеклянная альстромерия: образ формы</figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <section class="cinematic-scene scene--services" id="services" aria-labelledby="services-title">
-    <div class="scene-inner">
-      <span class="scene-mark" aria-hidden="true" data-parallax="0.08">02</span>
-      <div class="scene-head">
-        <div class="scene-head-copy">
-          <p class="eyebrow" data-reveal>Чем могу помочь</p>
-          <h2 class="scene-title" id="services-title" data-reveal>Не просто страница. <em>Инструмент для бизнеса.</em></h2>
-        </div>
-        <p class="lead" data-reveal>Формат сайта подбирается под задачу. Состав работ и стоимость обсуждаем после знакомства с вашим бизнесом.</p>
+  <section class="case" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="case-head">
+        <h2 id="work-title" data-rise>Кейс, который<br>можно потрогать</h2>
+        <p class="lead" data-rise>«Люблю, целую»: цветочный салон. Демонстрационный макет, а не запущенный сайт клиента: я собрал его как рабочий образец подхода. Слева сайт салона, каким он был. Справа макет: те же букеты и цены, но выбор и заказ в два шага.</p>
       </div>
-      <div class="services">
-        <article class="service" data-reveal>
-          <div class="service-top"><span class="service-num" aria-hidden="true">01</span><span class="service-stage">Знакомство</span></div>
-          <h3 class="service-name">Сайт-визитка</h3>
-          <p>Рассказать о компании, объяснить предложение и помочь посетителю сделать следующий шаг.</p>
-          <ul class="service-list">
-            <li>Понятная структура и предложение</li>
-            <li>Услуги и информация о бизнесе</li>
-            <li>Удобный переход к связи</li>
-          </ul>
-        </article>
-        <article class="service" data-reveal>
-          <div class="service-top"><span class="service-num" aria-hidden="true">02</span><span class="service-stage">Выбор</span></div>
-          <h3 class="service-name">Витрина товаров</h3>
-          <p>Показать ассортимент так, чтобы человек мог выбрать товар и уточнить заказ у вас.</p>
-          <ul class="service-list">
-            <li>Карточки с фото и описанием</li>
-            <li>Навигация по ассортименту</li>
-            <li>Сценарий обращения в мессенджер</li>
-          </ul>
-        </article>
-        <article class="service" data-reveal>
-          <div class="service-top"><span class="service-num" aria-hidden="true">03</span><span class="service-stage">Обновление</span></div>
-          <h3 class="service-name">Разбор и редизайн</h3>
-          <p>Разобраться, что мешает пользоваться текущим сайтом, и предложить конкретные изменения.</p>
-          <ul class="service-list">
-            <li>Аудит пути посетителя</li>
-            <li>Переработка ключевых блоков</li>
-            <li>Проверка мобильной версии</li>
-          </ul>
-        </article>
-      </div>
-      <p class="note">Цифры, сроки и стоимость называю после разбора задачи. Обещаний без подтверждения на этой странице нет.</p>
-    </div>
-  </section>
 
-  <section class="cinematic-scene scene--cases" id="cases" aria-labelledby="cases-title">
-    <div class="scene-inner">
-      <span class="scene-mark" aria-hidden="true" data-parallax="0.1">03</span>
-      <div class="scene-head">
-        <div class="scene-head-copy">
-          <p class="eyebrow" data-reveal>Портфолио</p>
-          <h2 class="scene-title" id="cases-title" data-reveal>Работы, которые можно <em>посмотреть.</em></h2>
+      <div class="compare" style="--split: 52%">
+        <img class="cmp-before" src="assets/lyublyu-before.webp" width="1440" height="900" alt="Сайт цветочного салона до переработки: длинная страница с мелким текстом и без выбора по бюджету" loading="lazy" decoding="async">
+        <div class="cmp-after">
+          <img src="assets/lyublyu-hero.webp" width="1440" height="900" alt="Переработанный макет: крупный первый экран, букет, цены и кнопка заказа" loading="lazy" decoding="async">
         </div>
-        <p class="lead" data-reveal>Здесь один честный кейс — демо-макет для цветочного салона. Это не запущенный сайт клиента, и цифр, которых не было, здесь нет.</p>
+        <span class="cmp-line" aria-hidden="true"></span>
+        <span class="cmp-grip" aria-hidden="true"><span>↔</span></span>
+        <input class="cmp-range" type="range" min="0" max="100" value="52" step="1" aria-label="Сравнение: сдвиньте, чтобы увидеть сайт до и после переработки">
+        <span class="cmp-tag cmp-tag--before" aria-hidden="true">было</span>
+        <span class="cmp-tag cmp-tag--after" aria-hidden="true">стало</span>
       </div>
-      <div class="case-list" id="case-list">
-        <article class="case-card">
-          <div class="case-media"><img src="assets/lyublyu-hero.webp" alt="Демонстрационный макет цветочного салона «Люблю, целую»" loading="lazy"></div>
-          <div class="case-body">
-            <p class="case-kicker">Кейс 01</p>
-            <h3 class="case-title">«Люблю, целую»</h3>
-            <p class="case-category">Цветочный салон, Воронеж · аудит и демо-макет</p>
-            <p class="case-desc">Демонстрационный макет, не действующий сайт клиента.</p>
-            <a class="btn btn--primary" href="https://yuriimasl.github.io/lyublyu-demo/">Открыть демо-макет →</a>
-          </div>
-        </article>
-      </div>
-      <noscript>
-        <p class="nojs-note">Карточка кейса собирается скриптом. Доступная работа без JavaScript: <a href="https://yuriimasl.github.io/lyublyu-demo/">демо-макет «Люблю, целую»</a> — демонстрационный макет, а не действующий сайт клиента.</p>
-      </noscript>
-    </div>
-  </section>
 
-  <section class="cinematic-scene scene--about" id="about" aria-labelledby="about-title">
-    <div class="scene-inner">
-      <span class="scene-mark" aria-hidden="true" data-parallax="0.07">04</span>
-      <div class="about-grid">
-        <div>
-          <p class="eyebrow" data-reveal>О разработчике</p>
-          <h2 class="about-statement" id="about-title" data-reveal>Сайты для небольшого бизнеса Воронежа — <em>с вниманием к деталям.</em></h2>
-          <div class="about-copy" data-reveal>
-            <p>Разрабатываю сайты для бизнеса: понятные витрины, удобный выбор и короткий путь к обращению. Без лишнего — с вниманием к тому, как страница работает на телефоне.</p>
-            <p>В портфолио пока <strong>один подтверждённый кейс</strong> — демо-макет цветочного салона «Люблю, целую». Демо-макеты не выдаю за запущенные клиентские сайты, а результаты — за непроверенные цифры.</p>
-          </div>
-          <p class="about-meta" data-reveal><span>Город: <b>Воронеж</b></span><span>Формат: <b>сайты для небольших бизнесов</b></span><span>Портфолио: <b>1 подтверждённый кейс</b></span></p>
+      <div class="case-body">
+        <div class="case-what">
+          <h3>Что именно сделано</h3>
+          <ul class="ticks">
+            <li>Пересобрал структуру под выбор букета: повод, размер, бюджет вместо простыни текста.</li>
+            <li>Сделал витрину с ценами S / M / XL и заказ в WhatsApp с уже заполненным текстом.</li>
+            <li>Проверил мобильную версию, клавиатуру и работу без JavaScript: страница остаётся читаемой.</li>
+          </ul>
+          <a class="btn btn--solid" href="https://yuriimasl.github.io/lyublyu-demo/" target="_blank" rel="noopener">Открыть демо-макет<span class="arr" aria-hidden="true">↗</span></a>
+          <p class="note">Макет демонстрационный: я не выдаю его за сайт клиента и не приписываю ему чужих результатов.</p>
         </div>
-        <div>
-          <h3 class="steps-title" data-reveal>Как идёт работа</h3>
-          <ol class="steps" data-reveal>
-            <li class="step"><span class="step-num" aria-hidden="true">01</span><div><h4>Знакомство с бизнесом</h4><p>Разбираем аудиторию, предложение и главное действие на сайте. Определяем состав работ.</p></div></li>
-            <li class="step"><span class="step-num" aria-hidden="true">02</span><div><h4>Структура и макет</h4><p>Собираем содержание и показываем будущую страницу. Согласовываем направление до разработки.</p></div></li>
-            <li class="step"><span class="step-num" aria-hidden="true">03</span><div><h4>Разработка</h4><p>Переносим дизайн в сайт, настраиваем навигацию и выбранный способ обращения.</p></div></li>
-            <li class="step"><span class="step-num" aria-hidden="true">04</span><div><h4>Проверка и запуск</h4><p>Проверяем ссылки, формы и отображение на разных экранах. Готовим сайт к публикации.</p></div></li>
-          </ol>
+        <div class="case-truth">
+          <h3>Что здесь честно</h3>
+          <p>В портфолио пока один кейс. Не запущенный клиентский сайт, а макет, который можно открыть и потрогать: посмотреть витрину, пройти путь до заказа, проверить вёрстку на телефоне.</p>
+          <p>Поэтому на странице нет отзывов, логотипов клиентов и цифр конверсии. Когда появятся, они будут здесь, с именами и ссылками.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="cinematic-scene scene--contact" id="contact" aria-labelledby="contact-title">
-    <div class="scene-inner">
-      <span class="scene-mark" aria-hidden="true" data-parallax="0.05">05</span>
-      <div class="scene-head">
-        <div class="scene-head-copy">
-          <p class="eyebrow" data-reveal>Следующий шаг</p>
-          <h2 class="scene-title" id="contact-title" data-reveal>Начнём <em>с вашей задачи.</em></h2>
-        </div>
+  <section class="process" id="process" aria-labelledby="process-title">
+    <div class="wrap">
+      <div class="process-head">
+        <h2 id="process-title" data-rise>Печь, форма, отжиг</h2>
+        <p class="lead" data-rise>Один и тот же порядок на любом проекте: сначала понять, что должно получиться, потом собрать форму, потом проверить, что она не треснет на телефоне.</p>
       </div>
-      <div class="contact-card" data-reveal>
-        <div class="contact-copy">
-          <h3>Какой сайт нужен вашему бизнесу?</h3>
-          <p>Для первого разговора достаточно рассказать, чем вы занимаетесь, что хотите показать и какого действия ждёте от посетителя.</p>
-          <p class="contact-note">Пока в портфолио один подтверждённый кейс — его можно открыть и посмотреть целиком.</p>
+      <ol class="steps">
+        <li class="step" data-rise>
+          <span class="step-num" aria-hidden="true">01</span>
+          <h3>Разбор задачи</h3>
+          <p>Смотрю, кто ваш покупатель, что он должен понять за десять секунд и какое действие сделать. Отсюда — состав страниц.</p>
+        </li>
+        <li class="step" data-rise>
+          <span class="step-num" aria-hidden="true">02</span>
+          <h3>Форма</h3>
+          <p>Структура и макет: где доказательство, где цена, где кнопка. Согласуем направление до того, как появится код.</p>
+        </li>
+        <li class="step" data-rise>
+          <span class="step-num" aria-hidden="true">03</span>
+          <h3>Сборка</h3>
+          <p>Вёрстка, типографика, движение, мобильная версия. Сайт статический: быстро грузится и не зависит от чужих сервисов.</p>
+        </li>
+        <li class="step" data-rise>
+          <span class="step-num" aria-hidden="true">04</span>
+          <h3>Отжиг</h3>
+          <p>Проверка контраста, клавиатуры, скринридера и разных экранов. После запуска не исчезаю: правки и вопросы на мне.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="services" aria-labelledby="services-title">
+    <div class="wrap">
+      <h2 id="services-title" data-rise>Что можно заказать</h2>
+      <dl class="service-list">
+        <div class="service" data-rise>
+          <dt>Сайт-визитка</dt>
+          <dd>Когда нужно объяснить, чем вы занимаетесь, и не потерять человека по дороге к контакту.</dd>
         </div>
-        <div class="contact-slot" id="contact-slot">
-          <div class="contact-actions">
-            <a class="btn btn--primary" href="https://wa.me/79292322074" target="_blank" rel="noopener">Написать в WhatsApp <span class="arrow" aria-hidden="true">→</span></a>
-            <a class="btn btn--ghost" href="https://vk.ru/see_the_root" target="_blank" rel="noopener">ВКонтакте</a>
-            <a class="contact-phone" href="tel:+79292322074">+7 929 232-20-74</a>
-          </div>
+        <div class="service" data-rise>
+          <dt>Витрина с выбором</dt>
+          <dd>Когда товар нужно показать лицом, а заказ вы принимаете в мессенджере: цветы, кофе, мебель, услуги.</dd>
         </div>
+        <div class="service" data-rise>
+          <dt>Редизайн и разбор</dt>
+          <dd>Когда сайт есть, но с него не пишут. Покажу, где именно теряется человек, и что менять в первую очередь.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="about" id="about" aria-labelledby="about-title">
+    <div class="wrap about-grid">
+      <figure class="portrait">
+        <img src="assets/portrait.webp" width="1000" height="1000" alt="Юрий, разработчик сайтов из Воронежа" loading="lazy" decoding="async">
+        <figcaption>Юрий · Воронеж</figcaption>
+      </figure>
+      <div class="about-copy">
+        <h2 id="about-title" data-rise>Меня зовут Юрий.<br>Делаю сайты, которые можно проверить.</h2>
+        <p data-rise>Работаю один, без агентства и менеджеров: вы общаетесь напрямую со мной, и я же собираю страницу. Мне интересны небольшие дела: цветочный салон, кофейня, мастерская, где сайт нужен не для галочки, а чтобы человек выбрал и написал.</p>
+        <p data-rise>Пока в портфолио один кейс, и это честная стадия: я не подписываю чужие работы своим именем. Следующим в портфолио станет ваш сайт.</p>
       </div>
     </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <h2 id="contact-title" data-rise>Расскажите, чем занимаетесь</h2>
+      <p class="lead" data-rise>Хватит двух-трёх предложений: что за бизнес, что хотите показать и как сейчас принимают заказы. Отвечу в тот же день и скажу, что имеет смысл делать с сайтом.</p>
+      <div class="contact-actions" data-rise>
+        <a class="btn btn--solid btn--big" href="https://wa.me/79292322074?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%2C%20%D0%AE%D1%80%D0%B8%D0%B9!%20%D0%A3%20%D0%BC%D0%B5%D0%BD%D1%8F%20%D0%B1%D0%B8%D0%B7%D0%BD%D0%B5%D1%81%2C%20%D0%BD%D1%83%D0%B6%D0%B5%D0%BD%20%D1%81%D0%B0%D0%B9%D1%82." target="_blank" rel="noopener">Написать в WhatsApp<span class="arr" aria-hidden="true">↗</span></a>
+        <a class="btn btn--quiet" href="https://vk.ru/see_the_root" target="_blank" rel="noopener">ВКонтакте</a>
+        <a class="phone" href="tel:+79292322074">+7 929 232-20-74</a>
+      </div>
+      <p class="note" data-rise>Если сайт уже есть, пришлите ссылку — посмотрю и скажу, что мешает людям писать вам.</p>
+    </div>
+    <img class="bloom-echo" src="assets/glass-alstroemeria.webp" width="760" height="832" alt="" aria-hidden="true" loading="lazy" decoding="async">
   </section>
 
 </main>
 
-<footer class="site-foot">
-  <div class="foot-inner">
-    <div class="foot-grid">
-      <a class="foot-brand" href="#hero">
-        <span class="brand-mark" aria-hidden="true">Ю</span>
-        <span><span class="foot-name">Юрий</span><span class="foot-role">Сайты для бизнеса · Воронеж</span></span>
-      </a>
-      <nav class="foot-nav" aria-label="Навигация в подвале">
-        <a href="#services">Услуги</a>
-        <a href="#cases">Работы</a>
-        <a href="#about">О себе</a>
-        <a href="#contact">Контакты</a>
-      </nav>
-      <p class="foot-note">Внимание к содержанию. Аккуратный дизайн. Понятное взаимодействие.</p>
-    </div>
-    <div class="foot-bottom"><span>Юрий · Портфолио · Воронеж</span><a href="#hero">Наверх ↑</a></div>
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <span class="foot-brand">Юрий · сайты для бизнеса</span>
+    <nav class="foot-nav" aria-label="Навигация в подвале">
+      <a href="#work">Работа</a>
+      <a href="#process">Процесс</a>
+      <a href="#about">Обо мне</a>
+      <a href="#contact">Связаться</a>
+    </nav>
+    <p class="foot-note">Собрано вручную: HTML, CSS, немного JavaScript.<br>© 2026 Юрий, Воронеж.</p>
   </div>
 </footer>
 
-<script src="projects.js" defer></script>
-<script src="portfolio.js" defer></script>
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
-<script src="cinematic.js" defer></script>
+<script src="workshop.js" defer></script>
 </body>
 </html>

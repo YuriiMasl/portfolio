@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "world": "glass workshop at night: iron, glass, heat",
+  "modes": { "index.html": "experience" },
+  "colors": {
+    "ink": "#0b0a09",
+    "inkSoft": "#100d0b",
+    "iron": "#16120e",
+    "bone": "#f2ece3",
+    "boneDim": "#cabfb2",
+    "muted": "#9c9184",
+    "ember": "#f4571f",
+    "amber": "#ffa94d",
+    "heat": "#ffd9a0",
+    "line": "rgba(242,236,227,0.13)",
+    "lineWarm": "rgba(255,169,77,0.28)"
+  },
+  "colorStrategy": "committed",
+  "typography": {
+    "display": { "family": "Unbounded", "weights": [700, 800], "subsets": ["cyrillic", "latin"] },
+    "text": { "family": "Golos Text", "weights": [400, 500], "subsets": ["cyrillic", "latin"] },
+    "scale": {
+      "h1": "clamp(2.35rem, 5.1vw, 4.85rem)",
+      "h2": "clamp(1.85rem, 3.3vw, 3.1rem)",
+      "h3": "1.12rem",
+      "body": "1.0625rem",
+      "lead": "clamp(1rem, 1.05vw, 1.1rem)",
+      "caption": "0.75rem"
+    },
+    "measure": "58ch",
+    "displayTracking": "-0.038em"
+  },
+  "spacing": {
+    "gutter": "clamp(20px, 4.6vw, 64px)",
+    "sectionY": "clamp(64px, 9vh, 120px)",
+    "maxWidth": "1360px"
+  },
+  "components": ["panel", "btn", "compare", "step", "service", "portrait", "rig"],
+  "motion": {
+    "library": "gsap+ScrollTrigger (vendored)",
+    "signature": "glass cools after the furnace: panels rise, heat overlay fades over 2.1s",
+    "reveal": "22px rise, expo.out, once",
+    "parallax": "panels to -8%, bloom +6%",
+    "reducedMotion": "all motion disabled, page complete"
+  },
+  "images": {
+    "assets/glass-alstroemeria.webp": "generated illustration, alpha from luminance, 760x832",
+    "assets/portrait.webp": "owner photo, resized 1000x1000",
+    "assets/lyublyu-hero.webp": "case screenshot 1440x900",
+    "assets/lyublyu-shelf.webp": "case screenshot 1440x1080",
+    "assets/lyublyu-mobile.webp": "case screenshot 390x844",
+    "assets/lyublyu-before.webp": "previous site screenshot 1440x900"
+  }
+}
