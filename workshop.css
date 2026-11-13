@@ -1185,10 +1185,13 @@ html.has-plate .hero-veil {
   html.has-plate .hero-bg { animation: none; }
 }
 
+html.has-plate .hero-picture { display: contents; }
+html.has-plate .hero-bg { object-position: 58% 52%; }
+
 @media (max-width: 720px) {
-  html.has-plate .hero-bg { object-position: 66% 86%; }
+  html.has-plate .hero-bg { object-position: 50% 100%; }
   html.has-plate .hero-veil {
     background:
-      linear-gradient(180deg, rgba(11, 10, 9, 0.97) 0%, rgba(11, 10, 9, 0.88) 36%, rgba(11, 10, 9, 0.62) 58%, rgba(11, 10, 9, 0.88) 100%);
+      linear-gradient(180deg, rgba(11, 10, 9, 0.96) 0%, rgba(11, 10, 9, 0.80) 30%, rgba(11, 10, 9, 0.30) 48%, rgba(11, 10, 9, 0.10) 62%, rgba(11, 10, 9, 0.85) 100%);
   }
 }
