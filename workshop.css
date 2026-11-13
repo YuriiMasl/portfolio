@@ -1157,3 +1157,38 @@ h2 {
     transition-duration: 0.001ms !important;
   }
 }
+
+
+/* --- Статичная плата первого экрана (рендер из Blender) --- */
+html.has-plate .stage,
+html.has-plate .rig { display: none; }
+
+html.has-plate .hero-bg {
+  opacity: 1;
+  object-position: 62% 50%;
+  animation: plate-drift 46s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+html.has-plate .hero-veil {
+  background:
+    linear-gradient(96deg, rgba(11, 10, 9, 0.94) 0%, rgba(11, 10, 9, 0.86) 26%, rgba(11, 10, 9, 0.42) 50%, rgba(11, 10, 9, 0.08) 68%, rgba(11, 10, 9, 0.34) 88%, rgba(11, 10, 9, 0.72) 100%),
+    linear-gradient(180deg, rgba(11, 10, 9, 0.85) 0%, rgba(11, 10, 9, 0) 24%, rgba(11, 10, 9, 0) 76%, rgba(11, 10, 9, 0.9) 100%);
+}
+
+@keyframes plate-drift {
+  from { transform: scale(1.015) translate3d(0, 0, 0); }
+  to { transform: scale(1.055) translate3d(-1.6%, -1%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.has-plate .hero-bg { animation: none; }
+}
+
+@media (max-width: 720px) {
+  html.has-plate .hero-bg { object-position: 66% 86%; }
+  html.has-plate .hero-veil {
+    background:
+      linear-gradient(180deg, rgba(11, 10, 9, 0.97) 0%, rgba(11, 10, 9, 0.88) 36%, rgba(11, 10, 9, 0.62) 58%, rgba(11, 10, 9, 0.88) 100%);
+  }
+}
