@@ -1189,9 +1189,15 @@ html.has-plate .hero-picture { display: contents; }
 html.has-plate .hero-bg { object-position: 58% 52%; }
 
 @media (max-width: 720px) {
-  html.has-plate .hero-bg { object-position: 50% 100%; }
+  html.has-plate .hero-bg {
+    inset: auto 0 0 0;
+    height: 74%;
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 100%;
+  }
   html.has-plate .hero-veil {
     background:
-      linear-gradient(180deg, rgba(11, 10, 9, 0.96) 0%, rgba(11, 10, 9, 0.80) 30%, rgba(11, 10, 9, 0.30) 48%, rgba(11, 10, 9, 0.10) 62%, rgba(11, 10, 9, 0.85) 100%);
+      linear-gradient(180deg, rgba(11, 10, 9, 0.98) 0%, rgba(11, 10, 9, 0.92) 30%, rgba(11, 10, 9, 0.55) 46%, rgba(11, 10, 9, 0.20) 60%, rgba(11, 10, 9, 0.55) 76%, rgba(11, 10, 9, 0.90) 100%);
   }
 }
