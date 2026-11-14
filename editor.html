@@ -120,8 +120,9 @@ const elForKey = (k) => isExtra(k) ? exhibit.querySelector(`[data-extra="${k.sli
 
 function homography(corners, boxW, boxH) {
   const dst = corners.map(([u,v]) => [u*boxW, v*boxH]);
+  const src = [[0,0],[boxW,0],[boxW,boxH],[0,boxH]];
   const A=[], B=[];
-  IDENTITY.forEach(([x,y],i)=>{ const [X,Y]=dst[i];
+  src.forEach(([x,y],i)=>{ const [X,Y]=dst[i];
     A.push([x,y,1,0,0,0,-x*X,-y*X]); B.push(X);
     A.push([0,0,0,x,y,1,-x*Y,-y*Y]); B.push(Y); });
   for (let col=0; col<8; col++) {
@@ -140,12 +141,21 @@ function homography(corners, boxW, boxH) {
 
 const t3d = (v) => `perspective(1200px) rotateX(${v.rotX||0}deg) rotateY(${v.rotY||0}deg) rotateZ(${v.rotZ||0}deg)`;
 
-function applyWarp(node, layer) {
+function warpTargets(node, key) {
+  if (isExtra(key)) {
+    const img = node.querySelector('img') || node;
+    return [img];
+  }
+  return [...node.children].filter((el) => el.tagName !== 'IMG' || el.classList.contains('exhibit-glass'));
+}
+
+function applyWarp(node, layer, key) {
   if (!layer?.warp) return false;
-  const m = homography(layer.warp, node.offsetWidth || 1, node.offsetHeight || 1);
+  const targets = warpTargets(node, key);
+  const ref = targets[0] || node;
+  const m = homography(layer.warp, ref.offsetWidth || node.offsetWidth || 1, ref.offsetHeight || node.offsetHeight || 1);
   if (!m) return false;
-  node.style.transformOrigin = '0 0';
-  node.style.transform = m;
+  targets.forEach((el) => { el.style.transformOrigin = '0 0'; el.style.transform = m; });
   return true;
 }
 
@@ -158,7 +168,8 @@ function apply(key) {
   if (isExtra(key)) {
     Object.assign(node.style, { left:v.left+'%', top:v.top+'%', width:v.width+'%',
       zIndex:String(v.z??5), opacity:v.opacity??1, borderRadius:(v.radius??10)+'px' });
-    if (!applyWarp(node, v)) { node.style.transformOrigin=''; node.style.transform = t3d(v); }
+    node.style.transform = t3d(v);
+    applyWarp(node, v, key);
     return;
   }
   if (key === 'exhibit') {
@@ -169,7 +180,9 @@ function apply(key) {
   } else if (PANELS.includes(key)) {
     node.style.left = v.left+'%'; node.style.top = v.top+'%'; node.style.width = v.width+'%';
     node.style.zIndex = String(v.z ?? 2);
-    if (!applyWarp(node, v)) { node.style.transformOrigin=''; node.style.transform = t3d(v); }
+    node.style.transformOrigin = '';
+    node.style.transform = t3d(v);
+    applyWarp(node, v, key);
   } else if (key === 'stand') {
     node.style.transform = `translate(${v.dx||0}%, ${v.dy||0}%) scale(${v.scale??1})`;
     node.style.filter = `brightness(${v.brightness ?? 0.78}) drop-shadow(8px 18px 16px rgba(0,0,0,.55))`;
@@ -192,13 +205,17 @@ function applyText() {
 function buildExtras() {
   exhibit.querySelectorAll('[data-extra]').forEach((n)=>n.remove());
   state.extra.forEach((l)=>{
-    const img = doc.createElement('img');
-    img.src = l.src; img.dataset.extra = l.id; img.alt = '';
-    Object.assign(img.style, { position:'absolute', left:(l.left??0)+'%', top:(l.top??0)+'%',
+    const wrap = doc.createElement('div');
+    wrap.dataset.extra = l.id;
+    Object.assign(wrap.style, { position:'absolute', left:(l.left??0)+'%', top:(l.top??0)+'%',
       width:(l.width??30)+'%', borderRadius:(l.radius??10)+'px', opacity:l.opacity??1,
-      zIndex:String(l.z??5), pointerEvents:'none' });
-    exhibit.appendChild(img);
-    if (!applyWarp(img, l)) img.style.transform = t3d(l);
+      zIndex:String(l.z??5), pointerEvents:'none', transform: t3d(l) });
+    const img = doc.createElement('img');
+    img.src = l.src; img.alt = '';
+    Object.assign(img.style, { display:'block', width:'100%', height:'auto', borderRadius:'inherit' });
+    wrap.appendChild(img);
+    exhibit.appendChild(wrap);
+    applyWarp(wrap, l, 'x:'+l.id);
     bindNode('x:'+l.id);
   });
 }
@@ -268,10 +285,12 @@ function drawWarpHandles(node) {
   const layer = stateOf(selected);
   if (!layer) return;
   if (!layer.warp) layer.warp = IDENTITY.map((c)=>[...c]);
-  const saved = node.style.transform;
-  node.style.transform = 'none';
-  const base = node.getBoundingClientRect();
-  node.style.transform = saved;
+  const targets = warpTargets(node, selected);
+  const ref = targets[0] || node;
+  const saved = ref.style.transform;
+  ref.style.transform = 'none';
+  const base = ref.getBoundingClientRect();
+  ref.style.transform = saved;
   const m = homography(layer.warp, base.width, base.height);
   layer.warp.forEach(([u,v],i)=>{
     const px = base.left + u*base.width;
@@ -302,10 +321,12 @@ function decorateOverlayOnly(node) {
   overlay.innerHTML = '';
   const layer = stateOf(selected);
   if (!layer?.warp) return;
-  const saved = node.style.transform;
-  node.style.transform = 'none';
-  const base = node.getBoundingClientRect();
-  node.style.transform = saved;
+  const targets = warpTargets(node, selected);
+  const ref = targets[0] || node;
+  const saved = ref.style.transform;
+  ref.style.transform = 'none';
+  const base = ref.getBoundingClientRect();
+  ref.style.transform = saved;
   layer.warp.forEach(([u,v],i)=>{
     const px = base.left + u*base.width, py = base.top + v*base.height;
     const dot = doc.createElement('div');
@@ -354,7 +375,6 @@ function onMove(e) {
     else if (e.altKey) t.rotY = num((drag.start.rotY||0) + dx*0.35);
     else t.rotZ = num((Math.atan2(e.clientY-drag.cy, e.clientX-drag.cx)*180/Math.PI)+90);
   }
-  if (t.warp) { delete t.warp; }
   apply(selected); renderFields(); saveDraft();
 }
 

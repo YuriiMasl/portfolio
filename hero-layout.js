@@ -17,9 +17,10 @@
 
   function homography(corners, boxW, boxH) {
     const dst = corners.map(([u, v]) => [u * boxW, v * boxH]);
+    const src = [[0, 0], [boxW, 0], [boxW, boxH], [0, boxH]];
     const A = [];
     const B = [];
-    IDENTITY.forEach(([x, y], i) => {
+    src.forEach(([x, y], i) => {
       const [X, Y] = dst[i];
       A.push([x, y, 1, 0, 0, 0, -x * X, -y * X]); B.push(X);
       A.push([0, 0, 0, x, y, 1, -x * Y, -y * Y]); B.push(Y);
@@ -45,12 +46,30 @@
     return `matrix3d(${a},${d},0,${g},${b},${e},0,${hh},0,0,1,0,${c},${f},0,1)`;
   }
 
-  function applyWarp(node, layer) {
+  const t3d = (v) =>
+    `perspective(1200px) rotateX(${v.rotX || 0}deg) rotateY(${v.rotY || 0}deg) rotateZ(${v.rotZ || 0}deg)`;
+
+  // Искажение накладываем на внутренности слоя: у панели это стекло и экран,
+  // у добавленной картинки — сама картинка. Внешний слой остаётся свободным
+  // для поворота и размера.
+  function warpTargets(node, key) {
+    if (key.startsWith('x:')) {
+      const img = node.querySelector('img') || node;
+      return [img];
+    }
+    return [...node.children].filter((el) => el.tagName !== 'IMG' || el.classList.contains('exhibit-glass'));
+  }
+
+  function applyWarp(node, layer, key) {
     if (!layer || !layer.warp) return false;
-    const m = homography(layer.warp, node.offsetWidth || 1, node.offsetHeight || 1);
-    if (!m) return false;
-    node.style.transformOrigin = '0 0';
-    node.style.transform = m;
+    const targets = warpTargets(node, key);
+    const ref = targets[0] || node;
+    const matrix = homography(layer.warp, ref.offsetWidth || node.offsetWidth || 1, ref.offsetHeight || node.offsetHeight || 1);
+    if (!matrix) return false;
+    targets.forEach((el) => {
+      el.style.transformOrigin = '0 0';
+      el.style.transform = matrix;
+    });
     return true;
   }
 
@@ -62,11 +81,14 @@
       if (!el) return;
       ['width', 'right', 'bottom', 'left', 'top', 'transform', 'transform-origin', 'filter', 'z-index', 'opacity']
         .forEach((prop) => el.style.removeProperty(prop));
+      if (PANELS.includes(key)) {
+        [...el.children].forEach((ch) => {
+          ch.style.removeProperty('transform');
+          ch.style.removeProperty('transform-origin');
+        });
+      }
     });
   };
-
-  const t3d = (v) =>
-    `perspective(1200px) rotateX(${v.rotX || 0}deg) rotateY(${v.rotY || 0}deg) rotateZ(${v.rotZ || 0}deg)`;
 
   function applyText(text) {
     if (!text) return;
@@ -117,10 +139,9 @@
       if (val.top != null) el.style.top = val.top + '%';
       if (val.width != null) el.style.width = val.width + '%';
       if (val.z != null) el.style.zIndex = String(val.z);
-      if (!applyWarp(el, val)) {
-        el.style.transformOrigin = '';
-        el.style.transform = t3d(val);
-      }
+      el.style.transformOrigin = '';
+      el.style.transform = t3d(val);
+      applyWarp(el, val, key);
     });
 
     const cp = layout.copy || {};
@@ -136,13 +157,9 @@
     const host = pick('exhibit');
     (layout.extra || []).forEach((layer) => {
       if (!host) return;
-      const img = document.createElement('img');
-      img.src = layer.src;
-      img.alt = layer.alt || '';
-      img.loading = 'lazy';
-      img.decoding = 'async';
-      img.dataset.extra = layer.id;
-      Object.assign(img.style, {
+      const wrap = document.createElement('div');
+      wrap.dataset.extra = layer.id;
+      Object.assign(wrap.style, {
         position: 'absolute',
         left: (layer.left ?? 0) + '%',
         top: (layer.top ?? 0) + '%',
@@ -150,11 +167,19 @@
         borderRadius: (layer.radius ?? 10) + 'px',
         opacity: layer.opacity ?? 1,
         zIndex: String(layer.z ?? 5),
-        pointerEvents: 'none'
+        pointerEvents: 'none',
+        transform: t3d(layer)
       });
-      host.appendChild(img);
-      extras.push(img);
-      if (!applyWarp(img, layer)) img.style.transform = t3d(layer);
+      const img = document.createElement('img');
+      img.src = layer.src;
+      img.alt = layer.alt || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      Object.assign(img.style, { display: 'block', width: '100%', height: 'auto', borderRadius: 'inherit' });
+      wrap.appendChild(img);
+      host.appendChild(wrap);
+      extras.push(wrap);
+      applyWarp(wrap, layer, 'x:' + layer.id);
     });
   };
 
@@ -163,6 +188,11 @@
     .then((data) => {
       layout = data;
       apply();
+      const retry = () => apply();
+      extras.forEach((node) => {
+        const img = node.querySelector('img');
+        if (img && !img.complete) img.addEventListener('load', retry, { once: true });
+      });
     })
     .catch(() => {});
 
