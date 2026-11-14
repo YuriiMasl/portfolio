@@ -7,60 +7,95 @@
 
   const URL_LAYOUT = 'assets/hero-layout.json';
   const mqDesktop = window.matchMedia('(min-width: 881px)');
-  const KEYS = ['exhibit', 'stand', 'main', 'catalog', 'phone', 'copy'];
+  const FIXED = ['exhibit', 'stand', 'main', 'catalog', 'phone', 'copy'];
+  const PANELS = ['main', 'catalog', 'phone'];
   let layout = null;
+  let extras = [];
 
-  const pick = () => {
-    const out = {};
-    KEYS.forEach((key) => {
-      out[key] = document.querySelector(`[data-layer="${key}"]`);
-    });
-    return out;
-  };
+  const pick = (key) => document.querySelector(`[data-layer="${key}"]`);
 
-  const clear = (els) => {
-    Object.values(els).forEach((el) => {
+  const clearAll = () => {
+    extras.forEach((node) => node.remove());
+    extras = [];
+    FIXED.forEach((key) => {
+      const el = pick(key);
       if (!el) return;
-      ['width', 'right', 'bottom', 'left', 'top', 'transform', 'filter'].forEach((prop) => {
+      ['width', 'right', 'bottom', 'left', 'top', 'transform', 'filter', 'z-index', 'opacity'].forEach((prop) => {
         el.style.removeProperty(prop);
       });
     });
   };
 
+  const transform3d = (v) =>
+    `perspective(1200px) rotateX(${v.rotX || 0}deg) rotateY(${v.rotY || 0}deg) rotateZ(${v.rotZ || 0}deg)`;
+
   const apply = () => {
-    const els = pick();
     if (!layout || !mqDesktop.matches) {
-      clear(els);
+      clearAll();
       return;
     }
     const ex = layout.exhibit || {};
-    if (els.exhibit) {
-      if (ex.width != null) els.exhibit.style.width = ex.width + '%';
-      if (ex.right != null) els.exhibit.style.right = ex.right + '%';
-      if (ex.bottom != null) els.exhibit.style.bottom = ex.bottom + '%';
-      if (ex.rot) els.exhibit.style.transform = `rotate(${ex.rot}deg)`;
+    const exhibit = pick('exhibit');
+    if (exhibit) {
+      if (ex.width != null) exhibit.style.width = ex.width + '%';
+      if (ex.right != null) exhibit.style.right = ex.right + '%';
+      if (ex.bottom != null) exhibit.style.bottom = ex.bottom + '%';
+      exhibit.style.transform = ex.rotZ ? `rotate(${ex.rotZ}deg)` : '';
     }
+
     const st = layout.stand || {};
-    if (els.stand && (st.scale || st.dx || st.dy || st.brightness)) {
-      const scale = st.scale ?? 1;
-      els.stand.style.transform = `translate(${st.dx || 0}%, ${st.dy || 0}%) scale(${scale})`;
-      if (st.brightness != null) els.stand.style.filter = `brightness(${st.brightness}) drop-shadow(8px 18px 16px rgba(0,0,0,.55))`;
+    const stand = pick('stand');
+    if (stand && (st.scale || st.dx || st.dy || st.brightness != null)) {
+      stand.style.transform = `translate(${st.dx || 0}%, ${st.dy || 0}%) scale(${st.scale ?? 1})`;
+      if (st.brightness != null) {
+        stand.style.filter = `brightness(${st.brightness}) drop-shadow(8px 18px 16px rgba(0,0,0,.55))`;
+      }
     }
-    ['main', 'catalog', 'phone'].forEach((key) => {
-      const el = els[key];
+
+    PANELS.forEach((key) => {
+      const el = pick(key);
       const val = layout[key];
       if (!el || !val) return;
       if (val.left != null) el.style.left = val.left + '%';
       if (val.top != null) el.style.top = val.top + '%';
       if (val.width != null) el.style.width = val.width + '%';
-      el.style.transform = `perspective(1200px) rotateY(${val.rotY || 0}deg) rotateZ(${val.rotZ || 0}deg)`;
+      el.style.transform = transform3d(val);
+      if (val.z != null) el.style.zIndex = String(val.z);
     });
+
     const cp = layout.copy || {};
-    if (els.copy) {
-      if (cp.left != null) els.copy.style.left = cp.left + '%';
-      if (cp.top != null) els.copy.style.top = cp.top + '%';
-      if (cp.width != null) els.copy.style.width = cp.width + '%';
+    const copy = pick('copy');
+    if (copy) {
+      if (cp.left != null) copy.style.left = cp.left + '%';
+      if (cp.top != null) copy.style.top = cp.top + '%';
+      if (cp.width != null) copy.style.width = cp.width + '%';
     }
+
+    extras.forEach((node) => node.remove());
+    extras = [];
+    const host = pick('exhibit');
+    (layout.extra || []).forEach((layer) => {
+      if (!host) return;
+      const img = document.createElement('img');
+      img.src = layer.src;
+      img.alt = layer.alt || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.dataset.extra = layer.id;
+      Object.assign(img.style, {
+        position: 'absolute',
+        left: (layer.left ?? 0) + '%',
+        top: (layer.top ?? 0) + '%',
+        width: (layer.width ?? 30) + '%',
+        borderRadius: (layer.radius ?? 10) + 'px',
+        opacity: layer.opacity ?? 1,
+        transform: transform3d(layer),
+        zIndex: String(layer.z ?? 5),
+        pointerEvents: 'none'
+      });
+      host.appendChild(img);
+      extras.push(img);
+    });
   };
 
   fetch(URL_LAYOUT, { cache: 'no-cache' })
