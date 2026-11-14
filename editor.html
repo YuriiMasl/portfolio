@@ -51,6 +51,7 @@
     <div class="fields" id="fields"></div>
     <div class="row">
       <button id="warp">Искажение</button>
+      <button id="warpReset">Сброс</button>
       <button id="zup">Выше</button>
       <button id="zdown">Ниже</button>
     </div>
@@ -284,65 +285,68 @@ function decorate() {
 function drawWarpHandles(node) {
   const layer = stateOf(selected);
   if (!layer) return;
-  if (!layer.warp) layer.warp = IDENTITY.map((c)=>[...c]);
-  const targets = warpTargets(node, selected);
-  const ref = targets[0] || node;
-  const saved = ref.style.transform;
-  ref.style.transform = 'none';
-  const base = ref.getBoundingClientRect();
-  ref.style.transform = saved;
-  const m = homography(layer.warp, base.width, base.height);
-  layer.warp.forEach(([u,v],i)=>{
-    const px = base.left + u*base.width;
-    const py = base.top + v*base.height;
-    const dot = doc.createElement('div');
-    dot.className = 'ow-corner';
-    Object.assign(dot.style, { position:'fixed', left:(px-8)+'px', top:(py-8)+'px', width:'16px',
-      height:'16px', borderRadius:'3px', background:'#ff8b3d', border:'2px solid #21150c',
-      cursor:'move', zIndex:99999, pointerEvents:'auto' });
-    overlay.appendChild(dot);
-    dot.addEventListener('pointerdown', (e)=>{
-      e.preventDefault(); e.stopPropagation();
-      const start = { x:e.clientX, y:e.clientY, u, v };
-      const move = (ev)=>{
-        const du = (ev.clientX - start.x)/base.width;
-        const dv = (ev.clientY - start.y)/base.height;
-        layer.warp[i] = [num(start.u + du, 3), num(start.v + dv, 3)];
-        apply(selected); saveDraft();
-        overlay.innerHTML=''; decorateOverlayOnly(node);
-      };
-      const up = ()=>{ doc.removeEventListener('pointermove', move); doc.removeEventListener('pointerup', up); };
-      doc.addEventListener('pointermove', move); doc.addEventListener('pointerup', up);
-    });
-  });
+  if (!layer.warp) layer.warp = IDENTITY.map((c) => [...c]);
+  drawWarpOverlay(node, layer);
 }
 
-function decorateOverlayOnly(node) {
+function drawWarpOverlay(node, layer) {
   overlay.innerHTML = '';
-  const layer = stateOf(selected);
-  if (!layer?.warp) return;
   const targets = warpTargets(node, selected);
   const ref = targets[0] || node;
   const saved = ref.style.transform;
   ref.style.transform = 'none';
   const base = ref.getBoundingClientRect();
+  const heroRect = hero.getBoundingClientRect();
   ref.style.transform = saved;
-  layer.warp.forEach(([u,v],i)=>{
-    const px = base.left + u*base.width, py = base.top + v*base.height;
+
+  const pts = layer.warp.map(([u, v]) => ({
+    x: base.left - heroRect.left + u * base.width,
+    y: base.top - heroRect.top + v * base.height
+  }));
+
+  const svg = doc.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  Object.assign(svg.style, { position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', pointerEvents: 'none' });
+  const poly = doc.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+  poly.setAttribute('points', pts.map((p) => `${p.x},${p.y}`).join(' '));
+  poly.setAttribute('fill', 'rgba(255,139,61,.10)');
+  poly.setAttribute('stroke', '#ff8b3d');
+  poly.setAttribute('stroke-width', '1.5');
+  poly.setAttribute('stroke-dasharray', '6 5');
+  svg.appendChild(poly);
+  overlay.appendChild(svg);
+
+  pts.forEach((p, i) => {
     const dot = doc.createElement('div');
-    Object.assign(dot.style, { position:'fixed', left:(px-8)+'px', top:(py-8)+'px', width:'16px',
-      height:'16px', borderRadius:'3px', background:'#ff8b3d', border:'2px solid #21150c',
-      cursor:'move', zIndex:99999, pointerEvents:'auto' });
+    Object.assign(dot.style, {
+      position: 'absolute', left: (p.x - 13) + 'px', top: (p.y - 13) + 'px',
+      width: '26px', height: '26px', borderRadius: '6px',
+      background: 'rgba(255,139,61,.92)', border: '2px solid #1b120a',
+      cursor: 'grab', pointerEvents: 'auto', boxShadow: '0 4px 12px rgba(0,0,0,.5)',
+      zIndex: 99999
+    });
+    dot.title = 'угол ' + (i + 1);
     overlay.appendChild(dot);
-    dot.addEventListener('pointerdown', (e)=>{
+
+    dot.addEventListener('pointerdown', (e) => {
       e.preventDefault(); e.stopPropagation();
-      const start = { x:e.clientX, y:e.clientY, u, v };
-      const move = (ev)=>{
-        layer.warp[i] = [num(start.u + (ev.clientX-start.x)/base.width, 3), num(start.v + (ev.clientY-start.y)/base.height, 3)];
-        apply(selected); saveDraft(); decorateOverlayOnly(node);
+      const startX = e.clientX, startY = e.clientY;
+      const startU = layer.warp[i][0], startV = layer.warp[i][1];
+      const move = (ev) => {
+        layer.warp[i] = [
+          num(startU + (ev.clientX - startX) / base.width, 3),
+          num(startV + (ev.clientY - startY) / base.height, 3)
+        ];
+        apply(selected);
+        saveDraft();
+        drawWarpOverlay(node, layer);
       };
-      const up = ()=>{ doc.removeEventListener('pointermove', move); doc.removeEventListener('pointerup', up); };
-      doc.addEventListener('pointermove', move); doc.addEventListener('pointerup', up);
+      const up = () => {
+        doc.removeEventListener('pointermove', move);
+        doc.removeEventListener('pointerup', up);
+        drawWarpOverlay(node, layer);
+      };
+      doc.addEventListener('pointermove', move);
+      doc.addEventListener('pointerup', up);
     });
   });
 }
@@ -456,8 +460,9 @@ function setup() {
   if (!hero || !exhibit) return;
 
   overlay = doc.createElement('div');
-  Object.assign(overlay.style, { position:'fixed', inset:'0', pointerEvents:'none', zIndex:99998 });
-  doc.body.appendChild(overlay);
+  Object.assign(overlay.style, { position:'absolute', inset:'0', pointerEvents:'none', zIndex:99998 });
+  hero.style.position = hero.style.position || 'relative';
+  hero.appendChild(overlay);
 
   exhibit.style.pointerEvents = 'auto';
   const copyEl = doc.querySelector('[data-layer="copy"]');
@@ -527,6 +532,15 @@ function shiftZ(dir) {
   t.z = dir>0 ? Math.max(...all,0)+1 : Math.min(...all,0)-1;
   apply(selected); renderFields(); saveDraft();
 }
+document.getElementById('warpReset').addEventListener('click', ()=>{
+  const t = stateOf(selected); if (!t) return;
+  t.warp = null;
+  const node = elForKey(selected);
+  if (node) [...node.children].forEach((ch)=>{ ch.style.transform=''; ch.style.transformOrigin=''; });
+  warpMode = false;
+  apply(selected); renderFields(); decorate(); saveDraft();
+  toast('Искажение сброшено');
+});
 document.getElementById('zup').addEventListener('click', ()=>shiftZ(1));
 document.getElementById('zdown').addEventListener('click', ()=>shiftZ(-1));
 
