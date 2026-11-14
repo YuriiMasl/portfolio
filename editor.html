@@ -13,7 +13,7 @@
   .app { display:grid; grid-template-columns:1fr 350px; height:100%; }
   .stage-wrap { position:relative; overflow:hidden; background:#0b0908; }
   .stage { position:absolute; }
-  iframe { position:absolute; top:0; left:0; width:1440px; height:900px; border:0; transform-origin:0 0; background:#0b0908; }
+  iframe { position:absolute; top:0; left:0; width:1600px; height:900px; border:0; transform-origin:0 0; background:#0b0908; }
   .side { border-left:1px solid var(--line); background:var(--panel); overflow-y:auto;
     padding:14px; display:flex; flex-direction:column; gap:11px; }
   h1 { font-size:12px; margin:0; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
@@ -46,6 +46,14 @@
   </div></div>
 
   <aside class="side">
+    <label style="font-size:11px;color:var(--muted)">как смотреть
+      <select id="viewport" style="width:100%;padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:#12100d;color:var(--text)">
+        <option value="1600x900">ноутбук 1600×900</option>
+        <option value="1920x1080">большой 1920×1080</option>
+        <option value="1440x810">узкий 1440×810</option>
+        <option value="1366x768">старый 1366×768</option>
+      </select>
+    </label>
     <h1>Слои</h1>
     <div class="layers" id="chips"></div>
     <div class="fields" id="fields"></div>
@@ -505,15 +513,26 @@ function setup() {
   });
 }
 
+let VW = 1600, VH = 900;
 function fit() {
   const wrap = document.getElementById('stageWrap');
   const stage = document.getElementById('stage');
-  const scale = Math.min(wrap.clientWidth/1440, wrap.clientHeight/900);
-  document.getElementById('frame').style.transform = `scale(${scale})`;
-  stage.style.width = 1440*scale+'px'; stage.style.height = 900*scale+'px';
-  stage.style.left = (wrap.clientWidth-1440*scale)/2+'px';
-  stage.style.top = (wrap.clientHeight-900*scale)/2+'px';
+  const frameEl = document.getElementById('frame');
+  frameEl.style.width = VW + 'px';
+  frameEl.style.height = VH + 'px';
+  const scale = Math.min(wrap.clientWidth / VW, wrap.clientHeight / VH);
+  frameEl.style.transform = `scale(${scale})`;
+  stage.style.width = VW*scale+'px'; stage.style.height = VH*scale+'px';
+  stage.style.left = (wrap.clientWidth-VW*scale)/2+'px';
+  stage.style.top = (wrap.clientHeight-VH*scale)/2+'px';
 }
+
+document.getElementById('viewport').addEventListener('change', (e) => {
+  const [w, h] = e.target.value.split('x').map(Number);
+  VW = w; VH = h;
+  fit();
+  document.getElementById('frame').src = 'index.html?v=' + Date.now();
+});
 
 document.getElementById('frame').src = 'index.html?v=' + Date.now();
 document.getElementById('frame').addEventListener('load', ()=>setTimeout(setup, 400));

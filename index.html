@@ -18,8 +18,19 @@
 <link rel="preload" href="assets/fonts/oswald-cyrillic-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/golos-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/hero/workshop.webp" as="image">
-<link rel="stylesheet" href="workshop.css?v=1794678754">
-<link rel="stylesheet" href="hero.css?v=1794678754">
+<link rel="stylesheet" href="workshop.css?v=1794682721">
+<link rel="stylesheet" href="hero.css?v=1794682721">
+<script>
+  (function () {
+    var fit = function () {
+      var s = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
+      document.documentElement.style.setProperty('--stage-scale', s.toFixed(4));
+    };
+    fit();
+    window.addEventListener('resize', fit);
+    window.addEventListener('orientationchange', fit);
+  })();
+</script>
 </head>
 <body>
 
@@ -53,14 +64,15 @@
     <img class="hero-bg" src="assets/hero/workshop.webp" width="1586" height="992" alt="" aria-hidden="true" fetchpriority="high">
     <div class="hero-veil" aria-hidden="true"></div>
 
+    <div class="hero-stage">
     <div class="hero-copy" data-layer="copy">
-      <p class="hero-intro" data-text="intro">Делаю сайты для небольших бизнесов:<br class="desktop-break"> цветочный салон, кофейня, мастерская.<br>Воронеж, работаю удалённо по России.</p>
+      <p class="hero-intro" data-text="intro">Небольшие сайты для небольших дел:<br class="desktop-break"> цветочный салон, кофейня, мастерская.<br>Воронеж, работаю по России.</p>
       <h1 id="hero-title" data-text="title">
-        <span class="line"><span class="line-in">Сайты, которые</span></span>
-        <span class="line"><span class="line-in">держат форму</span></span>
+        <span class="line"><span class="line-in">Выдуваю сайты,</span></span>
+        <span class="line"><span class="line-in">как стекло</span></span>
       </h1>
       <a class="link-arrow" href="#work" data-text="cta">Открыть кейс <span aria-hidden="true">→</span></a>
-      <p class="hero-facts" data-text="facts">Один подтверждённый кейс<br>Демо-макет, а не сайт клиента</p>
+      <p class="hero-facts" data-text="facts">Один кейс, сделанный вручную<br>Демо-макет, а не сайт клиента</p>
     </div>
 
     <div class="hero-exhibit" data-layer="exhibit" role="group" aria-label="Экран демо-макета на металлической стойке">
@@ -75,13 +87,14 @@
       
       
     </div>
+    </div>
   </section>
 
   <section class="case" id="work" aria-labelledby="work-title">
     <div class="wrap">
       <div class="case-head">
         <h2 id="work-title" class="fade">Кейс, который<br>можно потрогать</h2>
-        <p class="lead fade">«Люблю, целую»: цветочный салон. Демонстрационный макет, а не запущенный сайт клиента: я собрал его как рабочий образец подхода. Слева сайт салона, каким он был. Справа макет: те же букеты и цены, но выбор и заказ в два шага.</p>
+        <p class="lead fade">«Люблю, целую» — цветочный салон. Это демонстрационный макет, а не запущенный сайт клиента: я собрал его как образец подхода. Слева страница, какой она была. Справа — та же витрина, но выбор и заказ в два шага.</p>
       </div>
 
       <div class="compare glass-frame" style="--split: 52%">
@@ -120,28 +133,28 @@
     <div class="wrap">
       <div class="process-head">
         <h2 id="process-title" class="fade">Печь, форма, отжиг</h2>
-        <p class="lead fade">Один и тот же порядок на любом проекте: сначала понять, что должно получиться, потом собрать форму, потом проверить, что она не треснет на телефоне.</p>
+        <p class="lead fade">Порядок один на любом проекте: понять, что должно получиться, набрать форму и проверить, что она не треснет на телефоне.</p>
       </div>
       <ol class="steps">
         <li class="step fade">
           <span class="step-num" aria-hidden="true">01</span>
-          <h3>Разбор задачи</h3>
-          <p>Смотрю, кто ваш покупатель, что он должен понять за десять секунд и какое действие сделать. Отсюда состав страниц.</p>
+          <h3>Разбор</h3>
+          <p>Кто ваш покупатель, что он должен понять за десять секунд и какое действие сделать. Пока это не ясно, за форму не берусь.</p>
         </li>
         <li class="step fade">
           <span class="step-num" aria-hidden="true">02</span>
           <h3>Форма</h3>
-          <p>Структура и макет: где доказательство, где цена, где кнопка. Согласуем направление до того, как появится код.</p>
+          <p>Структура и макет: где доказательство, где цена, где кнопка. Направление согласуем до первой строки кода.</p>
         </li>
         <li class="step fade">
           <span class="step-num" aria-hidden="true">03</span>
-          <h3>Сборка</h3>
-          <p>Вёрстка, типографика, движение, мобильная версия. Сайт статический: быстро грузится и не зависит от чужих сервисов.</p>
+          <h3>Выдув</h3>
+          <p>Вёрстка, типографика, движение, мобильная версия. Сайт статический: грузится быстро и не зависит от чужих сервисов.</p>
         </li>
         <li class="step fade">
           <span class="step-num" aria-hidden="true">04</span>
           <h3>Отжиг</h3>
-          <p>Проверка контраста, клавиатуры, скринридера и разных экранов. После запуска не исчезаю: правки и вопросы на мне.</p>
+          <p>Контраст, клавиатура, скринридер, разные экраны. Остывший сайт не должен трескаться: после запуска правки на мне.</p>
         </li>
       </ol>
     </div>
@@ -174,8 +187,8 @@
         <figcaption>Юрий · Воронеж</figcaption>
       </figure>
       <div class="about-copy">
-        <h2 id="about-title" class="fade">Меня зовут Юрий.<br>Делаю сайты, которые можно проверить.</h2>
-        <p class="fade">Работаю один, без агентства и менеджеров: вы общаетесь напрямую со мной, и я же собираю страницу. Мне интересны небольшие дела: цветочный салон, кофейня, мастерская, где сайт нужен не для галочки, а чтобы человек выбрал и написал.</p>
+        <h2 id="about-title" class="fade">Меня зовут Юрий.<br>Работаю один: от заготовки до отжига.</h2>
+        <p class="fade">Без агентства и менеджеров: вы говорите напрямую со мной, и я же собираю страницу. Мне интересны небольшие дела — цветочный салон, кофейня, мастерская, где сайт нужен не для галочки, а чтобы человек выбрал и написал.</p>
         <p class="fade">Пока в портфолио один кейс, и это честная стадия: я не подписываю чужие работы своим именем. Следующим в портфолио станет ваш сайт.</p>
       </div>
     </div>
@@ -185,7 +198,7 @@
     <img class="contact-bg" src="assets/molten-texture.webp" width="1200" height="800" alt="" aria-hidden="true" loading="lazy" decoding="async">
     <div class="wrap">
       <h2 id="contact-title" class="fade">Расскажите, чем занимаетесь</h2>
-      <p class="lead fade">Хватит двух-трёх предложений: что за бизнес, что хотите показать и как сейчас принимают заказы. Отвечу в тот же день и скажу, что имеет смысл делать с сайтом.</p>
+      <p class="lead fade">Хватит двух-трёх предложений: что за бизнес, что хотите показать и как сейчас принимают заказы. Отвечу в тот же день и скажу прямо, что имеет смысл делать, а что — нет.</p>
       <div class="contact-actions fade">
         <a class="btn btn--glass btn--ember btn--big" href="https://t.me/IOpaWho" target="_blank" rel="noopener">Написать в Telegram<span class="arr" aria-hidden="true">↗</span></a>
         <a class="btn btn--glass" href="https://vk.ru/see_the_root" target="_blank" rel="noopener">ВКонтакте</a>
@@ -214,8 +227,8 @@
 
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
-<script src="workshop.js?v=1794678754" defer></script>
-<script src="hero-layout.js?v=1794678754" defer></script>
+<script src="workshop.js?v=1794682721" defer></script>
+<script src="hero-layout.js?v=1794682721" defer></script>
 
 </body>
 </html>
