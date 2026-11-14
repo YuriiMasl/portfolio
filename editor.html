@@ -102,6 +102,8 @@ const FIXED = ['exhibit', 'stand', 'main', 'copy'];
 const PANELS = ['main'];
 const LABEL = { exhibit:'витрина', stand:'стойка', main:'экран кейса', copy:'текстовый блок' };
 const LS_KEY = 'heroLayoutDraftV3';
+let fileHash = '';
+const hashStr = (str) => { let h = 5381; for (let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0; return String(h); };
 const IDENTITY = [[0,0],[1,0],[1,1],[0,1]];
 
 const DEFAULT = {
@@ -396,7 +398,9 @@ function saveDraft() {
   applyText();
   const text = JSON.stringify(state, null, 2);
   document.getElementById('out').value = text;
-  try { localStorage.setItem(LS_KEY, text); } catch(e) {}
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({ base: fileHash, state: state }));
+  } catch(e) {}
 }
 
 function select(key) { selected = key; warpMode=false; renderChips(); renderFields(); decorate(); }
@@ -478,17 +482,29 @@ function setup() {
 
   readTextFromDom();
 
-  const draft = (() => { try { return JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch(e) { return null; } })();
+  let draft = (() => {
+    try {
+      const raw = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+      if (!raw) return null;
+      return raw.state ? { state: raw.state, base: raw.base } : { state: raw, base: null };
+    } catch(e) { return null; }
+  })();
 
   fetch('assets/hero-layout.json', { cache:'no-cache' })
     .then((r) => (r.ok ? r.json() : null))
     .catch(() => null)
     .then((file) => {
+      fileHash = hashStr(JSON.stringify(file || {}));
+      if (draft && draft.base && draft.base !== fileHash) {
+        draft = null;
+        toast('Файл обновился — взял актуальную версию');
+      }
+      const draftState = draft ? draft.state : null;
       const merged = JSON.parse(JSON.stringify(DEFAULT));
       if (file) Object.keys(file).forEach((k) => { merged[k] = file[k]; });
-      if (draft) Object.keys(draft).forEach((k) => {
+      if (draftState) Object.keys(draftState).forEach((k) => {
         merged[k] = (merged[k] && typeof merged[k] === 'object' && !Array.isArray(merged[k]))
-          ? { ...merged[k], ...draft[k] } : draft[k];
+          ? { ...merged[k], ...draftState[k] } : draftState[k];
       });
       if (!Array.isArray(merged.extra)) merged.extra = [];
       if (!merged.text) merged.text = JSON.parse(JSON.stringify(DEFAULT.text));
