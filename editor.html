@@ -7,39 +7,36 @@
 <meta name="robots" content="noindex, nofollow">
 <style>
   :root { --bg:#14110e; --panel:#1d1915; --line:#332b23; --text:#ece3d6; --muted:#a4968a; --accent:#ff8b3d; }
-  * { box-sizing: border-box; }
-  html, body { margin:0; height:100%; background:var(--bg); color:var(--text);
+  * { box-sizing:border-box; }
+  html,body { margin:0; height:100%; background:var(--bg); color:var(--text);
     font:13px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif; }
-  .app { display:grid; grid-template-columns:1fr 340px; height:100%; }
+  .app { display:grid; grid-template-columns:1fr 350px; height:100%; }
   .stage-wrap { position:relative; overflow:hidden; background:#0b0908; }
   .stage { position:absolute; }
-  iframe { position:absolute; top:0; left:0; width:1440px; height:900px; border:0;
-    transform-origin:0 0; background:#0b0908; }
+  iframe { position:absolute; top:0; left:0; width:1440px; height:900px; border:0; transform-origin:0 0; background:#0b0908; }
   .side { border-left:1px solid var(--line); background:var(--panel); overflow-y:auto;
-    padding:14px; display:flex; flex-direction:column; gap:12px; }
+    padding:14px; display:flex; flex-direction:column; gap:11px; }
   h1 { font-size:12px; margin:0; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
   .layers { display:flex; flex-wrap:wrap; gap:6px; }
-  .chip { padding:6px 10px; border:1px solid var(--line); border-radius:999px; background:#241f1a;
-    cursor:pointer; font-size:12px; }
+  .chip { padding:6px 10px; border:1px solid var(--line); border-radius:999px; background:#241f1a; cursor:pointer; font-size:12px; }
   .chip.is-on { border-color:var(--accent); color:#ffd9b8; }
   .fields { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
   label { display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--muted); }
-  input[type="number"] { width:100%; padding:6px 8px; border-radius:8px; border:1px solid var(--line);
-    background:#12100d; color:var(--text); font-variant-numeric:tabular-nums; }
+  input[type="number"], input[type="text"], textarea { width:100%; padding:6px 8px; border-radius:8px;
+    border:1px solid var(--line); background:#12100d; color:var(--text); font-variant-numeric:tabular-nums; }
+  textarea { resize:vertical; min-height:52px; }
   .row { display:flex; gap:8px; }
-  button { flex:1; padding:8px 10px; border-radius:9px; border:1px solid var(--line);
-    background:#241f1a; color:var(--text); cursor:pointer; font-size:12px; }
+  button { flex:1; padding:8px 10px; border-radius:9px; border:1px solid var(--line); background:#241f1a;
+    color:var(--text); cursor:pointer; font-size:12px; }
   button.primary { background:var(--accent); border-color:var(--accent); color:#21150c; font-weight:600; }
-  button.ghost { background:#1b1712; }
+  button.is-on { border-color:var(--accent); color:#ffd9b8; }
   button:hover { filter:brightness(1.12); }
   .hint { color:var(--muted); font-size:11px; line-height:1.5; margin:0; }
-  textarea { width:100%; height:120px; border-radius:10px; border:1px solid var(--line);
-    background:#12100d; color:#cbbfb0; font:11px/1.4 ui-monospace,Consolas,monospace; padding:8px; }
-  .toast { position:fixed; left:50%; bottom:22px; transform:translateX(-50%); background:#2b2119;
-    border:1px solid var(--line); color:#ffd9b8; padding:8px 14px; border-radius:999px;
-    opacity:0; transition:.25s; pointer-events:none; z-index:99; }
-  .toast.is-on { opacity:1; }
   .sep { height:1px; background:var(--line); margin:2px 0; }
+  .toast { position:fixed; left:50%; bottom:22px; transform:translateX(-50%); background:#2b2119;
+    border:1px solid var(--line); color:#ffd9b8; padding:8px 14px; border-radius:999px; opacity:0;
+    transition:.25s; pointer-events:none; z-index:99; }
+  .toast.is-on { opacity:1; }
 </style>
 </head>
 <body>
@@ -51,11 +48,11 @@
   <aside class="side">
     <h1>Слои</h1>
     <div class="layers" id="chips"></div>
-    <div class="sep"></div>
     <div class="fields" id="fields"></div>
     <div class="row">
-      <button class="ghost" id="up">Выше</button>
-      <button class="ghost" id="down">Ниже</button>
+      <button id="warp">Искажение</button>
+      <button id="zup">Выше</button>
+      <button id="zdown">Ниже</button>
     </div>
     <div class="row">
       <button id="add">Добавить картинку</button>
@@ -64,18 +61,26 @@
     <div class="row">
       <button class="ghost" id="remove">Удалить слой</button>
     </div>
-    <p class="hint">Тяни объект — двигается. Уголок — размер. Кружок сверху — поворот (Shift — наклон вперёд,
-      Alt — разворот вбок). Стрелки — сдвиг на 0.2%, с Shift — 1%.</p>
+    <p class="hint">Тяни — двигается. Уголок — размер. Кружок — поворот (Shift — наклон, Alt — разворот).
+      «Искажение» — четыре угла, как в фотошопе. Стрелки — сдвиг, Shift — крупнее.</p>
+    <div class="sep"></div>
+    <h1>Тексты</h1>
+    <label>вступление<textarea id="t-intro" rows="3"></textarea></label>
+    <label>заголовок, строка 1<input type="text" id="t-l1"></label>
+    <label>заголовок, строка 2<input type="text" id="t-l2"></label>
+    <label>кнопка<input type="text" id="t-cta"></label>
+    <label>подпись<textarea id="t-facts" rows="2"></textarea></label>
+    <div class="row"><button id="inlineText">Править текст на странице</button></div>
     <div class="sep"></div>
     <div class="row">
       <button class="primary" id="save">Скачать JSON</button>
       <button id="copy">Скопировать</button>
     </div>
     <div class="row">
-      <button class="ghost" id="reset">Сбросить</button>
-      <button class="ghost" id="import">Импорт…</button>
+      <button id="reset">Сбросить</button>
+      <button id="import">Импорт…</button>
     </div>
-    <textarea id="out" readonly></textarea>
+    <textarea id="out" readonly style="height:110px"></textarea>
   </aside>
 </div>
 <div class="toast" id="toast"></div>
@@ -84,88 +89,118 @@
 <input type="file" id="fileJson" accept="application/json" hidden>
 
 <script>
-const FIXED = ['exhibit', 'stand', 'main', 'catalog', 'phone', 'copy'];
-const PANELS = ['main', 'catalog', 'phone'];
-const LABEL = { exhibit:'вся витрина', stand:'стойка', main:'главная', catalog:'каталог', phone:'телефон', copy:'текст' };
-const LS_KEY = 'heroLayoutDraftV2';
+const FIXED = ['exhibit', 'stand', 'main', 'copy'];
+const PANELS = ['main'];
+const LABEL = { exhibit:'витрина', stand:'стойка', main:'экран кейса', copy:'текстовый блок' };
+const LS_KEY = 'heroLayoutDraftV3';
+const IDENTITY = [[0,0],[1,0],[1,1],[0,1]];
 
 const DEFAULT = {
-  exhibit: { width:64, right:1, bottom:3, rotZ:0 },
-  stand:   { scale:1, dx:0, dy:0, brightness:0.78 },
-  main:    { left:13, top:7, width:76, rotX:0, rotY:-8, rotZ:-3, z:2 },
-  catalog: { left:11, top:34, width:71, rotX:0, rotY:-8, rotZ:-3, z:3 },
-  phone:   { left:20, top:57, width:68, rotX:0, rotY:-8, rotZ:-2, z:4 },
-  copy:    { left:4.8, top:42, width:38 },
-  extra:   []
+  exhibit:{ width:64, right:1, bottom:3, rotZ:0 },
+  stand:{ scale:1, dx:0, dy:0, brightness:0.78 },
+  main:{ left:13, top:7, width:76, rotX:0, rotY:-8, rotZ:-3, z:2, warp:null },
+  copy:{ left:4.8, top:42, width:38 },
+  text:{ intro:'', title:['',''], cta:'Открыть кейс', facts:'' },
+  extra:[]
 };
 
-let frame, doc, win, hero, exhibit;
+let frame, doc, hero, exhibit, overlay;
 let state = JSON.parse(JSON.stringify(DEFAULT));
 let selected = 'main';
+let warpMode = false;
 let drag = null;
 
-const num = (v, d = 2) => Math.round(v * 10 ** d) / 10 ** d;
-const toast = (msg) => {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('is-on');
-  clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove('is-on'), 1700);
-};
-const elForKey = (key) => key.startsWith('x:')
-  ? exhibit.querySelector(`[data-extra="${key.slice(2)}"]`)
-  : doc.querySelector(`[data-layer="${key}"]`);
-const isExtra = (key) => key.startsWith('x:');
-const extraOf = (key) => state.extra.find((l) => l.id === key.slice(2));
+const num = (v,d=2) => Math.round(v*10**d)/10**d;
+const toast = (m) => { const el=document.getElementById('toast'); el.textContent=m; el.classList.add('is-on');
+  clearTimeout(el._t); el._t=setTimeout(()=>el.classList.remove('is-on'),1700); };
+const isExtra = (k) => k.startsWith('x:');
+const extraOf = (k) => state.extra.find((l)=>l.id===k.slice(2));
+const stateOf = (k) => isExtra(k) ? extraOf(k) : state[k];
+const elForKey = (k) => isExtra(k) ? exhibit.querySelector(`[data-extra="${k.slice(2)}"]`) : doc.querySelector(`[data-layer="${k}"]`);
 
-const t3d = (v) => `perspective(1200px) rotateX(${v.rotX || 0}deg) rotateY(${v.rotY || 0}deg) rotateZ(${v.rotZ || 0}deg)`;
+function homography(corners, boxW, boxH) {
+  const dst = corners.map(([u,v]) => [u*boxW, v*boxH]);
+  const A=[], B=[];
+  IDENTITY.forEach(([x,y],i)=>{ const [X,Y]=dst[i];
+    A.push([x,y,1,0,0,0,-x*X,-y*X]); B.push(X);
+    A.push([0,0,0,x,y,1,-x*Y,-y*Y]); B.push(Y); });
+  for (let col=0; col<8; col++) {
+    let piv=col;
+    for (let r=col+1;r<8;r++) if (Math.abs(A[r][col])>Math.abs(A[piv][col])) piv=r;
+    if (Math.abs(A[piv][col])<1e-9) return null;
+    [A[col],A[piv]]=[A[piv],A[col]]; [B[col],B[piv]]=[B[piv],B[col]];
+    const d=A[col][col];
+    for (let c=col;c<8;c++) A[col][c]/=d; B[col]/=d;
+    for (let r=0;r<8;r++) { if (r===col) continue; const f=A[r][col]; if (!f) continue;
+      for (let c=col;c<8;c++) A[r][c]-=f*A[col][c]; B[r]-=f*B[col]; }
+  }
+  const [a,b,c,d,e,f,g,hh] = B;
+  return `matrix3d(${a},${d},0,${g},${b},${e},0,${hh},0,0,1,0,${c},${f},0,1)`;
+}
 
-function buildExtras() {
-  exhibit.querySelectorAll('[data-extra]').forEach((n) => n.remove());
-  state.extra.forEach((layer) => {
-    const img = doc.createElement('img');
-    img.src = layer.src;
-    img.dataset.extra = layer.id;
-    img.alt = '';
-    Object.assign(img.style, {
-      position:'absolute', left:(layer.left ?? 0)+'%', top:(layer.top ?? 0)+'%',
-      width:(layer.width ?? 30)+'%', borderRadius:(layer.radius ?? 10)+'px',
-      opacity: layer.opacity ?? 1, transform: t3d(layer), zIndex: String(layer.z ?? 5),
-      pointerEvents:'none'
-    });
-    exhibit.appendChild(img);
-  });
+const t3d = (v) => `perspective(1200px) rotateX(${v.rotX||0}deg) rotateY(${v.rotY||0}deg) rotateZ(${v.rotZ||0}deg)`;
+
+function applyWarp(node, layer) {
+  if (!layer?.warp) return false;
+  const m = homography(layer.warp, node.offsetWidth || 1, node.offsetHeight || 1);
+  if (!m) return false;
+  node.style.transformOrigin = '0 0';
+  node.style.transform = m;
+  return true;
 }
 
 function apply(key) {
-  const v = key === 'extra' ? null : state[key];
   if (key === 'extra') { buildExtras(); return; }
+  const node = elForKey(key);
+  if (!node) return;
+  const v = stateOf(key);
+  if (!v) return;
   if (isExtra(key)) {
-    const layer = extraOf(key);
-    const node = elForKey(key);
-    if (!layer || !node) return;
-    Object.assign(node.style, {
-      left: layer.left + '%', top: layer.top + '%', width: layer.width + '%',
-      transform: t3d(layer), zIndex: String(layer.z ?? 5), opacity: layer.opacity ?? 1,
-      borderRadius: (layer.radius ?? 10) + 'px'
-    });
+    Object.assign(node.style, { left:v.left+'%', top:v.top+'%', width:v.width+'%',
+      zIndex:String(v.z??5), opacity:v.opacity??1, borderRadius:(v.radius??10)+'px' });
+    if (!applyWarp(node, v)) { node.style.transformOrigin=''; node.style.transform = t3d(v); }
     return;
   }
-  const node = elForKey(key);
-  if (!node || !v) return;
   if (key === 'exhibit') {
-    node.style.width = v.width + '%';
-    node.style.right = v.right + '%';
-    node.style.bottom = v.bottom + '%';
+    node.style.width = v.width+'%'; node.style.right = v.right+'%'; node.style.bottom = v.bottom+'%';
     node.style.transform = v.rotZ ? `rotate(${v.rotZ}deg)` : '';
   } else if (key === 'copy') {
-    node.style.left = v.left + '%'; node.style.top = v.top + '%'; node.style.width = v.width + '%';
+    node.style.left = v.left+'%'; node.style.top = v.top+'%'; node.style.width = v.width+'%';
   } else if (PANELS.includes(key)) {
-    node.style.left = v.left + '%'; node.style.top = v.top + '%'; node.style.width = v.width + '%';
-    node.style.transform = t3d(v);
+    node.style.left = v.left+'%'; node.style.top = v.top+'%'; node.style.width = v.width+'%';
     node.style.zIndex = String(v.z ?? 2);
+    if (!applyWarp(node, v)) { node.style.transformOrigin=''; node.style.transform = t3d(v); }
   } else if (key === 'stand') {
-    node.style.transform = `translate(${v.dx || 0}%, ${v.dy || 0}%) scale(${v.scale ?? 1})`;
+    node.style.transform = `translate(${v.dx||0}%, ${v.dy||0}%) scale(${v.scale??1})`;
     node.style.filter = `brightness(${v.brightness ?? 0.78}) drop-shadow(8px 18px 16px rgba(0,0,0,.55))`;
   }
+}
+
+function applyText() {
+  const t = state.text || {};
+  const intro = doc.querySelector('[data-text="intro"]');
+  if (intro && typeof t.intro === 'string') intro.innerHTML = t.intro.replace(/\n/g,'<br>');
+  const title = doc.querySelector('[data-text="title"]');
+  if (title && Array.isArray(t.title)) title.innerHTML = t.title
+    .map((l)=>`<span class="line"><span class="line-in">${l}</span></span>`).join('');
+  const cta = doc.querySelector('[data-text="cta"]');
+  if (cta && t.cta) cta.innerHTML = `${t.cta} <span aria-hidden="true">→</span>`;
+  const facts = doc.querySelector('[data-text="facts"]');
+  if (facts && typeof t.facts === 'string') facts.innerHTML = t.facts.replace(/\n/g,'<br>');
+}
+
+function buildExtras() {
+  exhibit.querySelectorAll('[data-extra]').forEach((n)=>n.remove());
+  state.extra.forEach((l)=>{
+    const img = doc.createElement('img');
+    img.src = l.src; img.dataset.extra = l.id; img.alt = '';
+    Object.assign(img.style, { position:'absolute', left:(l.left??0)+'%', top:(l.top??0)+'%',
+      width:(l.width??30)+'%', borderRadius:(l.radius??10)+'px', opacity:l.opacity??1,
+      zIndex:String(l.z??5), pointerEvents:'none' });
+    exhibit.appendChild(img);
+    if (!applyWarp(img, l)) img.style.transform = t3d(l);
+    bindNode('x:'+l.id);
+  });
 }
 
 function fieldsFor(key) {
@@ -178,191 +213,269 @@ function fieldsFor(key) {
 }
 
 function renderChips() {
-  const host = document.getElementById('chips');
-  host.innerHTML = '';
-  const keys = [...FIXED, ...state.extra.map((l) => 'x:' + l.id)];
-  keys.forEach((key) => {
+  const host = document.getElementById('chips'); host.innerHTML='';
+  [...FIXED, ...state.extra.map((l)=>'x:'+l.id)].forEach((key)=>{
     const b = document.createElement('button');
-    b.className = 'chip' + (key === selected ? ' is-on' : '');
+    b.className = 'chip' + (key===selected ? ' is-on' : '');
     b.textContent = isExtra(key) ? (extraOf(key)?.label || 'картинка') : LABEL[key];
-    b.addEventListener('click', () => select(key));
+    b.addEventListener('click', ()=>select(key));
     host.appendChild(b);
   });
 }
 
 function renderFields() {
-  const host = document.getElementById('fields');
-  host.innerHTML = '';
-  const data = isExtra(selected) ? extraOf(selected) : state[selected];
-  fieldsFor(selected).forEach(([prop, label]) => {
-    const wrap = document.createElement('label');
-    wrap.textContent = label;
-    const input = document.createElement('input');
-    input.type = 'number';
-    input.step = prop === 'opacity' ? '0.05' : '0.5';
-    input.min = prop === 'opacity' ? '0' : '';
-    input.max = prop === 'opacity' ? '1' : '';
+  const host = document.getElementById('fields'); host.innerHTML='';
+  const data = stateOf(selected);
+  fieldsFor(selected).forEach(([prop,label])=>{
+    const wrap = document.createElement('label'); wrap.textContent = label;
+    const input = document.createElement('input'); input.type='number'; input.step = prop==='opacity'?'0.05':'0.5';
     input.value = data?.[prop] ?? 0;
-    input.addEventListener('input', () => {
-      const val = parseFloat(input.value);
-      if (!Number.isFinite(val)) return;
-      data[prop] = val;
-      apply(selected);
-      saveDraft();
+    input.addEventListener('input', ()=>{
+      const val = parseFloat(input.value); if (!Number.isFinite(val)) return;
+      data[prop] = val; apply(selected); saveDraft();
     });
-    wrap.appendChild(input);
-    host.appendChild(wrap);
+    wrap.appendChild(input); host.appendChild(wrap);
   });
   document.getElementById('remove').disabled = !isExtra(selected);
+  document.getElementById('warp').classList.toggle('is-on', warpMode);
 }
 
 function decorate() {
-  doc.querySelectorAll('.ow-handle').forEach((n) => n.remove());
-  doc.querySelectorAll('[data-layer],[data-extra]').forEach((n) => {
-    n.style.outline = 'none'; n.style.pointerEvents = '';
-  });
+  doc.querySelectorAll('.ow-handle,.ow-corner').forEach((n)=>n.remove());
+  overlay.innerHTML = '';
+  doc.querySelectorAll('[data-layer],[data-extra]').forEach((n)=>{ n.style.outline='none'; n.style.pointerEvents=''; });
   const node = elForKey(selected);
   if (!node) return;
   node.style.pointerEvents = 'auto';
   node.style.outline = '1px dashed rgba(255,139,61,.8)';
   node.style.outlineOffset = '2px';
+  if (warpMode) { drawWarpHandles(node); return; }
+
   const mk = (style, mode) => {
     const h = doc.createElement('div');
     h.className = 'ow-handle';
-    Object.assign(h.style, {
-      position:'absolute', zIndex:9999, width:'14px', height:'14px', borderRadius:'50%',
-      background:'#ff8b3d', border:'2px solid #21150c', cursor: mode === 'rotate' ? 'grab' : 'nwse-resize', ...style
-    });
-    h.dataset.mode = mode;
-    node.appendChild(h);
-    h.addEventListener('pointerdown', (e) => startDrag(e, mode));
-    return h;
+    Object.assign(h.style, { position:'absolute', zIndex:9999, width:'14px', height:'14px',
+      borderRadius:'50%', background:'#ff8b3d', border:'2px solid #21150c',
+      cursor: mode==='rotate'?'grab':'nwse-resize', ...style });
+    h.dataset.mode = mode; node.appendChild(h);
+    h.addEventListener('pointerdown', (e)=>startDrag(e, mode));
   };
   mk({ right:'-7px', bottom:'-7px' }, 'resize');
   mk({ left:'50%', top:'-22px', marginLeft:'-7px' }, 'rotate');
 }
 
-function stateOf(key) {
-  return isExtra(key) ? extraOf(key) : state[key];
+function drawWarpHandles(node) {
+  const layer = stateOf(selected);
+  if (!layer) return;
+  if (!layer.warp) layer.warp = IDENTITY.map((c)=>[...c]);
+  const saved = node.style.transform;
+  node.style.transform = 'none';
+  const base = node.getBoundingClientRect();
+  node.style.transform = saved;
+  const m = homography(layer.warp, base.width, base.height);
+  layer.warp.forEach(([u,v],i)=>{
+    const px = base.left + u*base.width;
+    const py = base.top + v*base.height;
+    const dot = doc.createElement('div');
+    dot.className = 'ow-corner';
+    Object.assign(dot.style, { position:'fixed', left:(px-8)+'px', top:(py-8)+'px', width:'16px',
+      height:'16px', borderRadius:'3px', background:'#ff8b3d', border:'2px solid #21150c',
+      cursor:'move', zIndex:99999, pointerEvents:'auto' });
+    overlay.appendChild(dot);
+    dot.addEventListener('pointerdown', (e)=>{
+      e.preventDefault(); e.stopPropagation();
+      const start = { x:e.clientX, y:e.clientY, u, v };
+      const move = (ev)=>{
+        const du = (ev.clientX - start.x)/base.width;
+        const dv = (ev.clientY - start.y)/base.height;
+        layer.warp[i] = [num(start.u + du, 3), num(start.v + dv, 3)];
+        apply(selected); saveDraft();
+        overlay.innerHTML=''; decorateOverlayOnly(node);
+      };
+      const up = ()=>{ doc.removeEventListener('pointermove', move); doc.removeEventListener('pointerup', up); };
+      doc.addEventListener('pointermove', move); doc.addEventListener('pointerup', up);
+    });
+  });
 }
 
-function boxFor(key) {
-  if (key === 'exhibit' || key === 'copy') return hero.getBoundingClientRect();
-  return exhibit.getBoundingClientRect();
+function decorateOverlayOnly(node) {
+  overlay.innerHTML = '';
+  const layer = stateOf(selected);
+  if (!layer?.warp) return;
+  const saved = node.style.transform;
+  node.style.transform = 'none';
+  const base = node.getBoundingClientRect();
+  node.style.transform = saved;
+  layer.warp.forEach(([u,v],i)=>{
+    const px = base.left + u*base.width, py = base.top + v*base.height;
+    const dot = doc.createElement('div');
+    Object.assign(dot.style, { position:'fixed', left:(px-8)+'px', top:(py-8)+'px', width:'16px',
+      height:'16px', borderRadius:'3px', background:'#ff8b3d', border:'2px solid #21150c',
+      cursor:'move', zIndex:99999, pointerEvents:'auto' });
+    overlay.appendChild(dot);
+    dot.addEventListener('pointerdown', (e)=>{
+      e.preventDefault(); e.stopPropagation();
+      const start = { x:e.clientX, y:e.clientY, u, v };
+      const move = (ev)=>{
+        layer.warp[i] = [num(start.u + (ev.clientX-start.x)/base.width, 3), num(start.v + (ev.clientY-start.y)/base.height, 3)];
+        apply(selected); saveDraft(); decorateOverlayOnly(node);
+      };
+      const up = ()=>{ doc.removeEventListener('pointermove', move); doc.removeEventListener('pointerup', up); };
+      doc.addEventListener('pointermove', move); doc.addEventListener('pointerup', up);
+    });
+  });
 }
+
+function boxFor(key) { return (key==='exhibit'||key==='copy') ? hero.getBoundingClientRect() : exhibit.getBoundingClientRect(); }
 
 function startDrag(e, mode) {
   e.preventDefault(); e.stopPropagation();
-  const node = elForKey(selected);
-  if (!node) return;
+  const node = elForKey(selected); if (!node) return;
   const r = node.getBoundingClientRect();
-  drag = {
-    mode,
-    startX: e.clientX, startY: e.clientY,
-    box: boxFor(selected),
-    start: JSON.parse(JSON.stringify(stateOf(selected))),
-    cx: r.left + r.width / 2, cy: r.top + r.height / 2,
-    shift: e.shiftKey, alt: e.altKey
-  };
+  drag = { mode, startX:e.clientX, startY:e.clientY, box:boxFor(selected),
+    start: JSON.parse(JSON.stringify(stateOf(selected))), cx:r.left+r.width/2, cy:r.top+r.height/2 };
   doc.addEventListener('pointermove', onMove);
-  doc.addEventListener('pointerup', stopDrag, { once: true });
+  doc.addEventListener('pointerup', stopDrag, { once:true });
 }
 
 function onMove(e) {
   if (!drag) return;
-  const dx = e.clientX - drag.startX;
-  const dy = e.clientY - drag.startY;
-  const target = stateOf(selected);
-  if (!target) return;
-
+  const dx = e.clientX - drag.startX, dy = e.clientY - drag.startY;
+  const t = stateOf(selected); if (!t) return;
   if (drag.mode === 'move') {
     if (selected === 'exhibit') {
-      state.exhibit.right = num(drag.start.right - (dx / drag.box.width) * 100);
-      state.exhibit.bottom = num(drag.start.bottom - (dy / drag.box.height) * 100);
-    } else {
-      target.left = num(drag.start.left + (dx / drag.box.width) * 100);
-      target.top = num(drag.start.top + (dy / drag.box.height) * 100);
-    }
+      state.exhibit.right = num(drag.start.right - dx/drag.box.width*100);
+      state.exhibit.bottom = num(drag.start.bottom - dy/drag.box.height*100);
+    } else { t.left = num(drag.start.left + dx/drag.box.width*100); t.top = num(drag.start.top + dy/drag.box.height*100); }
   } else if (drag.mode === 'resize') {
-    target.width = num(Math.max(4, drag.start.width + (dx / drag.box.width) * 100));
+    t.width = num(Math.max(4, drag.start.width + dx/drag.box.width*100));
   } else if (drag.mode === 'rotate') {
-    if (e.shiftKey) {
-      target.rotX = num((drag.start.rotX ?? 0) + dy * 0.35);
-    } else if (e.altKey) {
-      target.rotY = num((drag.start.rotY ?? 0) + dx * 0.35);
-    } else {
-      const ang = (Math.atan2(e.clientY - drag.cy, e.clientX - drag.cx) * 180) / Math.PI + 90;
-      target.rotZ = num(ang);
-    }
+    if (e.shiftKey) t.rotX = num((drag.start.rotX||0) + dy*0.35);
+    else if (e.altKey) t.rotY = num((drag.start.rotY||0) + dx*0.35);
+    else t.rotZ = num((Math.atan2(e.clientY-drag.cy, e.clientX-drag.cx)*180/Math.PI)+90);
   }
-  apply(selected);
-  renderFields();
-  saveDraft();
+  if (t.warp) { delete t.warp; }
+  apply(selected); renderFields(); saveDraft();
 }
 
-function stopDrag() {
-  drag = null;
-  doc.removeEventListener('pointermove', onMove);
-}
+function stopDrag() { drag=null; doc.removeEventListener('pointermove', onMove); }
 
 function saveDraft() {
+  applyText();
   const text = JSON.stringify(state, null, 2);
   document.getElementById('out').value = text;
-  try { localStorage.setItem(LS_KEY, text); } catch (e) {}
+  try { localStorage.setItem(LS_KEY, text); } catch(e) {}
 }
 
-function select(key) {
-  selected = key;
-  renderChips(); renderFields(); decorate();
+function select(key) { selected = key; warpMode=false; renderChips(); renderFields(); decorate(); }
+
+function bindNode(key) {
+  const node = elForKey(key);
+  if (!node || node.dataset.bound) return;
+  node.dataset.bound = '1';
+  node.addEventListener('pointerdown', (e)=>{
+    if (e.target.dataset.mode || e.target.classList.contains('ow-corner')) return;
+    select(key); startDrag(e, 'move');
+  });
 }
+
+function readTextFromDom() {
+  const t = state.text || {};
+  const intro = doc.querySelector('[data-text="intro"]');
+  const facts = doc.querySelector('[data-text="facts"]');
+  const cta = doc.querySelector('[data-text="cta"]');
+  const lines = [...doc.querySelectorAll('[data-text="title"] .line-in')];
+  if (intro) t.intro = intro.innerHTML.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]+>/g,'');
+  if (facts) t.facts = facts.innerHTML.replace(/<br\s*\/?>/gi,'\n').replace(/<[^>]+>/g,'');
+  if (cta) t.cta = cta.textContent.replace('→','').trim();
+  if (lines.length) t.title = lines.map((l)=>l.textContent.trim());
+  state.text = t;
+}
+
+function renderText() {
+  const t = state.text || {};
+  document.getElementById('t-intro').value = t.intro || '';
+  document.getElementById('t-l1').value = t.title?.[0] || '';
+  document.getElementById('t-l2').value = t.title?.[1] || '';
+  document.getElementById('t-cta').value = t.cta || '';
+  document.getElementById('t-facts').value = t.facts || '';
+}
+
+['t-intro','t-l1','t-l2','t-cta','t-facts'].forEach((id)=>{
+  document.getElementById(id).addEventListener('input', ()=>{
+    state.text = state.text || {};
+    state.text.intro = document.getElementById('t-intro').value;
+    state.text.title = [document.getElementById('t-l1').value, document.getElementById('t-l2').value];
+    state.text.cta = document.getElementById('t-cta').value;
+    state.text.facts = document.getElementById('t-facts').value;
+    applyText(); saveDraft();
+  });
+});
+
+let inlineOn = false;
+document.getElementById('inlineText').addEventListener('click', (e)=>{
+  inlineOn = !inlineOn;
+  e.target.classList.toggle('is-on', inlineOn);
+  doc.querySelectorAll('[data-text]').forEach((n)=>{
+    n.contentEditable = inlineOn ? 'true' : 'false';
+    n.style.outline = inlineOn ? '1px dashed rgba(255,139,61,.55)' : '';
+  });
+  if (inlineOn) {
+    doc.querySelectorAll('[data-text]').forEach((n)=>n.addEventListener('input', ()=>{
+      readTextFromDom(); renderText(); saveDraft();
+    }));
+    toast('Текст можно править прямо на странице');
+  }
+});
 
 function setup() {
   frame = document.getElementById('frame');
   doc = frame.contentDocument;
-  win = frame.contentWindow;
   hero = doc.querySelector('.hero');
   exhibit = doc.querySelector('[data-layer="exhibit"]');
   if (!hero || !exhibit) return;
 
+  overlay = doc.createElement('div');
+  Object.assign(overlay.style, { position:'fixed', inset:'0', pointerEvents:'none', zIndex:99998 });
+  doc.body.appendChild(overlay);
+
   exhibit.style.pointerEvents = 'auto';
-  if (doc.querySelector('[data-layer="copy"]')) doc.querySelector('[data-layer="copy"]').style.pointerEvents = 'none';
+  const copyEl = doc.querySelector('[data-layer="copy"]');
+  if (copyEl) copyEl.style.pointerEvents = 'auto';
 
-  let draft = null;
-  try { draft = JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch (e) {}
-  if (draft) { state = { ...state, ...draft }; if (!Array.isArray(state.extra)) state.extra = []; }
+  readTextFromDom();
 
-  FIXED.forEach((k) => { if (state[k]) apply(k); });
-  buildExtras();
+  const draft = (() => { try { return JSON.parse(localStorage.getItem(LS_KEY) || 'null'); } catch(e) { return null; } })();
 
-  const keys = () => [...FIXED, ...state.extra.map((l) => 'x:' + l.id)];
-  keys().forEach((key) => {
-    const node = elForKey(key);
-    if (!node) return;
-    node.addEventListener('pointerdown', (e) => {
-      if (e.target.dataset.mode) return;
-      select(key);
-      startDrag(e, 'move');
+  fetch('assets/hero-layout.json', { cache:'no-cache' })
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null)
+    .then((file) => {
+      const merged = JSON.parse(JSON.stringify(DEFAULT));
+      if (file) Object.keys(file).forEach((k) => { merged[k] = file[k]; });
+      if (draft) Object.keys(draft).forEach((k) => {
+        merged[k] = (merged[k] && typeof merged[k] === 'object' && !Array.isArray(merged[k]))
+          ? { ...merged[k], ...draft[k] } : draft[k];
+      });
+      if (!Array.isArray(merged.extra)) merged.extra = [];
+      if (!merged.text) merged.text = JSON.parse(JSON.stringify(DEFAULT.text));
+      state = merged;
+
+      FIXED.forEach((k)=>apply(k));
+      applyText();
+      buildExtras();
+      FIXED.forEach(bindNode);
+      renderChips(); renderFields(); renderText(); decorate(); saveDraft();
     });
-  });
 
-  select('main');
-  saveDraft();
-
-  doc.addEventListener('keydown', (e) => {
+  doc.addEventListener('keydown', (e)=>{
     const step = e.shiftKey ? 1 : 0.2;
     const map = { ArrowLeft:[-step,0], ArrowRight:[step,0], ArrowUp:[0,-step], ArrowDown:[0,step] };
-    const d = map[e.key];
-    if (!d) return;
-    const t = stateOf(selected);
-    if (!t) return;
+    const d = map[e.key]; if (!d) return;
+    const t = stateOf(selected); if (!t) return;
     e.preventDefault();
-    if (selected === 'exhibit') {
-      state.exhibit.right = num(state.exhibit.right - d[0]);
-      state.exhibit.bottom = num(state.exhibit.bottom - d[1]);
-    } else {
-      t.left = num(t.left + d[0]);
-      t.top = num(t.top + d[1]);
-    }
+    if (selected === 'exhibit') { state.exhibit.right = num(state.exhibit.right - d[0]); state.exhibit.bottom = num(state.exhibit.bottom - d[1]); }
+    else { t.left = num(t.left + d[0]); t.top = num(t.top + d[1]); }
     apply(selected); renderFields(); saveDraft();
   });
 }
@@ -370,145 +483,105 @@ function setup() {
 function fit() {
   const wrap = document.getElementById('stageWrap');
   const stage = document.getElementById('stage');
-  const scale = Math.min(wrap.clientWidth / 1440, wrap.clientHeight / 900);
+  const scale = Math.min(wrap.clientWidth/1440, wrap.clientHeight/900);
   document.getElementById('frame').style.transform = `scale(${scale})`;
-  stage.style.width = 1440 * scale + 'px';
-  stage.style.height = 900 * scale + 'px';
-  stage.style.left = (wrap.clientWidth - 1440 * scale) / 2 + 'px';
-  stage.style.top = (wrap.clientHeight - 900 * scale) / 2 + 'px';
+  stage.style.width = 1440*scale+'px'; stage.style.height = 900*scale+'px';
+  stage.style.left = (wrap.clientWidth-1440*scale)/2+'px';
+  stage.style.top = (wrap.clientHeight-900*scale)/2+'px';
 }
 
-document.getElementById('frame').addEventListener('load', () => setTimeout(setup, 250));
+document.getElementById('frame').addEventListener('load', ()=>setTimeout(setup, 300));
 window.addEventListener('resize', fit);
 fit();
 
-/* ---- порядок слоёв ---- */
-function shiftZ(dir) {
-  const t = stateOf(selected);
-  if (!t) return;
-  const all = [
-    ...PANELS.map((k) => state[k]).filter(Boolean),
-    ...state.extra
-  ].map((l) => l.z ?? 0);
-  t.z = num(dir > 0 ? Math.max(...all, 0) + 1 : Math.min(...all, 0) - 1, 0);
-  apply(selected); renderFields(); saveDraft();
-  toast(dir > 0 ? 'Поднял выше' : 'Опустил ниже');
-}
-document.getElementById('up').addEventListener('click', () => shiftZ(1));
-document.getElementById('down').addEventListener('click', () => shiftZ(-1));
+document.getElementById('warp').addEventListener('click', ()=>{
+  warpMode = !warpMode;
+  if (warpMode && !stateOf(selected)?.warp) stateOf(selected).warp = IDENTITY.map((c)=>[...c]);
+  renderFields(); decorate(); saveDraft();
+});
 
-/* ---- добавление и замена картинок ---- */
-document.getElementById('add').addEventListener('click', () => document.getElementById('fileAdd').click());
-document.getElementById('fileAdd').addEventListener('change', (e) => {
-  const files = [...e.target.files];
-  files.forEach((file, i) => {
+function shiftZ(dir) {
+  const t = stateOf(selected); if (!t) return;
+  const all = [...PANELS.map(k=>state[k]).filter(Boolean), ...state.extra].map(l=>l.z??0);
+  t.z = dir>0 ? Math.max(...all,0)+1 : Math.min(...all,0)-1;
+  apply(selected); renderFields(); saveDraft();
+}
+document.getElementById('zup').addEventListener('click', ()=>shiftZ(1));
+document.getElementById('zdown').addEventListener('click', ()=>shiftZ(-1));
+
+document.getElementById('add').addEventListener('click', ()=>document.getElementById('fileAdd').click());
+document.getElementById('fileAdd').addEventListener('change', (e)=>{
+  [...e.target.files].forEach((file,i)=>{
     const reader = new FileReader();
-    reader.onload = () => {
-      const max = Math.max(0, ...[...FIXED.map((k) => state[k]?.z ?? 0), ...state.extra.map((l) => l.z ?? 0)]);
-      const layer = {
-        id: 'i' + Date.now() + i,
-        label: file.name.replace(/\.[^.]+$/, '').slice(0, 22) || 'картинка',
-        src: reader.result,
-        left: 30, top: 30, width: 30,
-        rotX: 0, rotY: 0, rotZ: 0,
-        z: max + 1, opacity: 1, radius: 10
-      };
+    reader.onload = ()=>{
+      const max = Math.max(0, ...[...PANELS.map(k=>state[k]?.z??0), ...state.extra.map(l=>l.z??0)]);
+      const layer = { id:'i'+Date.now()+i, label:file.name.replace(/\.[^.]+$/,'').slice(0,22) || 'картинка',
+        src: reader.result, left:30, top:30, width:30, rotX:0, rotY:0, rotZ:0, z:max+1, opacity:1, radius:10, warp:null };
       state.extra.push(layer);
-      buildExtras();
-      select('x:' + layer.id);
-      saveDraft();
-      bindExtras();
-      toast('Добавил: ' + layer.label);
+      buildExtras(); select('x:'+layer.id); saveDraft();
+      toast('Добавил: '+layer.label);
     };
     reader.readAsDataURL(file);
   });
   e.target.value = '';
 });
 
-function bindExtras() {
-  state.extra.forEach((layer) => {
-    const node = elForKey('x:' + layer.id);
-    if (!node || node.dataset.bound) return;
-    node.dataset.bound = '1';
-    node.addEventListener('pointerdown', (e) => {
-      if (e.target.dataset.mode) return;
-      select('x:' + layer.id);
-      startDrag(e, 'move');
-    });
-  });
-}
-
-document.getElementById('replace').addEventListener('click', () => document.getElementById('fileReplace').click());
-document.getElementById('fileReplace').addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+document.getElementById('replace').addEventListener('click', ()=>document.getElementById('fileReplace').click());
+document.getElementById('fileReplace').addEventListener('change', (e)=>{
+  const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = () => {
-    if (isExtra(selected)) {
-      extraOf(selected).src = reader.result;
-      buildExtras(); bindExtras(); decorate();
-    } else if (PANELS.includes(selected)) {
+  reader.onload = ()=>{
+    if (isExtra(selected)) { extraOf(selected).src = reader.result; buildExtras(); decorate(); }
+    else if (PANELS.includes(selected)) {
       const inner = elForKey(selected).querySelector('.exhibit-surface > img');
-      if (inner) inner.src = reader.result;
-      else toast('У этого слоя нет картинки');
-    } else {
-      toast('Выбери слой с картинкой');
-    }
+      if (inner) inner.src = reader.result; else toast('У слоя нет картинки');
+    } else toast('Выбери слой с картинкой');
     saveDraft();
   };
   reader.readAsDataURL(file);
   e.target.value = '';
 });
 
-document.getElementById('remove').addEventListener('click', () => {
-  if (!isExtra(selected)) return toast('Удалять можно только добавленные картинки');
-  state.extra = state.extra.filter((l) => 'x:' + l.id !== selected);
+document.getElementById('remove').addEventListener('click', ()=>{
+  if (!isExtra(selected)) return toast('Удаляются только добавленные картинки');
+  state.extra = state.extra.filter((l)=>'x:'+l.id !== selected);
   buildExtras(); select('main'); saveDraft();
 });
 
-/* ---- файлы ---- */
-document.getElementById('save').addEventListener('click', () => {
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+document.getElementById('save').addEventListener('click', ()=>{
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type:'application/json' });
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'hero-layout.json';
-  a.click();
+  a.href = URL.createObjectURL(blob); a.download = 'hero-layout.json'; a.click();
   URL.revokeObjectURL(a.href);
-  toast('Скачал JSON — пришли его мне');
+  toast('Скачал JSON — пришли мне');
 });
-
-document.getElementById('copy').addEventListener('click', async () => {
-  try {
-    await navigator.clipboard.writeText(JSON.stringify(state, null, 2));
-    toast('JSON в буфере');
-  } catch { toast('Скопируй из поля внизу'); }
+document.getElementById('copy').addEventListener('click', async ()=>{
+  try { await navigator.clipboard.writeText(JSON.stringify(state, null, 2)); toast('JSON в буфере'); }
+  catch { toast('Скопируй из поля внизу'); }
 });
-
-document.getElementById('reset').addEventListener('click', () => {
-  try { localStorage.removeItem(LS_KEY); } catch (e) {}
-  fetch('assets/hero-layout.json', { cache: 'no-cache' })
-    .then((r) => r.json())
-    .then((data) => {
-      state = { ...JSON.parse(JSON.stringify(DEFAULT)), ...data };
-      if (!Array.isArray(state.extra)) state.extra = [];
-      FIXED.forEach((k) => apply(k));
-      buildExtras(); bindExtras(); select('main'); saveDraft();
-      toast('Вернул к файлу');
-    });
+document.getElementById('reset').addEventListener('click', ()=>{
+  try { localStorage.removeItem(LS_KEY); } catch(e) {}
+  fetch('assets/hero-layout.json', { cache:'no-cache' }).then(r=>r.json()).then((data)=>{
+    state = { ...JSON.parse(JSON.stringify(DEFAULT)), ...data };
+    if (!Array.isArray(state.extra)) state.extra = [];
+    if (!state.text) state.text = JSON.parse(JSON.stringify(DEFAULT.text));
+    FIXED.forEach((k)=>apply(k)); applyText(); buildExtras();
+    FIXED.forEach(bindNode); select('main'); renderText(); saveDraft();
+    toast('Вернул к файлу');
+  });
 });
-
-document.getElementById('import').addEventListener('click', () => document.getElementById('fileJson').click());
-document.getElementById('fileJson').addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
+document.getElementById('import').addEventListener('click', ()=>document.getElementById('fileJson').click());
+document.getElementById('fileJson').addEventListener('change', (e)=>{
+  const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = () => {
+  reader.onload = ()=>{
     try {
       const data = JSON.parse(reader.result);
       state = { ...JSON.parse(JSON.stringify(DEFAULT)), ...data };
       if (!Array.isArray(state.extra)) state.extra = [];
-      FIXED.forEach((k) => apply(k));
-      buildExtras(); bindExtras(); select('main'); saveDraft();
+      if (!state.text) state.text = JSON.parse(JSON.stringify(DEFAULT.text));
+      FIXED.forEach((k)=>apply(k)); applyText(); buildExtras();
+      FIXED.forEach(bindNode); select('main'); renderText(); saveDraft();
       toast('Раскладка загружена');
     } catch { toast('Не разобрал JSON'); }
   };
