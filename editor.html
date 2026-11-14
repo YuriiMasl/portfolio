@@ -42,7 +42,7 @@
 <body>
 <div class="app">
   <div class="stage-wrap" id="stageWrap"><div class="stage" id="stage">
-    <iframe id="frame" src="index.html"></iframe>
+    <iframe id="frame" src="about:blank"></iframe>
   </div></div>
 
   <aside class="side">
@@ -490,7 +490,8 @@ function fit() {
   stage.style.top = (wrap.clientHeight-900*scale)/2+'px';
 }
 
-document.getElementById('frame').addEventListener('load', ()=>setTimeout(setup, 300));
+document.getElementById('frame').src = 'index.html?v=' + Date.now();
+document.getElementById('frame').addEventListener('load', ()=>setTimeout(setup, 400));
 window.addEventListener('resize', fit);
 fit();
 
