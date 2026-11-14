@@ -1,0 +1,239 @@
+/* Positional artwork from ../ассеты/референс.png.
+   Each exhibit is fixed to the same coordinate system as its iron frame. */
+.head { position: absolute; inset: 0 0 auto; padding-top: 24px; }
+.head-wrap { max-width: 1586px; padding-inline: 4.8%; }
+.head-bar { padding: 0; border: 0; background: none; box-shadow: none; backdrop-filter: none; }
+.head-bar::before { display: none; }
+.brand { padding: 0; }
+.brand-avatar { width: 44px; height: 44px; }
+.brand-name { font-family: var(--text); font-weight: 500; font-size: 17px; }
+.brand-note { margin-top: 4px; color: #c3b9ae; }
+.tabs { gap: 12px; }
+.tab { min-height: 44px; color: #ddd3c5; }
+.tab--accent { padding-inline: 24px; }
+
+.hero {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  min-height: 780px;
+  height: max(780px, 100svh);
+  max-height: 1200px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #15100c;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.hero-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(13, 10, 8, .64), rgba(13, 10, 8, .24) 38%, transparent 67%),
+    linear-gradient(0deg, #0b0a09 0%, transparent 18%, transparent 87%, rgba(11, 10, 9, .22));
+}
+.hero-copy {
+  position: absolute;
+  z-index: 5;
+  top: 42%;
+  left: 4.8%;
+  width: 38%;
+  max-width: 580px;
+}
+.hero-intro {
+  margin: 0 0 28px;
+  max-width: 39ch;
+  color: #d8cfc2;
+  font-size: clamp(14px, 1.1vw, 18px);
+  line-height: 1.65;
+  text-shadow: 0 2px 16px #100b07;
+}
+.hero h1 {
+  margin: 0 0 32px;
+  color: #f4eddf;
+  font-family: "Oswald", "Arial Narrow", sans-serif;
+  font-weight: 600;
+  font-size: clamp(48px, 4.7vw, 78px);
+  line-height: 1.08;
+  letter-spacing: -.025em;
+  text-transform: uppercase;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, .3);
+}
+.hero .line { white-space: nowrap; padding-block: 4px; margin-block: -4px; }
+.hero .link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 48px;
+  padding: 0 0 8px;
+  border-bottom: 1px solid rgba(255, 150, 70, .65);
+  color: #ffab6b;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .2s, gap .2s;
+}
+.hero .link-arrow span { font-size: 24px; font-weight: 400; }
+.hero .link-arrow:hover { color: #ffe0b0; gap: 32px; }
+.hero .link-arrow:active { color: white; }
+.hero-facts {
+  margin: 32px 0 0;
+  color: #beb3a5;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.hero-exhibit {
+  position: absolute;
+  z-index: 2;
+  width: min(64%, 100svh);
+  max-width: 1060px;
+  aspect-ratio: 1;
+  right: 1%;
+  bottom: 3%;
+  pointer-events: none;
+}
+.exhibit-stand {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter: brightness(.78) drop-shadow(8px 18px 16px rgba(0, 0, 0, .55));
+}
+.exhibit-panel { position: absolute; margin: 0; aspect-ratio: 1024 / 700; }
+.exhibit-glass { display: block; width: 100%; height: 100%; filter: drop-shadow(0 16px 16px #0008); }
+.exhibit-surface {
+  position: absolute;
+  left: 5.5%;
+  right: 5.5%;
+  top: 16.5%;
+  bottom: 12%;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #141511;
+  box-shadow: 0 0 0 1px #ffd49355;
+}
+.exhibit-surface::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(128deg, #ffe5bd15, transparent 38%, #fba44b0a 80%);
+  box-shadow: inset 0 0 28px #2b1b0d66;
+}
+.exhibit-surface > img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.exhibit-surface figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 7px 12px;
+  color: #eee1cd;
+  background: #0d0c0bea;
+  font-size: clamp(9px, .78vw, 13px);
+  line-height: 1.3;
+}
+.exhibit-panel--main {
+  z-index: 2;
+  left: 13%;
+  top: 7%;
+  width: 76%;
+  transform: perspective(1200px) rotateY(-8deg) rotateZ(-3deg);
+}
+.exhibit-panel--catalog {
+  z-index: 3;
+  left: 11%;
+  top: 34%;
+  width: 71%;
+  transform: perspective(1200px) rotateY(-8deg) rotateZ(-3deg);
+}
+.exhibit-panel--catalog .exhibit-surface > img { object-fit: cover; object-position: 50% 50%; }
+.exhibit-panel--phone {
+  z-index: 4;
+  left: 20%;
+  top: 57%;
+  width: 68%;
+  transform: perspective(1200px) rotateY(-8deg) rotateZ(-2deg);
+}
+.exhibit-phone-surface {
+  position: absolute;
+  inset: 16% 6% 12%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.exhibit-phone-surface > img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 43%;
+  height: 104%;
+  object-fit: contain;
+  filter: drop-shadow(4px 10px 8px #000a);
+}
+.exhibit-phone-surface figcaption { width: 53%; padding-left: 5%; color: #f2e6d2; }
+.exhibit-phone-title {
+  display: block;
+  margin-bottom: 12px;
+  font-family: var(--display);
+  font-size: clamp(18px, 2vw, 32px);
+  line-height: 1.15;
+}
+.exhibit-phone-note { display: block; font-size: clamp(10px, .9vw, 14px); line-height: 1.5; color: #e2c9a9; }
+.exhibit-phone-label { display: block; margin-top: 16px; font-size: clamp(9px, .78vw, 12px); color: #ffc68d; }
+
+@media (min-width: 1700px) { .hero-copy { left: max(4.8%, calc((100% - 1586px) / 2)); } }
+@media (min-width: 881px) and (max-height: 820px) {
+  .hero { min-height: 720px; }
+  .hero-copy { top: 35%; }
+  .hero-exhibit { width: 60%; bottom: 0; }
+}
+@media (max-width: 1080px) and (min-width: 881px) {
+  .hero { min-height: 740px; }
+  .hero-copy { top: 38%; width: 42%; }
+  .hero h1 { font-size: 52px; }
+  .hero-exhibit { width: 65%; right: -5%; bottom: 7%; }
+}
+@media (max-width: 880px) {
+  .head { padding-top: 16px; }
+  .head-wrap { padding-inline: 24px; }
+  .hero { height: auto; max-height: none; min-height: 1050px; padding-top: 150px; }
+  .hero-copy { position: relative; inset: auto; width: auto; max-width: none; margin-inline: 24px; }
+  .hero-intro { font-size: 16px; margin-bottom: 24px; }
+  .hero h1 { font-size: clamp(48px, 7.7vw, 66px); margin-bottom: 24px; }
+  .hero-facts { margin-top: 24px; }
+  .hero-exhibit { position: relative; inset: auto; width: 91%; max-width: 660px; margin: -12px 0 0 auto; }
+  .hero-bg { object-position: 64% center; }
+  .hero-veil { background: linear-gradient(180deg, #100c09b3, #100c0977 38%, transparent 60%, #0b0a09 100%); }
+  .exhibit-surface figcaption { font-size: 10px; }
+  .exhibit-phone-surface figcaption { font-size: 9px; }
+}
+@media (max-width: 560px) {
+  .hero { min-height: 900px; padding-top: 132px; padding-bottom: 28px; }
+  .hero-intro { font-size: 14px; line-height: 1.7; margin-bottom: 24px; }
+  .hero h1 { font-size: clamp(38px, 10.7vw, 56px); line-height: 1.08; }
+  .hero .link-arrow { font-size: 14px; min-height: 44px; }
+  .hero-facts { font-size: 12px; margin-top: 20px; }
+  .hero-exhibit { width: 108%; margin-top: 4px; margin-left: -8%; }
+  .exhibit-surface figcaption { padding: 5px 7px; font-size: 8px; }
+  .exhibit-phone-surface figcaption { font-size: 7px; }
+  .exhibit-phone-title { font-size: 17px; margin-bottom: 8px; }
+  .exhibit-phone-note { font-size: 9px; }
+  .exhibit-phone-label { font-size: 8px; margin-top: 8px; }
+  .brand-note { display: block; font-size: 10px; }
+  .brand-avatar { width: 40px; height: 40px; }
+  .brand { gap: 10px; }
+  .tabs { gap: 0; }
+  .tab--accent { padding-inline: 16px; }
+  .foot-nav { gap: 4px 16px; }
+  .foot-nav a, .contact-actions .phone { display: inline-flex; align-items: center; min-height: 44px; }
+}

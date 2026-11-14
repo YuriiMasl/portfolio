@@ -11,12 +11,11 @@
 <meta property="og:description" content="Сайты для малого бизнеса: разбор задачи, форма, проверка на прочность. Один кейс открыт целиком.">
 <meta property="og:locale" content="ru_RU">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230B0A09'/%3E%3Crect x='5' y='5' width='54' height='54' rx='12' fill='none' stroke='%23F4571F' stroke-width='2'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='32' fill='%23F2ECE3' text-anchor='middle'%3E%D0%AE%3C/text%3E%3C/svg%3E">
-<link rel="preload" href="assets/fonts/unbounded-cyrillic-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/oswald-cyrillic-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/golos-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/hero-plate-v3.webp" as="image" media="(min-width: 721px)">
-<link rel="preload" href="assets/hero-plate-mobile.webp" as="image" media="(max-width: 720px)">
+<link rel="preload" href="assets/hero/workshop.webp" as="image">
 <link rel="stylesheet" href="workshop.css">
-<script>document.documentElement.classList.add('has-plate')</script>
+<link rel="stylesheet" href="hero.css">
 </head>
 <body>
 
@@ -47,59 +46,46 @@
 <main id="main">
 
   <section class="hero" id="top" aria-labelledby="hero-title">
-    <picture class="hero-picture">
-      <source media="(max-width: 720px)" srcset="assets/hero-plate-mobile.webp">
-      <img class="hero-bg" src="assets/hero-plate-v3.webp" width="1920" height="1200" alt="" aria-hidden="true" fetchpriority="high" decoding="async">
-    </picture>
+    <img class="hero-bg" src="assets/hero/workshop.webp" width="1586" height="992" alt="" aria-hidden="true" fetchpriority="high">
     <div class="hero-veil" aria-hidden="true"></div>
-    <div class="stage" aria-hidden="true"><canvas id="stage-canvas"></canvas></div>
 
-    <div class="wrap hero-grid">
-      <div class="hero-copy">
-        <p class="hero-intro fade">Делаю сайты для небольших бизнесов: цветочный салон, кофейня, мастерская. Воронеж, работаю удалённо по России.</p>
-        <h1 id="hero-title">
-          <span class="line"><span class="line-in">Сайты, которые</span></span>
-          <span class="line"><span class="line-in">держат форму</span></span>
-        </h1>
-        <div class="hero-links fade">
-          <a class="link-arrow" href="#work">Открыть кейс <span aria-hidden="true">→</span></a>
-          <a class="btn btn--glass" href="https://t.me/IOpaWho" target="_blank" rel="noopener">Написать в Telegram</a>
-        </div>
-        <p class="facts fade">Один подтверждённый кейс · демо-макет, а не сайт клиента</p>
-      </div>
+    <div class="hero-copy" data-layer="copy">
+      <p class="hero-intro">Делаю сайты для небольших бизнесов:<br class="desktop-break"> цветочный салон, кофейня, мастерская.<br>Воронеж, работаю удалённо по России.</p>
+      <h1 id="hero-title">
+        <span class="line"><span class="line-in">Сайты, которые</span></span>
+        <span class="line"><span class="line-in">держат форму</span></span>
+      </h1>
+      <a class="link-arrow" href="#work">Открыть кейс <span aria-hidden="true">→</span></a>
+      <p class="hero-facts">Один подтверждённый кейс<br>Демо-макет, а не сайт клиента</p>
+    </div>
 
-      <div class="rig" aria-label="Три экрана демо-кейса на железной стойке">
-        <span class="rig-post" aria-hidden="true"></span>
-        <span class="rig-arm" aria-hidden="true"></span>
-        <span class="rig-cross" aria-hidden="true"></span>
-
-        <figure class="panel panel--main" data-float="1">
-          <div class="panel-heat" aria-hidden="true"></div>
-          <img src="assets/lyublyu-hero.webp" width="1440" height="900" alt="Главный экран демо-макета цветочного салона «Люблю, целую»: крупный заголовок, букет и цены" decoding="async" fetchpriority="high">
+    <div class="hero-exhibit" data-layer="exhibit" role="group" aria-label="Три экрана демо-макета на металлической стойке">
+      <img class="exhibit-stand" data-layer="stand" src="assets/hero/stand.webp" width="990" height="992" alt="" aria-hidden="true">
+      <figure class="exhibit-panel exhibit-panel--main" data-layer="main">
+        <img class="exhibit-glass" src="assets/hero/glass.webp" width="1024" height="700" alt="" aria-hidden="true">
+        <div class="exhibit-surface">
+          <img src="assets/hero/screen-main.webp" width="1440" height="900" alt="Первый экран демо-макета «Люблю, целую»: букет, заголовок и выбор по бюджету" fetchpriority="high">
           <figcaption>Главная · первый экран</figcaption>
-        </figure>
-
-        <figure class="panel panel--shelf" data-float="2">
-          <div class="panel-heat" aria-hidden="true"></div>
-          <img src="assets/lyublyu-shelf.webp" width="1440" height="1080" alt="Витрина демо-макета: полка букетов с ценами S, M и XL" loading="lazy" decoding="async">
+        </div>
+      </figure>
+      <figure class="exhibit-panel exhibit-panel--catalog" data-layer="catalog">
+        <img class="exhibit-glass" src="assets/hero/glass.webp" width="1024" height="700" alt="" aria-hidden="true">
+        <div class="exhibit-surface">
+          <img src="assets/hero/screen-catalog.webp" width="1440" height="1080" alt="Витрина букетов демо-макета с выбором размера и ценами">
           <figcaption>Витрина · выбор и цены</figcaption>
-        </figure>
-
-        <figure class="phone-mock" data-float="3">
-          <div class="phone-body">
-            <span class="phone-island" aria-hidden="true"></span>
-            <div class="phone-screen">
-              <img src="assets/lyublyu-mobile.webp" width="390" height="844" alt="Мобильная версия демо-макета: карточка букета и заказ" loading="lazy" decoding="async">
-            </div>
-          </div>
-          <figcaption>Телефон · заказ</figcaption>
-        </figure>
-
-        <figure class="bloom">
-          <img src="assets/glass-alstroemeria-bright.webp" width="1100" height="1005" alt="Стеклянная альстромерия, светящаяся как только что выдутая" loading="lazy" decoding="async">
-          <figcaption>Стеклянная альстромерия: образ формы</figcaption>
-        </figure>
-      </div>
+        </div>
+      </figure>
+      <figure class="exhibit-panel exhibit-panel--phone" data-layer="phone">
+        <img class="exhibit-glass" src="assets/hero/glass.webp" width="1024" height="700" alt="" aria-hidden="true">
+        <div class="exhibit-phone-surface">
+          <figcaption>
+            <span class="exhibit-phone-title">Выбрать букет.<br>Даже на ходу.</span>
+            <span class="exhibit-phone-note">Та же витрина.<br>Тот же простой заказ.</span>
+            <span class="exhibit-phone-label">Мобильная версия · заказ</span>
+          </figcaption>
+          <img src="assets/hero/phone.webp" width="600" height="994" alt="Тот же демо-макет на экране телефона">
+        </div>
+      </figure>
     </div>
   </section>
 
@@ -237,10 +223,11 @@
   </div>
 </footer>
 
-<script src="vendor/lenis.min.js" defer></script>
+
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
 <script src="workshop.js" defer></script>
-<script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
+<script src="hero-layout.js" defer></script>
+
 </body>
 </html>
