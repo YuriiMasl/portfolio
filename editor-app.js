@@ -1,7 +1,8 @@
 const FIXED = ['exhibit', 'stand', 'main', 'copy'];
 const PANELS = ['main'];
 const LABEL = { exhibit:'витрина', stand:'стойка', main:'экран кейса', copy:'текстовый блок' };
-const LS_KEY = 'heroLayoutDraftV3';
+const LS_KEY = 'heroLayoutDraftV4';
+try { localStorage.removeItem('heroLayoutDraftV3'); } catch(e) {}
 let fileHash = '';
 const hashStr = (str) => { let h = 5381; for (let i = 0; i < str.length; i++) h = ((h << 5) + h + str.charCodeAt(i)) | 0; return String(h); };
 const IDENTITY = [[0,0],[1,0],[1,1],[0,1]];
@@ -395,9 +396,9 @@ function setup() {
     .catch(() => null)
     .then((file) => {
       fileHash = hashStr(JSON.stringify(file || {}));
-      if (draft && draft.base && draft.base !== fileHash) {
+      if (draft && (!draft.base || draft.base !== fileHash)) {
         draft = null;
-        toast('Файл обновился — взял актуальную версию');
+        toast('Взял раскладку из файла — черновик был старый');
       }
       const draftState = draft ? draft.state : null;
       const merged = JSON.parse(JSON.stringify(DEFAULT));
