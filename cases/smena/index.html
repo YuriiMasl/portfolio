@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Смена — кофейня и обжарка в Воронеже</title>
+<meta name="description" content="Кофейня и обжарка в бывшем цехе на Кирова, 4. Эспрессо, фильтр, зерно малыми партиями. Воронеж.">
+<meta name="theme-color" content="#E8E3D7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231E33C9'/%3E%3Crect x='7' y='7' width='18' height='18' fill='%23FF4FA3'/%3E%3Crect x='11' y='11' width='10' height='10' fill='%23141414'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/unbounded-900-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#menu">Перейти к меню</a>
+
+<svg class="defs" aria-hidden="true" focusable="false" width="0" height="0">
+  <filter id="duo-blue" color-interpolation-filters="sRGB">
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues="0.055 0.905"/>
+      <feFuncG type="table" tableValues="0.065 0.905"/>
+      <feFuncB type="table" tableValues="0.560 0.885"/>
+    </feComponentTransfer>
+  </filter>
+  <filter id="duo-pink" color-interpolation-filters="sRGB">
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues="0.300 0.985"/>
+      <feFuncG type="table" tableValues="0.030 0.880"/>
+      <feFuncB type="table" tableValues="0.220 0.930"/>
+    </feComponentTransfer>
+  </filter>
+  <filter id="duo-ink" color-interpolation-filters="sRGB">
+    <feColorMatrix type="saturate" values="0"/>
+    <feComponentTransfer>
+      <feFuncR type="table" tableValues="0.060 0.930"/>
+      <feFuncG type="table" tableValues="0.060 0.900"/>
+      <feFuncB type="table" tableValues="0.055 0.870"/>
+    </feComponentTransfer>
+  </filter>
+</svg>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span data-progress></span></div>
+
+<header class="masthead">
+  <a class="masthead__logo" href="#top">Смена</a>
+  <p class="masthead__tag">кофейня и обжарка&nbsp;· Воронеж</p>
+  <nav class="masthead__nav" aria-label="Основная навигация">
+    <a href="#craft">О нас</a>
+    <a href="#menu">Меню</a>
+    <a href="#beans">Зерно</a>
+    <a href="#events">События</a>
+    <a href="#place">Место</a>
+  </nav>
+  <a class="masthead__tel" href="tel:+74732120418">+7 473 212-04-18</a>
+  <button class="masthead__burger" type="button" aria-expanded="false" aria-controls="drawer">
+    <span class="masthead__burger-word">Меню</span>
+    <span class="burger-lines" aria-hidden="true"><i></i><i></i></span>
+  </button>
+</header>
+
+<div class="drawer" id="drawer" hidden>
+  <nav aria-label="Мобильная навигация">
+    <a href="#craft"><span>О нас</span><em>01</em></a>
+    <a href="#menu"><span>Меню</span><em>02</em></a>
+    <a href="#beans"><span>Зерно</span><em>03</em></a>
+    <a href="#events"><span>События</span><em>04</em></a>
+    <a href="#place"><span>Место</span><em>05</em></a>
+  </nav>
+  <div class="drawer__foot">
+    <a href="tel:+74732120418">+7 473 212-04-18</a>
+    <p>Кирова 4, Воронеж<br>Пн–Пт 8:00–21:00 · Сб–Вс 9:00–22:00</p>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- 01 · обложка -->
+  <section class="cover" aria-labelledby="cover-title">
+    <div class="cover__grid">
+      <div class="cover__lead">
+        <h1 class="wordmark" id="cover-title">Смена</h1>
+        <p class="cover__kicker"><span>кофейня</span><i aria-hidden="true">✳</i><span>обжарка</span></p>
+        <p class="cover__hook">Обжариваем по три килограмма и варим из того, что обжарили вчера. Кофейня в бывшем цехе на&nbsp;Кирова,&nbsp;4 — с восьми утра.</p>
+        <div class="cover__actions">
+          <a class="btn btn--ink" href="#menu">Меню и цены</a>
+          <a class="link-arrow" href="https://yandex.ru/maps/?text=%D0%92%D0%BE%D1%80%D0%BE%D0%BD%D0%B5%D0%B6%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9A%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%2C%204" target="_blank" rel="noopener">Как дойти</a>
+        </div>
+
+        <nav class="cover__index" aria-label="Содержание номера">
+          <p class="cover__index-label">В номере</p>
+          <a href="#menu">
+            <span class="cover__index-num">01</span>
+            <span class="cover__index-name">Меню</span>
+            <span class="cover__index-note">эспрессо, фильтр, выпечка</span>
+            <span class="cover__index-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#beans">
+            <span class="cover__index-num">02</span>
+            <span class="cover__index-name">Зерно</span>
+            <span class="cover__index-note">обжарка вт и пт, Эфиопия Гуджи</span>
+            <span class="cover__index-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#events">
+            <span class="cover__index-num">03</span>
+            <span class="cover__index-name">События</span>
+            <span class="cover__index-note">каппинг, воркшоп, латте-арт</span>
+            <span class="cover__index-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="#place">
+            <span class="cover__index-num">04</span>
+            <span class="cover__index-name">Место</span>
+            <span class="cover__index-note">Кирова 4, каждый день с 8:00</span>
+            <span class="cover__index-arrow" aria-hidden="true">→</span>
+          </a>
+        </nav>
+        <p class="cover__now" data-status>Открыто до 21:00</p>
+      </div>
+
+      <figure class="plate plate--cover">
+        <span class="plate__tag">Цех №1<br>смена 08:00</span>
+        <div class="plate__frame">
+          <img src="assets/img/hero.jpg" alt="Бар кофейни в бывшем цехе: бетонная стойка, эспрессо-машина, высокие окна" width="1024" height="1366">
+        </div>
+        <figcaption>Смена 08:00. Первый эспрессо.</figcaption>
+      </figure>
+    </div>
+
+    <div class="cover__foot">
+      <p class="cover__shift"><span data-shift>Смена № 1</span><span aria-hidden="true">·</span><span data-date>сегодня</span></p>
+      <p class="colophon-line">Обжарка: вт и пт · бар: пн–пт 8:00–21:00</p>
+    </div>
+  </section>
+
+  <!-- 02 · кофейня -->
+  <section class="craft" id="craft" aria-labelledby="craft-title">
+    <p class="margin-num" aria-hidden="true">02</p>
+    <div class="craft__head">
+      <h2 class="h2" id="craft-title" data-reveal>Кофейня<br>в цехе</h2>
+      <p class="lead" data-reveal>Бывший цех на Кирова, 4: бетон, высокие окна и ростер у стены. Обжариваем малыми партиями, варим без спешки и наливаем всем, кто зашёл до девяти.</p>
+    </div>
+
+    <div class="craft__cols">
+      <article class="craft__col" data-reveal>
+        <h3>Бар</h3>
+        <p>Эспрессо, фильтр и молоко. Три лота в ротации и постоянный бленд для эспрессо. Фильтр меняем, когда кончается мешок. Не по расписанию.</p>
+        <p class="mono-note">Эспрессо · фильтр · молоко</p>
+      </article>
+      <article class="craft__col" data-reveal>
+        <h3>Обжарка</h3>
+        <p>Ростер на три килограмма, обжарка по вторникам и пятницам. Зерно уходит в бар и в пачки, с датой на шве.</p>
+        <p class="mono-note">3 кг · вт и пт · дата на пачке</p>
+      </article>
+      <figure class="plate plate--craft" data-reveal>
+        <div class="plate__frame">
+          <img src="assets/img/bar2.jpg" alt="Бар и ростер в цехе: эспрессо-машина, мешки с зерном, бетонные стены" width="1400" height="1050">
+        </div>
+        <figcaption>Бар и ростер. Одна смена.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 03 · меню -->
+  <section class="menu" id="menu" aria-labelledby="menu-title">
+    <div class="menu__head">
+      <h2 class="h2 h2--paper" id="menu-title" data-reveal>Меню</h2>
+      <p class="menu__note" data-reveal>Меняется раз в сезон. Зерно — раз в две недели.<br>Эспрессо на зерне недели: Эфиопия Гуджи.</p>
+    </div>
+
+    <div class="filters" role="group" aria-label="Разделы меню">
+      <button class="filter is-on" type="button" data-filter="coffee" aria-pressed="true">Кофе <span>8</span></button>
+      <button class="filter" type="button" data-filter="other" aria-pressed="false">Не кофе <span>4</span></button>
+      <button class="filter" type="button" data-filter="food" aria-pressed="false">Еда <span>4</span></button>
+      <p class="filters__count" data-count aria-live="polite">8 позиций</p>
+    </div>
+
+    <ul class="menu-list" data-menu>
+      <li data-cat="coffee">
+        <div class="menu-item">
+          <h3>Эспрессо</h3>
+          <p>Бленд «Смена»: карамель и чёрный шоколад</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">190</span>
+      </li>
+      <li data-cat="coffee">
+        <div class="menu-item">
+          <h3>Американо</h3>
+          <p>Двойной, 200 мл</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">220</span>
+      </li>
+      <li data-cat="coffee">
+        <div class="menu-item">
+          <h3>Капучино</h3>
+          <p>Шесть унций, плотное молоко</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">260</span>
+      </li>
+      <li data-cat="coffee">
+        <div class="menu-item">
+          <h3>Флэт уайт</h3>
+          <p>Двойной эспрессо, 160 мл</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">290</span>
+      </li>
+      <li data-cat="coffee">
+        <div class="menu-item">
+          <h3>Фильтр V60</h3>
+          <p>Эфиопия Гуджи: черника, жасмин</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">280</span>
+      </li>
+      <li data-cat="coffee">
+        <div class="menu-item">
+          <h3>Батч-брю</h3>
+          <p>Готовим на всех, наливаем сразу</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">220</span>
+      </li>
+      <li data-cat="coffee">
+        <div class="menu-item">
+          <h3>Латте</h3>
+          <p>300 мл, можно на банановом</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">300</span>
+      </li>
+      <li data-cat="coffee">
+        <div class="menu-item">
+          <h3>Раф на солёной карамели</h3>
+          <p>Сливки, чёрный перец, наша карамель</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">330</span>
+      </li>
+
+      <li data-cat="other">
+        <div class="menu-item">
+          <h3>Матча</h3>
+          <p>Церемониальная, на молоке или воде</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">320</span>
+      </li>
+      <li data-cat="other">
+        <div class="menu-item">
+          <h3>Какао</h3>
+          <p>На белом шоколаде, без сахара</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">320</span>
+      </li>
+      <li data-cat="other">
+        <div class="menu-item">
+          <h3>Лимонад «Пунцовый»</h3>
+          <p>Грейпфрут, розовый перец, эстрагон</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">280</span>
+      </li>
+      <li data-cat="other">
+        <div class="menu-item">
+          <h3>Чай листовой</h3>
+          <p>Чёрный, зелёный, тайский</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">240</span>
+      </li>
+
+      <li data-cat="food">
+        <div class="menu-item">
+          <h3>Круассан</h3>
+          <p>Миндальный или пустой</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">220</span>
+      </li>
+      <li data-cat="food">
+        <div class="menu-item">
+          <h3>Синнабон</h3>
+          <p>С кардамоном, печём утром</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">260</span>
+      </li>
+      <li data-cat="food">
+        <div class="menu-item">
+          <h3>Сырник</h3>
+          <p>С солёной сметаной и укропом</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">290</span>
+      </li>
+      <li data-cat="food">
+        <div class="menu-item">
+          <h3>Бутерброд с пастрами</h3>
+          <p>Ржаной хлеб, горчица, маринованный огурец</p>
+        </div>
+        <span class="dots" aria-hidden="true"></span>
+        <span class="price">390</span>
+      </li>
+    </ul>
+
+    <div class="menu__foot">
+      <p class="mono-note">Позиции и цены демонстрационные. В реальном меню сезонные лоты меняются каждый месяц.</p>
+    </div>
+  </section>
+
+  <!-- 04 · зерно -->
+  <section class="beans" id="beans" aria-labelledby="beans-title">
+    <p class="margin-num" aria-hidden="true">04</p>
+    <div class="beans__head">
+      <h2 class="h2" id="beans-title" data-reveal>Зерно</h2>
+      <p class="lead" data-reveal>Три лота в ротации. Обжарка — вторник и пятница, дата на пачке. Приносите свою банку: минус сто рублей.</p>
+    </div>
+
+    <ul class="lots">
+      <li class="lot" data-reveal>
+        <div class="lot__name">
+          <h3>Эфиопия, Гуджи</h3>
+          <p class="mono-note">washed · 1 850 м · обжарка 12.05</p>
+        </div>
+        <p class="lot__notes">Черника, жасмин, чёрный чай</p>
+        <p class="lot__price"><span>250 г</span> 890</p>
+      </li>
+      <li class="lot" data-reveal>
+        <div class="lot__name">
+          <h3>Колумбия, Уила</h3>
+          <p class="mono-note">honey · 1 700 м · обжарка 12.05</p>
+        </div>
+        <p class="lot__notes">Красное яблоко, какао, мёд</p>
+        <p class="lot__price"><span>250 г</span> 850</p>
+      </li>
+      <li class="lot" data-reveal>
+        <div class="lot__name">
+          <h3>Бленд «Смена»</h3>
+          <p class="mono-note">espresso · Бразилия + Эфиопия · обжарка 12.05</p>
+        </div>
+        <p class="lot__notes">Карамель, орех, тёмный шоколад</p>
+        <p class="lot__price"><span>250 г</span> 690</p>
+      </li>
+    </ul>
+
+    <div class="subscription" data-reveal>
+      <div>
+        <h3>Подписка на зерно</h3>
+        <p>250 г каждые две недели, свежая обжарка, пачка с датой. Можно менять лот — или довериться нам.</p>
+      </div>
+      <p class="subscription__price">2 900 <span>₽ / месяц</span></p>
+      <a class="btn btn--paper" href="tel:+74732120418">Оформить звонком</a>
+    </div>
+  </section>
+
+  <!-- 05 · события -->
+  <section class="events" id="events" aria-labelledby="events-title">
+    <div class="events__head">
+      <h2 class="h2" id="events-title" data-reveal>События</h2>
+      <p class="events__note" data-reveal>Каппинг по субботам, воркшоп по четвергам. Места маленькие, поэтому записываемся заранее.</p>
+    </div>
+
+    <ol class="program">
+      <li data-reveal>
+        <p class="program__when">Сб<span>12:00</span></p>
+        <div class="program__body">
+          <h3>Каппинг: пять лотов вслепую</h3>
+          <p>Слепая чашка, счёт по SCA, разговоры про кислотность. Ведёт обжарщик.</p>
+        </div>
+        <p class="program__meta">900 ₽<br><span>8 мест</span></p>
+      </li>
+      <li data-reveal>
+        <p class="program__when">Чт<span>19:00</span></p>
+        <div class="program__body">
+          <h3>Воркшоп: фильтр дома</h3>
+          <p>Помол, вода, рецепт. Готовим V60 и разбираем, почему дома получается кисло.</p>
+        </div>
+        <p class="program__meta">1 200 ₽<br><span>6 мест</span></p>
+      </li>
+      <li data-reveal>
+        <p class="program__when">Пт<span>20:00</span></p>
+        <div class="program__body">
+          <h3>Латте-арт: свободный стол</h3>
+          <p>Последняя пятница месяца. Молоко и питчеры наши, руки ваши.</p>
+        </div>
+        <p class="program__meta">Вход<br><span>свободный</span></p>
+      </li>
+    </ol>
+
+    <div class="events__foot">
+      <a class="btn btn--ink" href="https://t.me/smena_vrn" target="_blank" rel="noopener">Записаться в Telegram</a>
+      <p class="events__fine">События: часть концепта. Даты и цены иллюстративные.</p>
+    </div>
+  </section>
+
+  <!-- 06 · место -->
+  <section class="place" id="place" aria-labelledby="place-title">
+    <p class="margin-num" aria-hidden="true">06</p>
+    <div class="place__grid">
+      <div class="place__info">
+        <h2 class="h2" id="place-title" data-reveal>Место</h2>
+        <p class="place__address" data-reveal>Воронеж,<br>Кирова, 4</p>
+        <p class="place__hint">Вход со двора, под вывеской «Смена». От Кольцовского сквера — четыре минуты пешком, мимо булочной.</p>
+
+        <table class="hours">
+          <caption>Часы работы</caption>
+          <tbody>
+            <tr><th scope="row">Пн–Пт</th><td>8:00–21:00</td></tr>
+            <tr><th scope="row">Сб–Вс</th><td>9:00–22:00</td></tr>
+          </tbody>
+        </table>
+        <p class="place__now" data-status>Открыто до 21:00</p>
+
+        <div class="place__contacts">
+          <a class="big-link" href="tel:+74732120418">+7 473 212-04-18</a>
+          <a class="big-link" href="mailto:hello@smena.coffee">hello@smena.coffee</a>
+        </div>
+
+        <a class="btn btn--outline" href="https://yandex.ru/maps/?text=%D0%92%D0%BE%D1%80%D0%BE%D0%BD%D0%B5%D0%B6%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%9A%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%2C%204" target="_blank" rel="noopener">Открыть в Яндекс Картах</a>
+      </div>
+
+      <figure class="plate plate--place" data-reveal>
+        <span class="plate__tag">двор<br>вход здесь</span>
+        <div class="plate__frame">
+          <img src="assets/img/table2.jpg" alt="Столик у окна: чашка фильтра и круассан, пакет зерна, бетонная стена" width="1000" height="1334">
+        </div>
+        <figcaption>Столик у окна. Смена 09:00.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+</main>
+
+<footer class="colophon" id="colophon">
+  <div class="colophon__top">
+    <p class="colophon__brand">Смена</p>
+    <nav aria-label="Подвал">
+      <a href="#craft">О нас</a>
+      <a href="#menu">Меню</a>
+      <a href="#beans">Зерно</a>
+      <a href="#events">События</a>
+      <a href="#place">Место</a>
+    </nav>
+    <a class="colophon__up" href="#top">Наверх ↑</a>
+  </div>
+  <div class="colophon__bottom">
+    <p>Кофейня и обжарка · Воронеж, Кирова 4 · <a href="tel:+74732120418">+7 473 212-04-18</a></p>
+    <p><span data-shift>Смена № 1</span> · обжарка вт и пт · бар с 8:00</p>
+    <p class="colophon__concept">Концепт-проект для портфолио, 2026. Бренд вымышлен, цены и события — иллюстрация.</p>
+  </div>
+  <div class="colorbar" aria-hidden="true">
+    <span class="colorbar__chip" style="background:#FF4FA3"></span>
+    <span class="colorbar__chip" style="background:#1E33C9"></span>
+    <span class="colorbar__chip" style="background:#141414"></span>
+    <span class="colorbar__chip" style="background:#E8E3D7;border-color:#141414"></span>
+    <span class="colorbar__text">Палитра: розовый · кобальт · бумага</span>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -63,7 +63,7 @@ class PortfolioChecks(unittest.TestCase):
         self.assertEqual(links, ['#work'])
         self.assertNotIn('Написать в Telegram', hero)
         self.assertEqual(hero.count('class="line-in"'), 2)
-        self.assertIn('Демо-макет, а не сайт клиента', hero)
+        self.assertIn('Демо-макеты, а не сайты клиентов', hero)
 
     def test_real_screen_and_supplied_layers(self):
         for name in ('workshop', 'stand', 'glass', 'screen-main'):
@@ -100,6 +100,41 @@ class PortfolioChecks(unittest.TestCase):
         self.assertIn('min-height: 44px', CSS)
         self.assertNotRegex(CSS, r'\.hero-copy\s*\{[^}]*opacity:\s*0')
 
+    def test_smena_case_is_presented(self):
+        self.assertIn('id="smena"', HTML)
+        self.assertIn('href="cases/smena/"', HTML)
+        self.assertIn('assets/smena-hero.webp', HTML)
+        self.assertIn('assets/smena-mobile.webp', HTML)
+        self.assertIn('два демо-макета', HTML)
+        self.assertIn('Цветы, которые', HTML)
+        self.assertIn('Кофе, который', HTML)
+        self.assertIn('Демо-макет: бренд, цены, события и контакты вымышлены', HTML)
+
+    def test_smena_case_files_exist(self):
+        case = ROOT / 'cases' / 'smena'
+        html = case / 'index.html'
+        self.assertTrue(html.is_file(), html)
+        self.assertGreater(html.stat().st_size, 0)
+        text = html.read_text(encoding='utf-8')
+        self.assertIn('<h1', text)
+        self.assertIn('Смена', text)
+        for rel in (
+            'styles.css',
+            'script.js',
+            'assets/fonts/fonts.css',
+            'assets/img/hero.jpg',
+            'assets/img/bar2.jpg',
+            'assets/img/table2.jpg',
+        ):
+            path = case / rel
+            self.assertTrue(path.is_file(), path)
+            self.assertGreater(path.stat().st_size, 0)
+        for name, size in (('smena-hero.webp', (1430, 900)), ('smena-mobile.webp', (390, 844))):
+            path = ROOT / 'assets' / name
+            self.assertTrue(path.is_file(), path)
+            with Image.open(path) as image:
+                self.assertEqual(image.size, size)
+
     @unittest.skipUnless(BASE_URL, 'Pass the live preview URL to check HTTP resources')
     def test_http_all_resources(self):
         for resource in [''] + local_resources():
@@ -108,6 +143,22 @@ class PortfolioChecks(unittest.TestCase):
                     self.assertEqual(response.status, 200)
                     self.assertTrue(response.read())
         print(f'HTTP resources: {len(local_resources()) + 1} OK')
+
+    @unittest.skipUnless(BASE_URL, 'Pass the live preview URL to check HTTP resources')
+    def test_smena_http(self):
+        for rel in (
+            'cases/smena/',
+            'cases/smena/styles.css',
+            'cases/smena/script.js',
+            'cases/smena/assets/img/hero.jpg',
+            'cases/smena/assets/img/bar2.jpg',
+            'cases/smena/assets/img/table2.jpg',
+        ):
+            with self.subTest(rel=rel):
+                with urlopen(urljoin(BASE_URL, rel), timeout=8) as response:
+                    self.assertEqual(response.status, 200)
+                    self.assertTrue(response.read())
+        print('Smena HTTP resources: 6 OK')
 
 
 if __name__ == '__main__':

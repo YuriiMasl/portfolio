@@ -1,0 +1,30 @@
+{
+  "project": "Смена — концепт-сайт кофейни",
+  "note": "Все изображения сгенерированы для концепта. Промпты также встроены в JPEG COM-сегменты.",
+  "images": [
+    {
+      "file": "hero.jpg",
+      "role": "Обложка: бариста наливает латте-арт в баре",
+      "source": "ChatGPT web image generation",
+      "generatedAt": "2026-11-16",
+      "original": "1024×1536 PNG → 1024×1366 JPEG (q3)",
+      "prompt": "Generate a photorealistic editorial photograph, vertical portrait orientation: a barista hands pouring latte art into a white ceramic cup at a concrete counter of a small specialty coffee bar. Behind, softly out of focus: a two-group espresso machine, shelves with coffee bags, tall industrial windows, a grinder. Morning side light, steam, deep shadows, 35mm film grain, muted desaturated palette. No faces, no text, no logos, no watermark."
+    },
+    {
+      "file": "bar2.jpg",
+      "role": "О нас: бар и ростер в цехе",
+      "source": "ChatGPT web image generation",
+      "generatedAt": "2026-11-16",
+      "original": "1448×1086 PNG → 1400×1050 JPEG (q3)",
+      "prompt": "Generate a photorealistic editorial photograph, landscape orientation: the bar of a small specialty coffee shop in a former industrial space, espresso machine, coffee roaster, bags of beans on wooden shelves, ceramic cups, a barista hands tamping coffee, tall windows, concrete walls, daylight, film grain, muted palette. No readable text, no logos, no watermark."
+    },
+    {
+      "file": "table2.jpg",
+      "role": "Место: столик у окна",
+      "source": "ChatGPT web image generation",
+      "generatedAt": "2026-11-16",
+      "original": "1086×1448 PNG → 1000×1334 JPEG (q3)",
+      "prompt": "Generate a photorealistic still-life photograph, vertical portrait orientation: a white ceramic cup of black filter coffee and a croissant on a worn wooden table by a tall industrial window, a paper bag of coffee beans and a brass spoon beside, concrete wall, soft morning light, deep shadows, 50mm, film grain, muted desaturated palette. No text, no logos, no watermark."
+    }
+  ]
+}
