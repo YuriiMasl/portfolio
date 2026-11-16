@@ -112,7 +112,7 @@ class PortfolioChecks(unittest.TestCase):
         self.assertIn('два демо-макета', HTML)
         self.assertIn('Цветы, которые', HTML)
         self.assertIn('Кофе, который', HTML)
-        self.assertIn('Демо-макет: бренд, цены, события и контакты вымышлены', HTML)
+        self.assertIn('Бренд, цены, события и контакты придуманы', HTML)
 
     def test_smena_case_files_exist(self):
         case = ROOT / 'cases' / 'smena'
