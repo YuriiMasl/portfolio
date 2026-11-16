@@ -719,6 +719,12 @@ html.has-3d .hero-veil {
     radial-gradient(80% 60% at 82% 0%, rgba(244, 87, 31, 0.12), transparent 62%);
 }
 
+.case--smena {
+  background:
+    linear-gradient(180deg, rgba(11, 10, 9, 0.92), rgba(11, 10, 9, 0.98) 40%),
+    radial-gradient(80% 60% at 18% 0%, rgba(244, 87, 31, 0.08), transparent 62%);
+}
+
 .case-head {
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
@@ -823,6 +829,62 @@ h2 {
 }
 .cmp-tag--before { left: 14px; }
 .cmp-tag--after { right: 14px; }
+
+.case-board {
+  display: grid;
+  grid-template-columns: clamp(132px, 18vw, 248px) minmax(0, 1fr);
+  gap: clamp(10px, 1.2vw, 18px);
+  align-items: end;
+  padding: clamp(10px, 1.2vw, 18px);
+  background: var(--ink-soft);
+}
+
+.case-screen {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: var(--ink);
+}
+
+.case-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.case-screen--desktop {
+  border-radius: calc(var(--r-md) - 2px);
+  box-shadow: 0 22px 44px -30px rgba(0, 0, 0, 0.95);
+}
+
+.case-screen--desktop img {
+  border-radius: inherit;
+}
+
+.case-screen--phone {
+  padding: 5px;
+  border-radius: clamp(22px, 2.4vw, 34px);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 18px 36px -22px rgba(0, 0, 0, 0.95);
+}
+
+.case-screen--phone img {
+  border-radius: calc(clamp(22px, 2.4vw, 34px) - 5px);
+}
+
+.case-board__caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 2px 0;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 
 .case-body {
   display: grid;
@@ -1124,6 +1186,7 @@ h2 {
   .case-body,
   .about-grid { grid-template-columns: minmax(0, 1fr); }
   .compare { aspect-ratio: 4 / 3; }
+  .case-board { grid-template-columns: clamp(116px, 20vw, 160px) minmax(0, 1fr); }
   .portrait { max-width: 420px; }
 
   .step { grid-template-columns: 44px minmax(0, 1fr); grid-template-areas: "num title" "num text"; }
@@ -1143,6 +1206,9 @@ h2 {
   .foot-inner { flex-direction: column; gap: 18px; }
   .cmp-grip { width: 44px; height: 44px; }
   .panel figcaption { font-size: 0.72rem; }
+  .case-board { grid-template-columns: minmax(0, 1fr); align-items: start; gap: 10px; }
+  .case-screen--phone { width: 50%; justify-self: center; }
+  .case-board__caption { flex-direction: column; gap: 4px; }
   .brand-avatar { width: 38px; height: 38px; border-radius: 12px; }
   .tab { padding: 10px 14px; font-size: 0.86rem; }
 }

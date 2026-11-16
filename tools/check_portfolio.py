@@ -5,6 +5,7 @@ from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urljoin, urlsplit, unquote
 from urllib.request import urlopen
+import json
 import re
 import sys
 import unittest
@@ -64,6 +65,9 @@ class PortfolioChecks(unittest.TestCase):
         self.assertNotIn('Написать в Telegram', hero)
         self.assertEqual(hero.count('class="line-in"'), 2)
         self.assertIn('Демо-макеты, а не сайты клиентов', hero)
+        layout = json.loads((ROOT / 'assets' / 'hero-layout.json').read_text(encoding='utf-8'))
+        self.assertEqual(layout['text']['cta'], 'Смотреть кейсы')
+        self.assertIn('Два кейса', layout['text']['facts'])
 
     def test_real_screen_and_supplied_layers(self):
         for name in ('workshop', 'stand', 'glass', 'screen-main'):

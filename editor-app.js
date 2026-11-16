@@ -12,7 +12,7 @@ const DEFAULT = {
   stand:{ scale:1, dx:0, dy:0, brightness:0.78 },
   main:{ left:13, top:7, width:76, rotX:0, rotY:-8, rotZ:-3, z:2, warp:null },
   copy:{ left:4.8, top:42, width:38 },
-  text:{ intro:'', title:['',''], cta:'Открыть кейс', facts:'' },
+  text:{ intro:'', title:['',''], cta:'Смотреть кейсы', facts:'' },
   extra:[]
 };
 
