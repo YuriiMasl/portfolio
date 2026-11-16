@@ -6,6 +6,7 @@
   if (window.__HERO_EDITOR__) return;
 
   const URL_LAYOUT = 'assets/hero-layout.json';
+  const bust = (u) => u + (u.includes('?') ? '&' : '?') + 't=' + Date.now();
   const mqDesktop = window.matchMedia('(min-width: 881px)');
   const FIXED = ['exhibit', 'stand', 'main', 'copy'];
   const PANELS = ['main'];
@@ -183,7 +184,7 @@
     });
   };
 
-  fetch(URL_LAYOUT, { cache: 'no-cache' })
+  fetch(bust(URL_LAYOUT), { cache: 'no-cache' })
     .then((r) => (r.ok ? r.json() : null))
     .then((data) => {
       layout = data;

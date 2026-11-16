@@ -390,7 +390,7 @@ function setup() {
     } catch(e) { return null; }
   })();
 
-  fetch('assets/hero-layout.json', { cache:'no-cache' })
+  fetch('assets/hero-layout.json?t=' + Date.now(), { cache:'no-store' })
     .then((r) => (r.ok ? r.json() : null))
     .catch(() => null)
     .then((file) => {
@@ -531,7 +531,7 @@ document.getElementById('copy').addEventListener('click', async ()=>{
 });
 document.getElementById('reset').addEventListener('click', ()=>{
   try { localStorage.removeItem(LS_KEY); } catch(e) {}
-  fetch('assets/hero-layout.json', { cache:'no-cache' }).then(r=>r.json()).then((data)=>{
+  fetch('assets/hero-layout.json?t=' + Date.now(), { cache:'no-store' }).then(r=>r.json()).then((data)=>{
     state = { ...JSON.parse(JSON.stringify(DEFAULT)), ...data };
     if (!Array.isArray(state.extra)) state.extra = [];
     if (!state.text) state.text = JSON.parse(JSON.stringify(DEFAULT.text));
