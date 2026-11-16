@@ -26,6 +26,7 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  z-index: 2;
   width: 1600px;
   height: 900px;
   transform: translate(-50%, -50%) scale(var(--stage-scale, 0.55));
@@ -220,17 +221,7 @@
   .hero h1 { font-size: clamp(48px, 7.7vw, 66px); margin-bottom: 24px; }
   .hero-facts { margin-top: 24px; }
   .hero-exhibit { position: relative; inset: auto; width: 91%; max-width: 660px; margin: -12px 0 0 auto; }
-  .hero-stage {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1600px;
-  height: 900px;
-  transform: translate(-50%, -50%) scale(var(--stage-scale, 0.55));
-  transform-origin: center center;
-}
-
-.hero-bg { object-position: 64% center; }
+  .hero-bg { object-position: 64% center; }
   .hero-veil { background: linear-gradient(180deg, #100c09b3, #100c0977 38%, transparent 60%, #0b0a09 100%); }
   .exhibit-surface figcaption { font-size: 10px; }
   .exhibit-phone-surface figcaption { font-size: 9px; }
@@ -264,4 +255,38 @@
     transform: none !important;
   }
   .hero { height: auto !important; min-height: 0 !important; }
+
+  /* На телефоне сцена со стойкой и наклонной панелью не читается:
+     вместо неё прямой кадр работы с подписью. */
+  .hero-exhibit {
+    width: calc(100% - 48px);
+    max-width: 640px;
+    aspect-ratio: auto;
+    margin: 10px auto 0;
+  }
+  .exhibit-stand,
+  .exhibit-glass { display: none; }
+
+  .exhibit-panel--main {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    transform: none;
+    overflow: hidden;
+    border: 1px solid rgba(255, 217, 160, .24);
+    border-radius: 20px;
+    background: #0d0b09;
+    box-shadow: 0 24px 48px -28px rgba(0, 0, 0, .95), inset 0 1px 0 rgba(255, 255, 255, .2);
+  }
+  .exhibit-panel--main .exhibit-surface {
+    inset: 0;
+    border-radius: inherit;
+  }
+  .exhibit-panel--main .exhibit-surface > img { border-radius: inherit; }
+  .exhibit-panel--main figcaption {
+    padding: 7px 10px;
+    font-size: 10px;
+  }
 }
