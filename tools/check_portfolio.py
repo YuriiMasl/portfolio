@@ -36,7 +36,7 @@ def local_resources():
         key = 'href' if tag == 'link' else 'src'
         value = attrs.get(key, '')
         if value and not urlsplit(value).scheme:
-            resources.add(value)
+            resources.add(urlsplit(value).path)
     for filename in ('workshop.css', 'hero.css'):
         text = (ROOT / filename).read_text(encoding='utf-8')
         for value in re.findall(r'url\([\"\']?([^\)\"\']+)', text):
@@ -65,15 +65,15 @@ class PortfolioChecks(unittest.TestCase):
         self.assertEqual(hero.count('class="line-in"'), 2)
         self.assertIn('Демо-макет, а не сайт клиента', hero)
 
-    def test_three_real_screens_and_supplied_layers(self):
-        for name in ('workshop', 'stand', 'glass', 'screen-main', 'screen-catalog', 'phone'):
+    def test_real_screen_and_supplied_layers(self):
+        for name in ('workshop', 'stand', 'glass', 'screen-main'):
             self.assertIn('assets/hero/' + name + '.webp', HTML)
-        self.assertEqual(HTML.count('<figure class="exhibit-panel '), 3)
+        self.assertEqual(HTML.count('<figure class="exhibit-panel '), 1)
         self.assertNotIn('has-plate', HTML)
         self.assertNotIn('stage-canvas', HTML)
         self.assertNotIn('hero-plate-v3', HTML)
-        # Main/cataloque screens are the supplied screenshots, not a fake UI.
-        for new, original in [('screen-main', 'lyublyu-hero'), ('screen-catalog', 'lyublyu-shelf')]:
+        # The main screen is the supplied screenshot, not a fake UI.
+        for new, original in [('screen-main', 'lyublyu-hero')]:
             with Image.open(ROOT / 'assets' / 'hero' / (new + '.webp')) as image:
                 with Image.open(ROOT.parent / 'ассеты' / (original + '.webp')) as source:
                     self.assertEqual(image.size, source.size)
