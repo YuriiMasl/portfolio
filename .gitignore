@@ -7,3 +7,5 @@ __pycache__/
 .impeccable/questions/
 .impeccable/build/
 .impeccable/config.local.json
+# граф проекта Graphify
+graphify-out/
