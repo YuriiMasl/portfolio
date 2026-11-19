@@ -100,9 +100,8 @@
   text-shadow: 0 4px 24px rgba(0, 0, 0, .3);
 }
 .hero .line { white-space: nowrap; padding-block: 4px; margin-block: -4px; }
-/* Кнопка-стекло: морозит фотографию за собой, по ободку ходит блик,
-   под пальцем она слегка проседает. Угол блика зарегистрирован как <angle>,
-   иначе градиент не умеет плавно ехать. */
+/* Кнопка-стекло по мотивам liquid glass: светящаяся капля — мята сверху,
+   лазурь снизу, мокрая кромка и блик, который идёт за курсором. */
 @property --glass-angle {
   syntax: "<angle>";
   inherits: false;
@@ -113,44 +112,49 @@
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 20px;
-  min-height: 62px;
-  padding: 0 28px 0 34px;
+  gap: 16px;
+  min-height: 64px;
+  padding: 0 14px 0 32px;
   margin-top: 4px;
   border: 0;
   border-radius: 999px;
   overflow: hidden;
   isolation: isolate;
-  color: #fffdf8;
+  color: #06283f;
   font-size: 16px;
-  font-weight: 500;
-  letter-spacing: .08em;
+  font-weight: 600;
+  letter-spacing: .07em;
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
-  --mx: 18%;
-  --my: 0%;
+  --mx: 26%;
+  --my: 10%;
   background:
-    radial-gradient(22% 56% at var(--mx) var(--my), rgba(255, 255, 255, .5), rgba(255, 255, 255, .08) 58%, transparent 74%),
-    radial-gradient(16% 46% at 9% 4%, rgba(255, 255, 255, .9), rgba(255, 255, 255, .12) 62%, transparent 76%),
-    linear-gradient(118deg, transparent 10%, rgba(255, 255, 255, .12) 24%, transparent 33%),
-    linear-gradient(160deg, rgba(255, 255, 255, .3) 0%, rgba(255, 255, 255, .06) 18%, rgba(255, 255, 255, .02) 52%, rgba(255, 255, 255, .09) 86%, rgba(255, 255, 255, .16) 100%),
-    radial-gradient(70% 120% at 88% 110%, rgba(255, 188, 126, .24), transparent 68%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%) brightness(1.1);
-  backdrop-filter: blur(18px) saturate(180%) brightness(1.1);
+    radial-gradient(46% 120% at var(--mx) var(--my), rgba(255, 255, 255, .95), rgba(255, 255, 255, .35) 42%, transparent 72%),
+    radial-gradient(54% 110% at 12% -12%, #ffffff 0%, #e9fffb 24%, transparent 58%),
+    radial-gradient(70% 120% at 104% 118%, rgba(26, 78, 176, .85), rgba(30, 90, 190, .25) 48%, transparent 68%),
+    linear-gradient(158deg,
+      #f6fffd 0%,
+      #d3f9f4 15%,
+      #b0f1f4 30%,
+      #8ce3f2 47%,
+      #68c6ef 64%,
+      #4ba6e6 82%,
+      #3e8ad6 100%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  backdrop-filter: blur(10px) saturate(160%);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .95),
-    inset 0 -1px 0 rgba(255, 255, 255, .5),
-    inset 0 12px 22px -18px rgba(255, 255, 255, .35),
-    inset 0 -18px 26px -18px rgba(255, 214, 176, .3),
-    0 18px 32px -20px rgba(0, 0, 0, .9),
-    0 30px 64px -34px rgba(255, 186, 120, .4);
-  text-shadow: 0 1px 2px rgba(20, 12, 6, .45);
+    inset 0 2px 1px rgba(255, 255, 255, 1),
+    inset 0 -2px 2px rgba(255, 255, 255, .6),
+    inset 0 -16px 22px -14px rgba(10, 55, 120, .6),
+    inset 0 14px 18px -14px rgba(255, 255, 255, .95),
+    0 12px 28px -14px rgba(70, 170, 235, .8),
+    0 26px 54px -28px rgba(45, 110, 210, .7);
   transform: perspective(700px) translateY(var(--lift, 0)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition: transform .22s cubic-bezier(.2, .7, .3, 1), box-shadow .28s, --glass-angle .9s ease;
 }
 
-/* Тонкий ободок: конический градиент, срезанный до волоска. */
+/* Мокрая кромка: тонкий светлый волосок по всему периметру. */
 .hero .glass-cta::before {
   content: "";
   position: absolute;
@@ -158,18 +162,18 @@
   padding: 1px;
   border-radius: inherit;
   background: conic-gradient(from var(--glass-angle),
-      rgba(255, 255, 255, .06) 0deg,
-      rgba(255, 255, 255, .92) 58deg,
-      rgba(255, 255, 255, .16) 150deg,
-      rgba(255, 255, 255, .6) 232deg,
-      rgba(255, 255, 255, .06) 320deg,
-      rgba(255, 255, 255, .06) 360deg);
+      rgba(255, 255, 255, .35) 0deg,
+      #ffffff 52deg,
+      rgba(190, 240, 255, .7) 140deg,
+      rgba(255, 255, 255, .95) 226deg,
+      rgba(160, 220, 255, .5) 306deg,
+      rgba(255, 255, 255, .35) 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 /* Блик, который проезжает по стеклу. */
@@ -179,42 +183,61 @@
   inset: -1px;
   border-radius: inherit;
   background: linear-gradient(105deg,
-      transparent 32%,
-      rgba(255, 255, 255, .5) 45%,
-      rgba(255, 255, 255, .1) 54%,
+      transparent 30%,
+      rgba(255, 255, 255, .85) 44%,
+      rgba(255, 255, 255, .2) 54%,
       transparent 66%);
   transform: translateX(-118%);
-  transition: transform .8s cubic-bezier(.25, .8, .3, 1);
+  transition: transform .85s cubic-bezier(.25, .8, .3, 1);
   pointer-events: none;
   mix-blend-mode: screen;
   z-index: -1;
 }
 
+/* Стрелка в стеклянной линзе — как шарик на референсе. */
 .hero .glass-cta span {
-  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-size: 19px;
+  font-weight: 700;
+  -webkit-text-stroke: .4px currentColor;
   line-height: 1;
+  color: #06283f;
+  background:
+    radial-gradient(circle at 30% 22%, #ffffff 0%, #f2fdff 30%, #d3f2fb 58%, #9fdcf4 82%, #7cc5ea 100%);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 1),
+    inset 0 -6px 10px -4px rgba(18, 78, 140, .5),
+    inset 0 6px 10px -6px rgba(255, 255, 255, .9),
+    0 3px 8px -2px rgba(8, 45, 85, .45);
   transition: transform .28s cubic-bezier(.2, .7, .3, 1);
 }
 .hero .glass-cta:hover {
   --lift: -2px;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 0 rgba(255, 255, 255, .4),
-    inset 0 -14px 24px -14px rgba(0, 0, 0, .7),
-    0 26px 48px -22px rgba(0, 0, 0, .95);
+    inset 0 2px 1px rgba(255, 255, 255, 1),
+    inset 0 -2px 2px rgba(255, 255, 255, .6),
+    inset 0 -14px 20px -14px rgba(12, 60, 120, .5),
+    inset 0 14px 18px -14px rgba(255, 255, 255, 1),
+    0 16px 34px -14px rgba(80, 185, 245, .9),
+    0 34px 70px -30px rgba(45, 115, 215, .8);
   --glass-angle: 505deg;
 }
 .hero .glass-cta:hover::after { transform: translateX(118%); }
-.hero .glass-cta:hover span { transform: translateX(5px); }
+.hero .glass-cta:hover span { transform: translateX(4px) scale(1.04); }
 .hero .glass-cta:active {
   transform: perspective(700px) translateY(1px) rotateX(calc(var(--rx, 0deg) + 12deg)) rotateY(var(--ry, 0deg));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .7),
-    inset 0 -14px 24px -14px rgba(0, 0, 0, .9),
-    0 10px 20px -14px rgba(0, 0, 0, .9);
+    inset 0 1px 1px rgba(255, 255, 255, .8),
+    inset 0 -14px 20px -14px rgba(12, 60, 120, .75),
+    0 8px 18px -12px rgba(40, 110, 200, .8);
 }
 .hero .glass-cta:focus-visible {
-  outline: 2px solid #ffb173;
+  outline: 2px solid #b9f6ff;
   outline-offset: 4px;
 }
 
@@ -383,7 +406,8 @@
   .hero { min-height: 900px; padding-top: 132px; padding-bottom: 28px; }
   .hero-intro { font-size: 14px; line-height: 1.7; margin-bottom: 24px; }
   .hero h1 { font-size: clamp(38px, 10.7vw, 56px); line-height: 1.08; }
-  .hero .glass-cta { font-size: 13.5px; min-height: 50px; padding: 0 22px 0 24px; gap: 14px; }
+  .hero .glass-cta { font-size: 13.5px; min-height: 50px; padding: 0 10px 0 22px; gap: 12px; }
+  .hero .glass-cta span { width: 32px; height: 32px; font-size: 14px; }
   .hero-facts { font-size: 12px; margin-top: 20px; }
   .hero-exhibit { width: 108%; margin-top: 4px; margin-left: -8%; }
   .exhibit-surface figcaption { padding: 5px 7px; font-size: 8px; }
