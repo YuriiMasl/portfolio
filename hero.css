@@ -170,7 +170,6 @@
   width: 24px;
   height: 24px;
   color: #ffc08a;
-  transform: rotate(45deg);
   transition: transform .28s cubic-bezier(.2, .7, .3, 1);
 }
 .hero .glass-cta:hover {
@@ -182,7 +181,7 @@
     0 20px 40px -20px rgba(0, 0, 0, .95);
 }
 .hero .glass-cta:hover::after { transform: translateX(118%); }
-.hero .glass-cta:hover .arrow-solid { transform: rotate(45deg) translateX(3px); }
+.hero .glass-cta:hover .arrow-solid { transform: translateX(3px); }
 .hero .glass-cta:active {
   transform: perspective(700px) translateY(1px) rotateX(calc(var(--rx, 0deg) + 12deg)) rotateY(var(--ry, 0deg));
   box-shadow:
