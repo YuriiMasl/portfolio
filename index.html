@@ -17,32 +17,12 @@
 <meta name="theme-color" content="#0B0A09">
 <link rel="preload" href="assets/fonts/oswald-cyrillic-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/golos-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/golos-cyrillic-500.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/hero/workshop.webp" as="image">
 <link rel="stylesheet" href="workshop.css?v=1794921502">
-<link rel="stylesheet" href="hero.css?v=20261119m">
-<script>
-  // Кадр 1600×900 вписываем в первый экран целиком: по ширине и по высоте.
-  (function () {
-    var fit = function () {
-      var hero = document.querySelector('.hero');
-      if (!hero || !hero.clientWidth) return;
-      var scale = Math.min(hero.clientWidth / 1600, hero.clientHeight / 900);
-      document.documentElement.style.setProperty('--stage-scale', scale.toFixed(4));
-      // фон тянем по ширине окна: так стена доходит до краёв, а стойка не едет
-      var stretch = hero.clientWidth / (1600 * scale);
-      document.documentElement.style.setProperty('--plate-stretch', Math.max(1, stretch).toFixed(4));
-    };
-    var start = function () {
-      fit();
-      var hero = document.querySelector('.hero');
-      if (hero && window.ResizeObserver) new ResizeObserver(fit).observe(hero);
-      window.addEventListener('resize', fit);
-      window.addEventListener('orientationchange', fit);
-    };
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
-    else start();
-  })();
-</script>
+<link rel="stylesheet" href="hero.css?v=20261119n">
+
+<noscript><style>.hero-stage{opacity:1}</style></noscript>
 </head>
 <body>
 
@@ -104,6 +84,28 @@
     </div>
     </div>
   </section>
+
+  <script>
+    // Считаем до первой отрисовки: иначе кадр успевает показаться в чужом масштабе.
+    (function () {
+      var root = document.documentElement;
+      var fit = function () {
+        var hero = document.querySelector('.hero');
+        if (!hero || !hero.clientWidth) return;
+        var scale = Math.min(hero.clientWidth / 1600, hero.clientHeight / 900);
+        root.style.setProperty('--stage-scale', scale.toFixed(4));
+        var stretch = hero.clientWidth / (1600 * scale);
+        root.style.setProperty('--plate-stretch', Math.max(1, stretch).toFixed(4));
+      };
+      fit();
+      var hero = document.querySelector('.hero');
+      if (hero && window.ResizeObserver) new ResizeObserver(fit).observe(hero);
+      window.addEventListener('resize', fit);
+      window.addEventListener('orientationchange', fit);
+      // сцена появляется, когда раскладка из JSON применена; страховка — если не успела
+      setTimeout(function () { root.classList.add('hero-ready'); }, 700);
+    })();
+  </script>
 
   <section class="case" id="work" aria-labelledby="work-title">
     <div class="wrap">
@@ -280,7 +282,7 @@
 <script src="vendor/gsap.min.js" defer></script>
 <script src="vendor/ScrollTrigger.min.js" defer></script>
 <script src="workshop.js?v=1794921502" defer></script>
-<script src="hero-layout.js?v=20261119d" defer></script>
+<script src="hero-layout.js?v=20261119e" defer></script>
 <script src="hero-cta.js?v=20261119a" defer></script>
 
 </body>

@@ -78,6 +78,13 @@ class PortfolioChecks(unittest.TestCase):
         self.assertIn('Math.min(hero.clientWidth / 1600, hero.clientHeight / 900)', HTML)
         self.assertNotIn('window.innerHeight / 900', HTML)
 
+    def test_hero_appears_only_when_placed(self):
+        """Сцена не показывается, пока не посчитан масштаб и не применена раскладка."""
+        layout_js = (ROOT / 'hero-layout.js').read_text(encoding='utf-8')
+        self.assertIn('html.hero-ready .hero-stage', CSS)
+        self.assertIn("classList.add('hero-ready')", layout_js)
+        self.assertLess(HTML.index('--stage-scale'), HTML.index('id="work"'))
+
     def test_real_screen_and_supplied_layers(self):
         for name in ('workshop', 'stand', 'glass', 'screen-main'):
             self.assertIn('assets/hero/' + name + '.webp', HTML)

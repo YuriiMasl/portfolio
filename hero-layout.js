@@ -111,6 +111,7 @@
   }
 
   const apply = () => {
+    document.documentElement.classList.add('hero-ready');
     if (!layout || !mqDesktop.matches) {
       clearAll();
       return;
@@ -189,6 +190,7 @@
 
   fetch(bust(URL_LAYOUT), { cache: 'no-cache' })
     .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null)
     .then((data) => {
       layout = data;
       apply();
