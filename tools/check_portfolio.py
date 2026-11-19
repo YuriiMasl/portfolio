@@ -66,7 +66,7 @@ class PortfolioChecks(unittest.TestCase):
         self.assertEqual(hero.count('class="line-in"'), 2)
         self.assertIn('Это образцы, а не заказы клиентов', hero)
         layout = json.loads((ROOT / 'assets' / 'hero-layout.json').read_text(encoding='utf-8'))
-        self.assertEqual(layout['text']['cta'], 'Смотреть работы')
+        self.assertEqual(layout['text']['cta'], 'Потрогать стекло')
         self.assertIn('Два макета', layout['text']['facts'])
 
     def test_real_screen_and_supplied_layers(self):
