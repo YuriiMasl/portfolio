@@ -52,6 +52,9 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
+  /* без шва: края кадра растворяются в размытой подложке */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
 }
 .hero-veil {
   position: absolute;
