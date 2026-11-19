@@ -21,14 +21,22 @@
 <link rel="stylesheet" href="workshop.css?v=1794921502">
 <link rel="stylesheet" href="hero.css?v=20261119b">
 <script>
+  // Первый экран всегда 16:9, поэтому сцену масштабируем строго по её ширине.
   (function () {
     var fit = function () {
-      var s = Math.min(window.innerWidth / 1600, window.innerHeight / 900);
-      document.documentElement.style.setProperty('--stage-scale', s.toFixed(4));
+      var hero = document.querySelector('.hero');
+      if (!hero || !hero.clientWidth) return;
+      document.documentElement.style.setProperty('--stage-scale', (hero.clientWidth / 1600).toFixed(4));
     };
-    fit();
-    window.addEventListener('resize', fit);
-    window.addEventListener('orientationchange', fit);
+    var start = function () {
+      fit();
+      var hero = document.querySelector('.hero');
+      if (hero && window.ResizeObserver) new ResizeObserver(fit).observe(hero);
+      window.addEventListener('resize', fit);
+      window.addEventListener('orientationchange', fit);
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+    else start();
   })();
 </script>
 </head>

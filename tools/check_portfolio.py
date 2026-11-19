@@ -69,6 +69,13 @@ class PortfolioChecks(unittest.TestCase):
         self.assertEqual(layout['text']['cta'], 'Потрогать стекло')
         self.assertIn('Два макета', layout['text']['facts'])
 
+    def test_hero_frame_is_one_16_9_picture(self):
+        """Сцена и фон — один кадр 16:9, иначе стойка уезжает с пола."""
+        self.assertIn('aspect-ratio: 16 / 9', CSS)
+        self.assertIn('min-height: 0', CSS)
+        self.assertIn('hero.clientWidth / 1600', HTML)
+        self.assertNotIn('window.innerHeight / 900', HTML)
+
     def test_real_screen_and_supplied_layers(self):
         for name in ('workshop', 'stand', 'glass', 'screen-main'):
             self.assertIn('assets/hero/' + name + '.webp', HTML)
