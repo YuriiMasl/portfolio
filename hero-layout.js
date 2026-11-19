@@ -103,7 +103,7 @@
     }
     const cta = document.querySelector('[data-text="cta"]');
     if (cta && text.cta) {
-      const arrow = '<svg class="arrow-solid" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.6 9.6h9.6V5.2L22 12l-9.8 6.8v-4.4H2.6Z" fill="currentColor" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>';
+      const arrow = '<svg class="arrow-solid " viewBox="0 0 24 24" aria-hidden="true"><path d="M22.6 1.9 2.6 10.4a1.15 1.15 0 0 0 .05 2.2l6.55 2.35 -1.9 6.55a1.15 1.15 0 0 0 2.1.95L22.6 1.9Z" fill="currentColor" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>';
       cta.innerHTML = `${text.cta} ${arrow}`;
     }
     const facts = document.querySelector('[data-text="facts"]');
