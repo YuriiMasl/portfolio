@@ -19,7 +19,7 @@
 <link rel="preload" href="assets/fonts/golos-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/hero/workshop.webp" as="image">
 <link rel="stylesheet" href="workshop.css?v=1794921502">
-<link rel="stylesheet" href="hero.css?v=20261119f">
+<link rel="stylesheet" href="hero.css?v=20261119g">
 <script>
   // Кадр 1600×900 вписываем в первый экран целиком: по ширине и по высоте.
   (function () {
@@ -28,6 +28,9 @@
       if (!hero || !hero.clientWidth) return;
       var scale = Math.min(hero.clientWidth / 1600, hero.clientHeight / 900);
       document.documentElement.style.setProperty('--stage-scale', scale.toFixed(4));
+      // фон тянем по ширине окна: так стена доходит до краёв, а стойка не едет
+      var stretch = hero.clientWidth / (1600 * scale);
+      document.documentElement.style.setProperty('--plate-stretch', Math.max(1, stretch).toFixed(4));
     };
     var start = function () {
       fit();
@@ -72,8 +75,10 @@
   <section class="hero" id="top" aria-labelledby="hero-title">
     <img class="hero-ambient" src="assets/hero/workshop.webp" alt="" aria-hidden="true">
     <div class="hero-stage">
-    <img class="hero-bg" src="assets/hero/workshop.webp" width="1586" height="992" alt="" aria-hidden="true" fetchpriority="high">
-    <div class="hero-veil" aria-hidden="true"></div>
+    <div class="hero-plate" aria-hidden="true">
+      <img class="hero-bg" src="assets/hero/workshop.webp" width="1586" height="992" alt="" fetchpriority="high">
+      <div class="hero-veil"></div>
+    </div>
 
     <div class="hero-copy" data-layer="copy">
       <p class="hero-intro" data-text="intro">Небольшие сайты для небольших дел:<br class="desktop-break"> цветочный салон, кофейня, мастерская.<br>Делаю сам. Воронеж, работаю по России.</p>

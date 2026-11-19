@@ -71,7 +71,9 @@ class PortfolioChecks(unittest.TestCase):
 
     def test_hero_frame_fits_and_keeps_the_floor(self):
         """Кадр помещается в окно целиком, а фон живёт внутри кадра — иначе стойка уезжает с пола."""
-        self.assertIn('.hero-stage > .hero-bg', CSS)
+        self.assertIn('.hero-plate > .hero-bg', CSS)
+        self.assertIn('--plate-stretch', CSS)
+        self.assertIn('--plate-stretch', HTML)
         self.assertIn('height: clamp(620px, 100svh, 1200px)', CSS)
         self.assertIn('Math.min(hero.clientWidth / 1600, hero.clientHeight / 900)', HTML)
         self.assertNotIn('window.innerHeight / 900', HTML)

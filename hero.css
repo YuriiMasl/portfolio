@@ -47,17 +47,22 @@
   -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%);
   mask-image: linear-gradient(180deg, transparent 0, #000 9%, #000 91%, transparent 100%);
 }
-.hero-stage > .hero-bg {
+/* Полотно фона: живёт вместе со сценой, но растягивается по ширине окна.
+   Тянем только по X — пол под стойкой остаётся на той же высоте. */
+.hero-plate {
   position: absolute;
   inset: 0;
   z-index: 0;
+  transform: scaleX(var(--plate-stretch, 1));
+  transform-origin: 50% 50%;
+}
+.hero-plate > .hero-bg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  /* без шва: края кадра растворяются в размытой подложке */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
 }
 .hero-veil {
   position: absolute;
@@ -364,7 +369,6 @@
   .head-wrap { padding-inline: 24px; }
   .hero { height: auto; max-height: none; min-height: 1050px; padding-top: 150px; }
   .hero-ambient { display: none; }
-  .hero-stage > .hero-bg { -webkit-mask-image: none; mask-image: none; }
   .hero-copy { position: relative; inset: auto; width: auto; max-width: none; margin-inline: 24px; }
   .hero-intro { font-size: 16px; margin-bottom: 24px; }
   .hero h1 { font-size: clamp(48px, 7.7vw, 66px); margin-bottom: 24px; }
