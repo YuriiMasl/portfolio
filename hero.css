@@ -169,7 +169,7 @@
 .hero .glass-cta .arrow-solid {
   width: 24px;
   height: 24px;
-  color: #ffc08a;
+  color: inherit;
   transition: transform .28s cubic-bezier(.2, .7, .3, 1);
 }
 .hero .glass-cta:hover {
@@ -190,7 +190,7 @@
     0 8px 18px -12px rgba(0, 0, 0, .9);
 }
 .hero .glass-cta:focus-visible {
-  outline: 2px solid #ffc08a;
+  outline: 2px solid rgba(244, 237, 223, .8);
   outline-offset: 4px;
 }
 
