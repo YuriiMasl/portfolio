@@ -64,10 +64,10 @@ class PortfolioChecks(unittest.TestCase):
         self.assertEqual(links, ['#work'])
         self.assertNotIn('Написать в Telegram', hero)
         self.assertEqual(hero.count('class="line-in"'), 2)
-        self.assertIn('Демо-макеты, а не сайты клиентов', hero)
+        self.assertIn('Это образцы, а не заказы клиентов', hero)
         layout = json.loads((ROOT / 'assets' / 'hero-layout.json').read_text(encoding='utf-8'))
-        self.assertEqual(layout['text']['cta'], 'Смотреть кейсы')
-        self.assertIn('Два кейса', layout['text']['facts'])
+        self.assertEqual(layout['text']['cta'], 'Смотреть работы')
+        self.assertIn('Два макета', layout['text']['facts'])
 
     def test_real_screen_and_supplied_layers(self):
         for name in ('workshop', 'stand', 'glass', 'screen-main'):
@@ -110,9 +110,9 @@ class PortfolioChecks(unittest.TestCase):
         self.assertIn('assets/smena-hero.webp', HTML)
         self.assertIn('assets/smena-mobile.webp', HTML)
         self.assertIn('два демо-макета', HTML)
-        self.assertIn('Цветы, которые', HTML)
-        self.assertIn('Кофе, который', HTML)
-        self.assertIn('Бренд, цены, события и контакты придуманы', HTML)
+        self.assertIn('Цветочный салон', HTML)
+        self.assertIn('Кофейня и обжарка', HTML)
+        self.assertIn('придуманы', HTML)
 
     def test_smena_case_files_exist(self):
         case = ROOT / 'cases' / 'smena'
