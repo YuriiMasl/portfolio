@@ -42,7 +42,7 @@
   height: 106%;
   object-fit: cover;
   object-position: center;
-  filter: blur(64px) brightness(0.2) saturate(0.6);
+  filter: blur(32px) brightness(0.26) saturate(0.6);
 }
 .hero-stage > .hero-bg {
   position: absolute;
@@ -53,8 +53,8 @@
   object-fit: cover;
   object-position: center;
   /* без шва: края кадра растворяются в размытой подложке */
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
 }
 .hero-veil {
   position: absolute;
