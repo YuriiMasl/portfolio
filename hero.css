@@ -105,7 +105,10 @@
   text-transform: uppercase;
   text-decoration: none;
   white-space: nowrap;
+  --mx: 18%;
+  --my: 0%;
   background:
+    radial-gradient(22% 56% at var(--mx) var(--my), rgba(255, 255, 255, .5), rgba(255, 255, 255, .08) 58%, transparent 74%),
     radial-gradient(16% 46% at 9% 4%, rgba(255, 255, 255, .9), rgba(255, 255, 255, .12) 62%, transparent 76%),
     linear-gradient(118deg, transparent 10%, rgba(255, 255, 255, .12) 24%, transparent 33%),
     linear-gradient(160deg, rgba(255, 255, 255, .3) 0%, rgba(255, 255, 255, .06) 18%, rgba(255, 255, 255, .02) 52%, rgba(255, 255, 255, .09) 86%, rgba(255, 255, 255, .16) 100%),
@@ -120,7 +123,8 @@
     0 18px 32px -20px rgba(0, 0, 0, .9),
     0 30px 64px -34px rgba(255, 186, 120, .4);
   text-shadow: 0 1px 2px rgba(20, 12, 6, .45);
-  transition: transform .28s cubic-bezier(.2, .7, .3, 1), box-shadow .28s, --glass-angle .9s ease;
+  transform: perspective(700px) translateY(var(--lift, 0)) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform .22s cubic-bezier(.2, .7, .3, 1), box-shadow .28s, --glass-angle .9s ease;
 }
 
 /* Тонкий ободок: конический градиент, срезанный до волоска. */
@@ -169,7 +173,7 @@
   transition: transform .28s cubic-bezier(.2, .7, .3, 1);
 }
 .hero .glass-cta:hover {
-  transform: translateY(-2px);
+  --lift: -2px;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 1),
     inset 0 -1px 0 rgba(255, 255, 255, .4),
@@ -180,7 +184,7 @@
 .hero .glass-cta:hover::after { transform: translateX(118%); }
 .hero .glass-cta:hover span { transform: translateX(5px); }
 .hero .glass-cta:active {
-  transform: translateY(0) rotate3d(1, 0, 0, 14deg);
+  transform: perspective(700px) translateY(1px) rotateX(calc(var(--rx, 0deg) + 12deg)) rotateY(var(--ry, 0deg));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, .7),
     inset 0 -14px 24px -14px rgba(0, 0, 0, .9),
@@ -205,6 +209,7 @@
   .hero .glass-cta::after { transition: none; }
   .hero .glass-cta::after { display: none; }
   .hero .glass-cta:hover { transform: none; }
+  .hero .glass-cta { transform: none; }
 }
 .hero-facts {
   margin: 32px 0 0;
